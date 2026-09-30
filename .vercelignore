@@ -1,0 +1,6 @@
+# Only the built homepage and its optimised assets are deployed.
+# Source material (raw photos, videos, questionnaire) stays in the repo but is not published.
+/*
+!/index.html
+!/assets
+!/vercel.json
