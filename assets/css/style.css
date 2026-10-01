@@ -634,6 +634,7 @@ ul, ol { padding: 0; list-style: none; }
   padding: 24px 26px;
   box-shadow: var(--shadow-md);
   display: grid; gap: 10px;
+  grid-template-rows: auto 1fr auto; align-content: start;
 }
 .service-card-body h3 { font-family: var(--display); font-weight: 600; font-size: 28px; line-height: 1.1; letter-spacing: -0.02em; }
 .service-card-body p { color: var(--slate); font-size: 15.5px; }

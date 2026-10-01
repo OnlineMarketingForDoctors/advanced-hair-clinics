@@ -275,7 +275,25 @@
   if (matchMedia('(hover: hover)').matches) {
     sList.addEventListener('mouseover', (e) => { const b = e.target.closest('button'); if (b) showService(+b.dataset.i); });
   }
+  // Lock the text box to the tallest service so hovering never shifts the layout
+  const sBody = $('.service-card-body');
+  const fitServiceBody = () => {
+    const name = $('#service-name'), desc = $('#service-desc'), link = $('#service-link');
+    const keep = [name.textContent, desc.textContent, link.textContent];
+    sBody.style.minHeight = '';
+    let max = 0;
+    services.forEach((s) => {
+      name.textContent = s.n; desc.textContent = s.d; link.textContent = `Discover ${s.n}`;
+      max = Math.max(max, sBody.offsetHeight);
+    });
+    [name.textContent, desc.textContent, link.textContent] = keep;
+    sBody.style.minHeight = `${max}px`;
+  };
   showService(0);
+  fitServiceBody();
+  if (document.fonts) document.fonts.ready.then(fitServiceBody);
+  let sFitT;
+  addEventListener('resize', () => { clearTimeout(sFitT); sFitT = setTimeout(fitServiceBody, 150); });
   // Warm the cache so swaps feel instant
   addEventListener('load', () => services.forEach((s) => { const im = new Image(); im.src = `assets/img/gen/${s.img}.webp`; }));
 
