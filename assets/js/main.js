@@ -279,6 +279,45 @@
   // Warm the cache so swaps feel instant
   addEventListener('load', () => services.forEach((s) => { const im = new Image(); im.src = `assets/img/gen/${s.img}.webp`; }));
 
+  /* ---------- Video testimonials ---------- */
+  const vids = [
+    { id: 'GztrgiQqlYM', img: 'real-results', name: 'Real results: hair transplant at Advanced Hair Clinics', t: 'FUE Hair Transplant', g: '3,850', h: '8,565', d: '2' },
+    { id: 'nj68iQf_e6Q', img: 'steve-tesser', name: 'Hair transplant: Steve Tesser', t: 'FUE Hair Transplant', g: '2,543', h: '5,403', d: '2' },
+    { id: 'adFcivrSJjg', img: 'my-experience', name: 'Hair transplant: my experience at Advanced Hair Clinics', t: 'FUE Hair Transplant', g: '2,287', h: '5,511', d: '1' },
+    { id: '_lF3QzLdcqQ', img: 'dimos-beke', name: 'Dimos Beke: my experience at Advanced Hair Clinics', t: 'Unshaven FUE Hair Transplant', g: '1,820', h: '4,145', d: '1' },
+    { id: 'g4F6fGoYw1A', img: 'testimonial-2318', name: 'Result after hair transplant', t: 'FUE Hair Transplant', g: '2,318' },
+  ];
+  const vtPlayer = $('#vt-player');
+  const vtList = $('#vt-list');
+  if (vtPlayer && vtList) {
+    let vCur = 0;
+    const vSrc = (v) => `assets/img/testimonials/${v.img}.webp`;
+    vtList.innerHTML = vids.map((v, i) => `<li><button type="button" data-i="${i}" aria-current="${i === 0}">
+      <span class="vt-thumb"><img src="${vSrc(v)}" alt="" loading="lazy" width="640" height="360"></span>
+      <span><strong>${v.name}</strong><span>${v.g} grafts</span></span></button></li>`).join('');
+    const showVid = (i, play) => {
+      vCur = i;
+      const v = vids[i];
+      $$('button', vtList).forEach((b) => b.setAttribute('aria-current', b.dataset.i == i));
+      $('#vt-name').textContent = v.name;
+      $('#vt-stats').innerHTML = [['Treatment', v.t], ['Grafts', v.g], ['Hairs', v.h], ['Treatment days', v.d]]
+        .filter(([, val]) => val).map(([k, val]) => `<div><dt>${k}</dt><dd>${val}</dd></div>`).join('');
+      if (play) {
+        vtPlayer.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${v.id}?autoplay=1&rel=0&modestbranding=1" title="${v.name}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`;
+        return;
+      }
+      vtPlayer.innerHTML = `<button type="button" class="vt-poster" aria-label="Play video: ${v.name}"><img src="${vSrc(v)}" alt="${v.name}" width="1600" height="900"><span class="vt-play" aria-hidden="true"></span></button>`;
+    };
+    vtPlayer.addEventListener('click', (e) => { if (e.target.closest('.vt-poster')) showVid(vCur, true); });
+    vtList.addEventListener('click', (e) => {
+      const b = e.target.closest('button');
+      if (!b) return;
+      showVid(+b.dataset.i, false);
+      if (innerWidth <= 1120) vtPlayer.scrollIntoView({ block: 'center', behavior: reduceMotion ? 'auto' : 'smooth' });
+    });
+    showVid(0, false);
+  }
+
   /* ---------- Why choose us ---------- */
   // Full copy from the original homepage, lightly edited. The first paragraph shows;
   // the rest opens with Read more.
