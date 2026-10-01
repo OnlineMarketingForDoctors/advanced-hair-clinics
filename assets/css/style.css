@@ -625,7 +625,7 @@ ul, ol { padding: 0; list-style: none; }
   overflow: hidden;
 }
 .service-card-img { aspect-ratio: 4 / 3.3; overflow: hidden; position: relative; }
-.service-card-img img { width: 100%; height: 100%; object-fit: cover; transition: opacity .4s, transform 1s var(--ease); }
+.service-card-img img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 0; transition: opacity .4s, transform 1s var(--ease); }
 .service-card-img img.is-swapping { opacity: 0; transform: scale(1.06); }
 .service-card-body {
   position: relative;
