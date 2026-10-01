@@ -723,7 +723,7 @@ ul, ol { padding: 0; list-style: none; }
 .meet-cover { position: relative; min-height: 760px; display: flex; align-items: flex-end; justify-content: center; }
 .meet-portrait {
   position: relative; z-index: 2;
-  width: min(92%, 640px); height: auto;
+  width: min(100%, 760px); height: auto;
   filter: drop-shadow(0 40px 60px rgba(0,0,0,.45));
 }
 .meet-tag {
@@ -738,9 +738,9 @@ ul, ol { padding: 0; list-style: none; }
 }
 .meet-tag strong { font-family: var(--display); font-size: 19px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; color: var(--ink); }
 .meet-tag span { color: var(--slate); }
-.tag-a { left: 6%; top: 38%; }
-.tag-b { right: 4%; top: 56%; }
-.tag-c { left: 10%; bottom: 8%; background: var(--teal); background-image: var(--grad-teal); }
+.tag-a { left: 4%; bottom: 30%; }
+.tag-b { right: 4%; bottom: 12%; }
+.tag-c { left: 4%; bottom: 6%; background: var(--teal); background-image: var(--grad-teal); }
 .tag-c strong, .tag-c span { color: #fff; }
 .meet-text {
   position: relative; z-index: 2;
@@ -1126,7 +1126,11 @@ ul, ol { padding: 0; list-style: none; }
   .why-panel { margin: -30px 10px 0; padding: 22px; }
   .meet-tag { max-width: 190px; padding: 12px 14px; font-size: 12.5px; }
   .meet-tag strong { font-size: 17px; }
-  .tag-a { left: 3%; top: 30%; } .tag-b { right: 3%; top: 52%; } .tag-c { left: 3%; bottom: 5%; }
+  .meet-cover { padding-top: 40px; }
+  .meet-tag { position: static; max-width: none; }
+  .meet-cover { flex-direction: column; align-items: stretch; gap: 10px; padding-left: var(--gutter); padding-right: var(--gutter); }
+  .meet-portrait { align-self: center; order: -1; }
+  .tag-c { display: none; }
   .j-card { flex-basis: 82vw; }
   .clinic-list { grid-template-columns: 1fr; }
   .ticker-track a { width: 190px; }
