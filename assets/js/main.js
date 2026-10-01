@@ -283,7 +283,7 @@
   // Full copy from the original homepage, lightly edited. The first paragraph shows;
   // the rest opens with Read more.
   const why = [
-    { t: 'Hair transplantation exclusively by doctors', media: { img: 'assets/img/why/exclusively-doctors.webp' },
+    { t: 'Hair transplantation exclusively by doctors', media: { video: 'timelapse' },
       p: ['At Advanced Hair Clinics, hair transplantation is a very serious matter that concerns only doctors. The head of the Advanced Hair Clinics medical team is Plastic Surgeon Dr. Anastasios Vekris, with experience in thousands of FUE hair transplant procedures in Greece and in many foreign countries (USA, Great Britain, France, Turkey, Cyprus, Israel, India, Saudi Arabia, Kuwait).',
         'Dr. Anastasios Vekris is one of the few Greek physicians who is a regular member of ISHRS (International Society of Hair Restoration Surgery) and is invited every year to the world hair transplantation conferences to train physicians from all over the globe in the new methods of Follicular Unit Excision.',
         'Dr. Vekris is one of the world\u2019s leading physicians specialising in FUE hair transplantation. He has many years of experience in this technique and has personally trained Advanced Hair Clinics medical team members, as well as dozens of other physicians and their team members in numerous countries abroad. All transplantation procedures involving the transfer of individual hair follicles are performed by his team and under his supervision, with the aim of achieving a natural-looking, individualised result.'] },
