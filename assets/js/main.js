@@ -415,6 +415,16 @@
   }, { threshold: 0.35 }).observe($('.why-stage'));
   showWhy(0);
 
+  /* ---------- Meet Dr Vekris: Read more ---------- */
+  const meetBtn = $('.meet-toggle');
+  if (meetBtn) meetBtn.addEventListener('click', () => {
+    const more = $('#meet-more');
+    more.hidden = !more.hidden;
+    meetBtn.textContent = more.hidden ? 'Read more' : 'Show less';
+    meetBtn.setAttribute('aria-expanded', !more.hidden);
+    setupJourney();
+  });
+
   /* ---------- Journey: pinned horizontal scroll ---------- */
   const journey = $('.journey');
   const jTrack = $('#journey-track');
