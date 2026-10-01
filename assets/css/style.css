@@ -715,17 +715,17 @@ ul, ol { padding: 0; list-style: none; }
   display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   overflow: hidden;
 }
-.meet::before {
-  content: ""; position: absolute; width: 60vw; height: 60vw; left: -20vw; top: -10vw;
-  background: radial-gradient(closest-side, rgba(17,163,182,.28), transparent);
-  pointer-events: none;
+.meet-bg { position: absolute; inset: 0; z-index: 0; background: #17112f; }
+/* Full width, anchored to the bottom; the photo's dark backdrop continues above it. */
+.meet-bg img { position: absolute; left: 0; bottom: 0; width: 100%; height: auto; }
+.meet-bg::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(90deg, rgba(25,13,48,0) 40%, rgba(25,13,48,.55) 62%, rgba(25,13,48,.8) 100%),
+              linear-gradient(180deg, #17112f 0%, rgba(23,17,47,0) 40%),
+              linear-gradient(0deg, rgba(25,13,48,.6) 0%, rgba(25,13,48,0) 30%);
 }
-.meet-cover { position: relative; min-height: 760px; display: flex; align-items: flex-end; justify-content: center; }
-.meet-portrait {
-  position: relative; z-index: 2;
-  width: min(100%, 760px); height: auto;
-  filter: drop-shadow(0 40px 60px rgba(0,0,0,.45));
-}
+.meet-cover { position: relative; z-index: 1; min-height: 820px; }
+.meet-text { z-index: 1; }
 .meet-tag {
   position: absolute; z-index: 3;
   max-width: 250px;
@@ -738,9 +738,9 @@ ul, ol { padding: 0; list-style: none; }
 }
 .meet-tag strong { font-family: var(--display); font-size: 19px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; color: var(--ink); }
 .meet-tag span { color: var(--slate); }
-.tag-a { left: 4%; bottom: 30%; }
-.tag-b { right: 4%; bottom: 12%; }
-.tag-c { left: 4%; bottom: 6%; background: var(--teal); background-image: var(--grad-teal); }
+.tag-a { left: 6%; bottom: 26%; }
+.tag-b { right: 2%; bottom: 10%; }
+.tag-c { left: 6%; bottom: 8%; background: var(--teal); background-image: var(--grad-teal); }
 .tag-c strong, .tag-c span { color: #fff; }
 .meet-text {
   position: relative; z-index: 2;
@@ -1091,7 +1091,11 @@ ul, ol { padding: 0; list-style: none; }
   .why-stage { padding-bottom: 0; }
 
   .meet { grid-template-columns: 1fr; }
-  .meet-cover { min-height: 0; padding-top: 80px; }
+  .meet-bg { position: relative; inset: auto; aspect-ratio: 985 / 1000; max-height: 640px; }
+  .meet-bg img { inset: 0; height: 100%; object-fit: cover; object-position: 50% 0%; }
+  .meet-bg::after { background: linear-gradient(0deg, var(--ink) 0%, rgba(25,13,48,0) 35%); }
+  .meet-cover { min-height: 0; padding: 0 var(--gutter); margin-top: -90px; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px; }
+  .meet-tag { position: static; max-width: none; }
   .meet-text { padding: 50px var(--gutter) 90px; }
 
   .clinics { grid-template-columns: 1fr; }
@@ -1126,10 +1130,6 @@ ul, ol { padding: 0; list-style: none; }
   .why-panel { margin: -30px 10px 0; padding: 22px; }
   .meet-tag { max-width: 190px; padding: 12px 14px; font-size: 12.5px; }
   .meet-tag strong { font-size: 17px; }
-  .meet-cover { padding-top: 40px; }
-  .meet-tag { position: static; max-width: none; }
-  .meet-cover { flex-direction: column; align-items: stretch; gap: 10px; padding-left: var(--gutter); padding-right: var(--gutter); }
-  .meet-portrait { align-self: center; order: -1; }
   .tag-c { display: none; }
   .j-card { flex-basis: 82vw; }
   .clinic-list { grid-template-columns: 1fr; }
