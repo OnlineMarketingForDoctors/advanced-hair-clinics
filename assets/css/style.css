@@ -524,6 +524,7 @@ ul, ol { padding: 0; list-style: none; }
 }
 .results-head { width: 100%; display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; }
 .results-head .h2 { max-width: 15em; }
+.results-eyebrow { font-family: var(--sans); font-size: 15px; line-height: 1.35; }
 .filter { display: inline-flex; padding: 5px; background: #fff; border-radius: 999px; box-shadow: var(--shadow-md); }
 .filter button {
   border: 0; background: transparent; padding: 10px 20px; border-radius: 999px;
