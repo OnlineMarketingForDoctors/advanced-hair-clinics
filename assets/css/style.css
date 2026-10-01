@@ -853,14 +853,50 @@ ul, ol { padding: 0; list-style: none; }
 }
 .journey-head .kicker { grid-column: 1 / -1; }
 .journey-head .h2 { font-size: clamp(30px, 3.4vw, 50px); max-width: 16em; }
-.journey-bar { height: 2px; background: var(--mist); border-radius: 2px; overflow: hidden; margin-bottom: 14px; }
+.journey-bar { display: none; }
 .journey-bar span { display: block; height: 100%; width: 0; background: var(--teal); }
 .journey-track {
+  --rail-y: 30px;
+  --fill: 0px;
+  position: relative;
   width: max-content;
-  display: flex; gap: 22px; align-items: stretch; align-self: center;
-  padding: 34px max(var(--gutter), calc((100vw - var(--max)) / 2)) 10px;
+  display: flex; gap: 40px; align-items: stretch; align-self: center;
+  padding: 84px max(var(--gutter), calc((100vw - var(--max)) / 2)) 10px;
   will-change: transform;
 }
+/* Timeline rail: grey track, teal fill that grows with scroll, arrowhead at the end */
+.journey-track::before, .journey-track::after {
+  content: ""; position: absolute; top: var(--rail-y); height: 3px; border-radius: 3px;
+  left: max(var(--gutter), calc((100vw - var(--max)) / 2));
+}
+.journey-track::before { right: max(var(--gutter), calc((100vw - var(--max)) / 2)); background: var(--mist); }
+.journey-track::after { width: var(--fill); max-width: calc(100% - 2 * max(var(--gutter), calc((100vw - var(--max)) / 2))); background: var(--grad-teal); transition: width .15s linear; }
+.j-node {
+  position: absolute; z-index: 2; left: 0; top: calc(var(--rail-y) - 84px - 17px);
+  width: 37px; height: 37px; border-radius: 50%;
+  display: grid; place-items: center;
+  font-weight: 800; font-size: 14px; color: var(--slate);
+  background: var(--pearl); border: 3px solid var(--mist);
+  transition: background .35s, border-color .35s, color .35s, transform .35s var(--ease);
+}
+.j-card.is-reached .j-node { background: var(--teal); border-color: var(--teal); color: #fff; transform: scale(1.08); box-shadow: 0 0 0 6px rgba(17,163,182,.18); }
+/* Direction arrow between consecutive steps */
+.j-card:not(:last-child) .j-arrow {
+  position: absolute; z-index: 2; right: -32px; top: calc(var(--rail-y) - 84px - 9px);
+  width: 24px; height: 18px; border-radius: 9px; background: var(--pearl);
+}
+.j-card:not(:last-child) .j-arrow::after {
+  content: ""; position: absolute; left: 7px; top: 4px; width: 8px; height: 8px;
+  border-right: 3px solid var(--mist); border-top: 3px solid var(--mist); transform: rotate(45deg);
+  transition: border-color .35s;
+}
+.j-card.is-reached .j-arrow::after { border-color: var(--teal); }
+.j-card:last-child .j-arrow { display: none; }
+.journey-track > li:last-child::after {
+  content: ""; position: absolute; right: -26px; top: calc(var(--rail-y) - 84px - 7px);
+  border-style: solid; border-width: 8px 0 8px 13px; border-color: transparent transparent transparent var(--mist);
+}
+.journey-track > li.is-reached:last-child::after { border-left-color: var(--teal); }
 .j-card {
   position: relative;
   flex: 0 0 360px;
@@ -868,13 +904,18 @@ ul, ol { padding: 0; list-style: none; }
   padding: 0 28px 30px;
   box-shadow: var(--shadow-md);
   display: flex; flex-direction: column; gap: 12px;
-  overflow: hidden;
 }
-.j-card img { margin: 0 -28px 8px; width: calc(100% + 56px); max-width: none; aspect-ratio: 16 / 9; object-fit: cover; }
+/* connector from the rail down to the card */
+.j-card::before {
+  content: ""; position: absolute; left: 18px; top: calc(var(--rail-y) - 84px + 20px); height: calc(84px - var(--rail-y) - 20px);
+  width: 2px; background: var(--mist); transition: background .35s;
+}
+.j-card.is-reached::before { background: var(--teal); }
+.j-card img { margin: 0 -28px 8px; width: calc(100% + 56px); max-width: none; aspect-ratio: 16 / 9; object-fit: cover; border-radius: var(--r-lg) var(--r-lg) 0 0; }
 @media (max-height: 820px) {
   .journey-pin { padding-top: calc(var(--header-h) + 14px); padding-bottom: 20px; }
   .journey-head .h2 { font-size: clamp(26px, 2.6vw, 36px); }
-  .journey-track { padding-top: 22px; }
+  .journey-track { padding-top: 74px; --rail-y: 26px; }
   .j-card { flex-basis: 330px; padding-bottom: 22px; gap: 8px; }
   .j-card img { aspect-ratio: 5 / 2; margin-bottom: 4px; }
   .j-card h3 { font-size: 20px; }
@@ -1203,7 +1244,7 @@ ul, ol { padding: 0; list-style: none; }
 
 /* Journey falls back to a native horizontal scroller on small screens / reduced motion */
 .journey.is-native .journey-pin { position: static; height: auto; min-height: 0; padding: clamp(80px, 9vw, 120px) 0; }
-.journey.is-native .journey-track { overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 40px; transform: none !important; }
+.journey.is-native .journey-track { width: auto; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; padding-bottom: 40px; transform: none !important; }
 .journey.is-native .j-card { scroll-snap-align: start; }
 
 @media (prefers-reduced-motion: reduce) {

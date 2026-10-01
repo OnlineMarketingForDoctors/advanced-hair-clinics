@@ -285,7 +285,6 @@
     { id: 'nj68iQf_e6Q', img: 'steve-tesser', name: 'Hair transplant: Steve Tesser', t: 'FUE Hair Transplant', g: '2,543', h: '5,403', d: '2' },
     { id: 'adFcivrSJjg', img: 'my-experience', name: 'Hair transplant: my experience at Advanced Hair Clinics', t: 'FUE Hair Transplant', g: '2,287', h: '5,511', d: '1' },
     { id: '_lF3QzLdcqQ', img: 'dimos-beke', name: 'Dimos Beke: my experience at Advanced Hair Clinics', t: 'Unshaven FUE Hair Transplant', g: '1,820', h: '4,145', d: '1' },
-    { id: 'g4F6fGoYw1A', img: 'testimonial-2318', name: 'Result after hair transplant', t: 'FUE Hair Transplant', g: '2,318' },
   ];
   const vtPlayer = $('#vt-player');
   const vtList = $('#vt-list');
@@ -478,6 +477,24 @@
     journey.dataset.dist = Math.max(0, dist);
     moveJourney();
   };
+  // Timeline nodes and arrows; the rail fills up to the middle of the window.
+  const jCards = $$('.j-card', jTrack);
+  jCards.forEach((c, i) => {
+    const node = document.createElement('span');
+    node.className = 'j-node';
+    node.setAttribute('aria-hidden', 'true');
+    node.textContent = i === jCards.length - 1 ? '\u2713' : i + 1;
+    const arrow = document.createElement('span');
+    arrow.className = 'j-arrow';
+    arrow.setAttribute('aria-hidden', 'true');
+    c.prepend(node, arrow);
+  });
+  const fillTimeline = (shift, viewW) => {
+    const start = jCards[0].offsetLeft;
+    const reach = shift + viewW * 0.6;
+    jTrack.style.setProperty('--fill', `${Math.max(0, reach - start)}px`);
+    jCards.forEach((c) => c.classList.toggle('is-reached', c.offsetLeft <= reach));
+  };
   const moveJourney = () => {
     if (journey.classList.contains('is-native')) return;
     const dist = +journey.dataset.dist || 0;
@@ -485,15 +502,18 @@
     const p = Math.min(1, Math.max(0, -top / (journey.offsetHeight - innerHeight || 1)));
     jTrack.style.transform = `translate3d(${-p * dist}px,0,0)`;
     jBar.style.width = `${p * 100}%`;
+    fillTimeline(p * dist + (p > 0.98 ? innerWidth : 0), innerWidth);
   };
   addEventListener('scroll', moveJourney, { passive: true });
   addEventListener('resize', setupJourney);
   addEventListener('load', setupJourney);
   setupJourney();
+  if (journey.classList.contains('is-native')) fillTimeline(0, jTrack.clientWidth);
   jTrack.addEventListener('scroll', () => {
     if (!journey.classList.contains('is-native')) return;
     const max = jTrack.scrollWidth - jTrack.clientWidth;
     jBar.style.width = `${max ? (jTrack.scrollLeft / max) * 100 : 0}%`;
+    fillTimeline(jTrack.scrollLeft + (jTrack.scrollLeft >= max - 2 ? jTrack.clientWidth : 0), jTrack.clientWidth);
   }, { passive: true });
 
   /* ---------- Clinic tabs ---------- */
