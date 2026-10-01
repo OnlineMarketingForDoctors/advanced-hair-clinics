@@ -467,10 +467,10 @@
     });
   }));
 
-  /* ---------- Instagram ticker (placeholder posts linking to the profile) ---------- */
-  const insta = ['office', 'hair-macro', 'workshop', 'svc-beard', 'keynote', 'svc-women', 'hairline-design', 'consultation', 'award', 'svc-fue', 'ai-tablet', 'handshake'];
+  /* ---------- Instagram ticker (recent posts linking to the profile) ---------- */
+  const insta = Array.from({ length: 10 }, (_, i) => `assets/img/insta/post-${String(i + 1).padStart(2, '0')}.webp`);
   const tTrack = $('.ticker-track');
-  const tile = (n) => `<li><a href="https://www.instagram.com/advanced_hair_clinics/" target="_blank" rel="noopener" aria-label="View Advanced Hair Clinics on Instagram"><img src="assets/img/gen/${n}-sm.webp" alt="" loading="lazy" width="512" height="640"></a></li>`;
+  const tile = (n) => `<li><a href="https://www.instagram.com/advanced_hair_clinics/" target="_blank" rel="noopener" aria-label="View Advanced Hair Clinics on Instagram"><img src="${n}" alt="" loading="lazy" width="396" height="527"></a></li>`;
   tTrack.innerHTML = insta.map(tile).join('') + insta.map(tile).join('').replace(/<li>/g, '<li aria-hidden="true">').replace(/<a /g, '<a tabindex="-1" ');
 
   /* ---------- Editorial image reveal + gentle parallax ---------- */

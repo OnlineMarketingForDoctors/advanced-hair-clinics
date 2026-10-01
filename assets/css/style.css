@@ -934,7 +934,7 @@ ul, ol { padding: 0; list-style: none; }
 @keyframes ticker { to { transform: translateX(-50%); } }
 .ticker-track li { flex: none; }
 .ticker-track a {
-  display: block; position: relative; width: 250px; aspect-ratio: 4 / 5; border-radius: var(--r-md); overflow: hidden;
+  display: block; position: relative; width: 250px; aspect-ratio: 3 / 4; border-radius: var(--r-md); overflow: hidden;
   box-shadow: var(--shadow-md);
 }
 .ticker-track img { width: 100%; height: 100%; object-fit: cover; transition: transform .8s var(--ease); }
