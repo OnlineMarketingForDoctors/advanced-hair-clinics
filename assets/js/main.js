@@ -145,27 +145,47 @@
         <div><p class="review-name">${esc(r.n)}</p><p class="review-meta"><span class="stars" aria-label="5 out of 5 stars">★★★★★</span></p></div>
         ${gSmall}
       </div>
-      <p class="review-text">${esc(r.t).replace(/Vekris/g, '<mark>Vekris</mark>')}</p>
+      <p class="review-text is-clamped">${esc(r.t).replace(/Vekris/g, '<mark>Vekris</mark>')}</p>
     </li>`).join('');
+  // Long reviews are capped at six lines so the cards stay a tidy, even height.
+  $$('.review-text', track).forEach((p) => {
+    if (p.scrollHeight <= p.clientHeight + 2) return;
+    const more = document.createElement('button');
+    more.type = 'button';
+    more.className = 'review-more';
+    more.textContent = 'Read more';
+    more.setAttribute('aria-expanded', 'false');
+    more.addEventListener('click', () => {
+      const open = p.classList.toggle('is-clamped') === false;
+      more.textContent = open ? 'Show less' : 'Read more';
+      more.setAttribute('aria-expanded', open);
+    });
+    p.after(more);
+  });
 
   const slides = $$('.review', track);
   const bar = $('.reviews-progress span');
   let rIdx = 0;
   let rTimer;
   const R_DELAY = 6000;
-  const stepWidth = () => slides[0].offsetWidth + parseFloat(getComputedStyle(track).columnGap || 22);
-  const maxIdx = () => {
-    const vp = $('.reviews-viewport').clientWidth;
-    const visible = Math.max(1, Math.floor(vp / stepWidth()));
-    return slides.length - visible;
+  const stepWidth = () => slides[0].getBoundingClientRect().width + (parseFloat(getComputedStyle(track).columnGap) || 22);
+  // Furthest the track may move: the last card's right edge meets the content edge,
+  // so the row never runs out into empty space.
+  const maxShift = () => {
+    const vpEl = $('.reviews-viewport');
+    const bleed = Math.abs(parseFloat(getComputedStyle(vpEl).marginRight) || 0);
+    const last = slides[slides.length - 1];
+    const end = (slides.length - 1) * stepWidth() + last.getBoundingClientRect().width;
+    return Math.max(0, end - (vpEl.clientWidth - bleed));
   };
+  const maxIdx = () => Math.ceil(maxShift() / stepWidth() - 0.01);
   const goReview = (i) => {
     const max = maxIdx();
     rIdx = i > max ? 0 : i < 0 ? max : i;
-    track.style.transform = `translateX(${-rIdx * stepWidth()}px)`;
-    slides.forEach((s, k) => s.classList.toggle('is-dim', k < rIdx));
+    const shift = Math.min(rIdx * stepWidth(), maxShift());
+    track.style.transform = `translateX(${-shift}px)`;
     bar.style.transition = 'none';
-    bar.style.width = `${(rIdx / max) * 100}%`;
+    bar.style.width = `${max ? (rIdx / max) * 100 : 100}%`;
   };
   const autoplay = () => {
     clearInterval(rTimer);
