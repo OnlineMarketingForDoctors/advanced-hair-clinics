@@ -496,7 +496,7 @@
         const r = img.parentElement.parentElement.getBoundingClientRect();
         if (r.bottom < 0 || r.top > innerHeight) return;
         const p = (r.top + r.height / 2 - innerHeight / 2) / innerHeight;
-        img.style.transform = `translate3d(0, ${p * -40}px, 0) scale(1.08)`;
+        img.style.transform = `translate3d(0, ${p * -40}px, 0) scale(1.08)${'flip' in img.dataset ? ' scaleX(-1)' : ''}`;
       });
     };
     addEventListener('scroll', doPar, { passive: true });
