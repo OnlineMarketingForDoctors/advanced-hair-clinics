@@ -665,8 +665,9 @@ ul, ol { padding: 0; list-style: none; }
 .why-media > * { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity .6s; }
 .why-media > .is-active { opacity: 1; }
 .why-panel {
-  position: absolute; right: -8px; bottom: 0;
-  width: min(520px, 78%);
+  position: absolute; right: 0; bottom: 0;
+  width: min(540px, 78%);
+  max-height: calc(100% - 24px); overflow-y: auto; overscroll-behavior: contain;
   background: var(--grad-ink); color: #fff;
   border-radius: var(--r-md);
   padding: 28px 30px;
@@ -674,7 +675,17 @@ ul, ol { padding: 0; list-style: none; }
 }
 .why-panel h3 { font-family: var(--display); font-weight: 600; font-size: clamp(22px, 2vw, 28px); line-height: 1.15; margin-bottom: 12px; letter-spacing: -0.02em; }
 .why-panel p { color: #D9D2EA; font-size: 15.5px; }
-.why-panel ul { margin-top: 12px; display: grid; gap: 7px; }
+.why-more { display: grid; gap: 10px; margin-top: 10px; }
+.why-more[hidden] { display: none; }
+.why-more ul { margin-top: 2px; }
+.why-toggle {
+  margin-top: 14px; padding: 0; border: 0; background: none;
+  font-weight: 700; font-size: 14.5px; color: var(--teal-soft);
+  text-decoration: underline; text-underline-offset: 4px;
+}
+.why-toggle:hover { color: #fff; }
+.why-tabs.is-held button .bar { animation-play-state: paused; }
+.why-panel ul { margin-top: 12px; display: grid; gap: 8px; }
 .why-panel li { position: relative; padding-left: 22px; font-size: 14.5px; color: #E8E3F3; }
 .why-panel li::before { content: ""; position: absolute; left: 0; top: .6em; width: 10px; height: 2px; background: var(--teal); }
 .why-panel.is-swapping { opacity: 0; transform: translateY(10px); }

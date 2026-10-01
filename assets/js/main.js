@@ -280,31 +280,47 @@
   addEventListener('load', () => services.forEach((s) => { const im = new Image(); im.src = `assets/img/gen/${s.img}.webp`; }));
 
   /* ---------- Why choose us ---------- */
+  // Full copy from the original homepage, lightly edited. The first paragraph shows;
+  // the rest opens with Read more.
   const why = [
     { t: 'Hair transplantation exclusively by doctors', media: { img: 'assets/img/why/exclusively-doctors.webp' },
-      p: 'At Advanced Hair Clinics, hair transplantation is a serious medical matter handled only by doctors. The medical team is led by plastic surgeon Dr. Anastasios Vekris, with experience in thousands of FUE procedures in Greece and abroad (USA, Great Britain, France, Turkey, Cyprus, Israel, India, Saudi Arabia, Kuwait).',
-      l: ['Regular member of ISHRS, invited every year to train physicians worldwide', 'All procedures performed by his team and under his supervision'] },
+      p: ['At Advanced Hair Clinics, hair transplantation is a very serious matter that concerns only doctors. The head of the Advanced Hair Clinics medical team is Plastic Surgeon Dr. Anastasios Vekris, with experience in thousands of FUE hair transplant procedures in Greece and in many foreign countries (USA, Great Britain, France, Turkey, Cyprus, Israel, India, Saudi Arabia, Kuwait).',
+        'Dr. Anastasios Vekris is one of the few Greek physicians who is a regular member of ISHRS (International Society of Hair Restoration Surgery) and is invited every year to the world hair transplantation conferences to train physicians from all over the globe in the new methods of Follicular Unit Excision.',
+        'Dr. Vekris is one of the world\u2019s leading physicians specialising in FUE hair transplantation. He has many years of experience in this technique and has personally trained Advanced Hair Clinics medical team members, as well as dozens of other physicians and their team members in numerous countries abroad. All transplantation procedures involving the transfer of individual hair follicles are performed by his team and under his supervision, with the aim of achieving a natural-looking, individualised result.'] },
     { t: 'Direct graft placement with Sharp Implanter', media: { video: 'sharp-implanter' },
-      p: 'We use high-precision medical instruments such as the Sharp Implanter, chosen for its accuracy during the crucial implantation stage.',
-      l: ['An exceptionally thin tip, less than 1 mm in diameter', 'Helps reduce the risk of damage to hair follicles', 'Grafts follow the direction and angle of natural hair growth', 'Designed to limit tissue trauma and post-procedure swelling'] },
+      p: ['One reason Advanced Hair Clinics excels on both a European and an international level is our use of high-precision medical instruments, such as the Sharp Implanter. This tool is chosen for its unparalleled precision during the crucial hair follicle implantation stage. Here\u2019s why we prefer it:'],
+      l: ['Its exceptionally thin tip, with a diameter of less than 1 mm, allows for absolute precision during implantation.',
+        'The Sharp Implanter\u2019s design is intended to help reduce the risk of damage to hair follicles during the procedure, supporting their viability and growth potential.',
+        'With the Sharp Implanter, we can place the grafts in the direction of natural hair growth and at the desired implantation angle. This ensures a natural result and the desired density while causing the least possible injury to the scalp.',
+        'The design of the Sharp Implanter is intended to help limit tissue trauma and may reduce the likelihood of post-procedure swelling, supporting a more comfortable recovery.'] },
     { t: 'Unshaven FUE session for 100% discretion', media: { video: 'unshaven-fue' },
-      p: 'The medical teams of Advanced Hair Clinics are among the few that successfully apply the very demanding Unshaven FUE method.',
-      l: ['Follicles extracted by trimming only the donor area', 'Grafts placed without shaving the recipient area', 'Immediate return to everyday life', 'A completely natural result'] },
+      p: ['The medical teams of Advanced Hair Clinics are among the few that successfully apply the very demanding Unshaven FUE method.'],
+      l: ['Ability to extract and transplant hair follicles only by trimming the donor area', 'Placement of grafts without shaving the recipient area', 'A discreet hair transplantation procedure', 'Immediate return to everyday life', 'A completely natural result'] },
     { t: 'Long Hair FUE: transplantation with long hair', media: { video: 'long-hair-fue' },
-      p: 'Advanced Hair Clinics is one of the few clinics in Greece, if not the only one, that successfully applies Long Hair FUE. Follicles are extracted and implanted without cutting the existing hair, regardless of its length.',
-      l: ['Requires great skill and technical knowledge', 'Ideal for both men and women', 'Immediate return to daily life'] },
+      p: ['Advanced Hair Clinics is one of the few clinics in Greece, if not the only one, that successfully applies Long Hair FUE, the transplantation of long hair.'],
+      l: ['The extraction and implantation of hair follicles is performed without cutting the existing hair, regardless of its length.',
+        'This technique requires great skill and technical knowledge on the part of the doctor to support optimal graft placement, with the correct direction and angle of insertion, with the aim of achieving a natural-looking result.',
+        'Ideal for both men and women.', 'Immediate return to daily life.'] },
     { t: 'Innovation in hair transplant planning using artificial intelligence', media: { video: 'ai-planning' },
-      p: 'We are pioneers not only in performing hair transplantation, but also in planning it, allowing you to see the growth of your transplanted hair and predict your final look with the Force HT artificial intelligence application.',
-      l: ['Better understanding of the expected outcome', 'Optimal graft distribution for natural density', 'Long-term preservation of the donor area for future needs'] },
+      p: ['At Advanced Hair Clinics we are pioneers not only in the execution, but also in the planning of hair transplantation, giving you the ability to see the growth of your transplanted hair and predict your final look.',
+        'Why we chose the Force HT artificial intelligence application:'],
+      l: ['Better understanding: it helps the patient understand the process and gain insight into the expected outcome.',
+        'Optimal graft distribution: it ensures the best use of the available hair follicles for natural density.',
+        'Long-term preservation: it protects the recipient area from thinning and ensures the donor area is preserved for future needs.'] },
     { t: 'Hairline design: asymmetrically symmetrical placement', media: { video: 'hairline-distance' },
-      p: 'Hairline design makes the difference between a successful, "invisible" hair transplant and an unnatural one. Led by Dr. Vekris, our medical teams redesign the natural hairline and personalise the result.',
-      l: ['A "jagged" line of asymmetrical symmetry along the hairline', 'Face shape, gender, age and ethnicity taken into account', 'Planned for the natural regression of the hairline over time'] },
+      p: ['Hairline design makes the difference between a successful, \u201cinvisible\u201d hair transplant and one with a fake, unnatural result. Our medical teams, led by the internationally renowned plastic surgeon Dr Anastasios Vekris, redesign the natural hairline and its characteristics, personalising the result by:'],
+      l: ['Creating asymmetrical symmetry in graft placement, with a \u201cjagged\u201d line along the entire length of the hairline',
+        'Taking into account the shape of the patient\u2019s face, gender, age and ethnicity',
+        'Considering the quality of the hair, the degree of hair loss and the potential of the donor area',
+        'Accounting for the natural regression of the hairline over time to ensure a natural result in the long term'] },
     { t: 'Option to extract body and face hair grafts', media: { video: 'body-hair' },
-      p: 'We are likely the only clinic in Greece whose doctors successfully extract body and facial hair grafts when the scalp donor area is poor. A highly specialised technique, performed only by very experienced medical teams.',
-      l: ['A solution when scalp donor hair is insufficient', 'Hairline design and distribution adapted for better coverage'] },
+      p: ['We are likely the only clinic in Greece where our doctors have successfully applied the technique of extracting body and facial hair grafts in cases of poor donor areas. This innovative technique provides a solution for people who wish to have a hair transplant but lack sufficient donor hair on their scalp.',
+        'It is a highly specialised and demanding technique, and consequently it is performed in only a few clinics by very experienced medical teams, such as those at Advanced Hair Clinics.',
+        'When hair follicles from areas other than the scalp are chosen, they are selected with the utmost care, and the plan is adjusted accordingly, with hairline design and hair follicle distribution creating a better coverage effect. The result is a satisfying improvement in density and hair growth, even in cases where other medical teams would fail.'] },
     { t: 'Our relationship doesn\'t end after surgery', media: { video: 'aftercare' },
-      p: 'Our surgeons, nurses and clinic consultants stay in regular contact with patients for the following 12 months, making sure they continue the necessary conservative treatment and that the transplanted hair grows at the expected rate.',
-      l: ['Detailed guidance before and after your hair transplant', 'Patients who trust us become "our people"'] },
+      p: ['At Advanced Hair Clinics, we stand by our patients, providing detailed information and guidance both before and after the hair transplant.',
+        'Our surgeons, nurses and clinic consultants communicate regularly with patients over the following 12 months, confirming that they continue to receive the necessary conservative treatment and that the growth of the transplanted hair progresses at the expected rate.',
+        'At Advanced Hair Clinics, patients who trust us become \u201cour people\u201d and know they can turn to us at any time with any questions or concerns.'] },
   ];
   const WHY_DUR = 9000;
   const tabs = $('#why-tabs');
@@ -318,9 +334,34 @@
   const mediaEls = [...media.children];
   let wIdx = 0;
   let wTimer;
+  let wStart = 0;
+  let wRemain = WHY_DUR;
   let whyVisible = false;
+  let wExpanded = false;
+  let wHover = false;
+  const stage = $('.why-stage');
+  // Auto-advance pauses while the reader hovers the panel or has it expanded.
+  const schedule = (ms) => {
+    clearTimeout(wTimer);
+    if (reduceMotion || !whyVisible) return;
+    wStart = performance.now();
+    wRemain = ms;
+    wTimer = setTimeout(() => showWhy((wIdx + 1) % why.length), ms);
+  };
+  const hold = () => {
+    if (tabs.classList.contains('is-held')) return;
+    clearTimeout(wTimer);
+    wRemain = Math.max(800, wRemain - (performance.now() - wStart));
+    tabs.classList.add('is-held');
+  };
+  const release = () => {
+    if (wExpanded || wHover || !tabs.classList.contains('is-held')) return;
+    tabs.classList.remove('is-held');
+    schedule(wRemain);
+  };
   const showWhy = (i, user) => {
     wIdx = i;
+    wExpanded = false;
     const w = why[i];
     $$('button', tabs).forEach((b) => b.setAttribute('aria-selected', b.dataset.i == i));
     mediaEls.forEach((el, k) => {
@@ -332,13 +373,29 @@
     panel.setAttribute('aria-labelledby', `why-t${i}`);
     panel.classList.add('is-swapping');
     setTimeout(() => {
-      panel.innerHTML = `<h3>${w.t}</h3><p>${w.p}</p><ul>${w.l.map((x) => `<li>${x}</li>`).join('')}</ul>`;
+      const [first, ...rest] = w.p;
+      const extra = rest.map((x) => `<p>${x}</p>`).join('') + (w.l ? `<ul>${w.l.map((x) => `<li>${x}</li>`).join('')}</ul>` : '');
+      panel.innerHTML = `<h3>${w.t}</h3><p>${first}</p>`
+        + (extra ? `<div class="why-more" id="why-more" hidden>${extra}</div><button type="button" class="why-toggle" aria-expanded="false" aria-controls="why-more">Read more</button>` : '');
       panel.classList.remove('is-swapping');
     }, reduceMotion ? 0 : 200);
     if (user && innerWidth <= 1120) $$('button', tabs)[i].scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
-    clearTimeout(wTimer);
-    if (!reduceMotion && whyVisible) wTimer = setTimeout(() => showWhy((wIdx + 1) % why.length), WHY_DUR);
+    tabs.classList.remove('is-held');
+    schedule(WHY_DUR);
+    if (wHover) hold();
   };
+  panel.addEventListener('click', (e) => {
+    const btn = e.target.closest('.why-toggle');
+    if (!btn) return;
+    const more = $('#why-more', panel);
+    wExpanded = more.hidden;
+    more.hidden = !wExpanded;
+    btn.textContent = wExpanded ? 'Show less' : 'Read more';
+    btn.setAttribute('aria-expanded', wExpanded);
+    if (wExpanded) hold(); else release();
+  });
+  stage.addEventListener('mouseenter', () => { wHover = true; hold(); });
+  stage.addEventListener('mouseleave', () => { wHover = false; release(); });
   tabs.addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) showWhy(+b.dataset.i, true); });
   tabs.addEventListener('keydown', (e) => {
     const vertical = innerWidth > 1120;
@@ -352,8 +409,9 @@
   });
   new IntersectionObserver(([en]) => {
     whyVisible = en.isIntersecting;
-    showWhy(wIdx);
-    if (!whyVisible) clearTimeout(wTimer);
+    if (whyVisible) { showWhy(wIdx); return; }
+    clearTimeout(wTimer);
+    mediaEls.forEach((el) => { if (el.tagName === 'VIDEO') el.pause(); });
   }, { threshold: 0.35 }).observe($('.why-stage'));
   showWhy(0);
 
