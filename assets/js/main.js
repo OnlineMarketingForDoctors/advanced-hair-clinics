@@ -138,17 +138,18 @@
   ];
   const gSmall = '<svg class="g-logo" viewBox="0 0 48 48" aria-label="Google review"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 13 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="m6.3 14.7 6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3a12 12 0 0 1-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/></svg>';
   const track = $('#reviews-track');
-  track.innerHTML = reviews.map((r, i) => `
-    <li class="review" aria-roledescription="slide" aria-label="${i + 1} of ${reviews.length}">
+  const card = (r) => `
+    <li class="review">
       <div class="review-top">
         <span class="avatar" style="background:${r.c}" aria-hidden="true">${esc(r.n[0])}</span>
         <div><p class="review-name">${esc(r.n)}</p><p class="review-meta"><span class="stars" aria-label="5 out of 5 stars">★★★★★</span></p></div>
         ${gSmall}
       </div>
       <p class="review-text is-clamped">${esc(r.t).replace(/Vekris/g, '<mark>Vekris</mark>')}</p>
-    </li>`).join('');
+    </li>`;
+  track.innerHTML = reviews.map(card).join('');
   // Long reviews are capped at six lines so the cards stay a tidy, even height.
-  $$('.review-text', track).forEach((p) => {
+  const addReadMore = (scope) => $$('.review-text', scope).forEach((p) => {
     if (p.scrollHeight <= p.clientHeight + 2) return;
     const more = document.createElement('button');
     more.type = 'button';
@@ -162,51 +163,29 @@
     });
     p.after(more);
   });
+  addReadMore(track);
 
-  const slides = $$('.review', track);
-  const bar = $('.reviews-progress span');
-  let rIdx = 0;
-  let rTimer;
-  const R_DELAY = 6000;
-  const stepWidth = () => slides[0].getBoundingClientRect().width + (parseFloat(getComputedStyle(track).columnGap) || 22);
-  // Furthest the track may move: the last card's right edge meets the content edge,
-  // so the row never runs out into empty space.
-  const maxShift = () => {
-    const vpEl = $('.reviews-viewport');
-    const bleed = Math.abs(parseFloat(getComputedStyle(vpEl).marginRight) || 0);
-    const last = slides[slides.length - 1];
-    const end = (slides.length - 1) * stepWidth() + last.getBoundingClientRect().width;
-    return Math.max(0, end - (vpEl.clientWidth - bleed));
-  };
-  const maxIdx = () => Math.ceil(maxShift() / stepWidth() - 0.01);
-  const goReview = (i) => {
-    const max = maxIdx();
-    rIdx = i > max ? 0 : i < 0 ? max : i;
-    const shift = Math.min(rIdx * stepWidth(), maxShift());
-    track.style.transform = `translateX(${-shift}px)`;
-    bar.style.transition = 'none';
-    bar.style.width = `${max ? (rIdx / max) * 100 : 100}%`;
-  };
-  const autoplay = () => {
-    clearInterval(rTimer);
-    if (!reduceMotion) rTimer = setInterval(() => goReview(rIdx + 1), R_DELAY);
-  };
-  $('[data-rev="next"]').addEventListener('click', () => { goReview(rIdx + 1); autoplay(); });
-  $('[data-rev="prev"]').addEventListener('click', () => { goReview(rIdx - 1); autoplay(); });
-  const vp = $('.reviews-viewport');
-  vp.addEventListener('mouseenter', () => clearInterval(rTimer));
-  vp.addEventListener('mouseleave', autoplay);
-  let sx = null;
-  vp.addEventListener('touchstart', (e) => { sx = e.touches[0].clientX; clearInterval(rTimer); }, { passive: true });
-  vp.addEventListener('touchend', (e) => {
-    if (sx === null) return;
-    const dx = e.changedTouches[0].clientX - sx;
-    if (Math.abs(dx) > 40) goReview(rIdx + (dx < 0 ? 1 : -1));
-    sx = null; autoplay();
-  });
-  addEventListener('resize', () => goReview(Math.min(rIdx, maxIdx())));
-  goReview(0);
-  autoplay();
+  // Ticker: a second, hidden copy of the cards makes the loop seamless.
+  // It runs on CSS and pauses on hover, keyboard focus or touch.
+  if (!reduceMotion) {
+    const copies = $$('.review', track).map((li) => {
+      const c = li.cloneNode(true);
+      c.setAttribute('aria-hidden', 'true');
+      c.inert = true;
+      return c;
+    });
+    copies.forEach((c) => track.appendChild(c));
+    const setSpeed = () => {
+      const loop = track.scrollWidth / 2;
+      track.style.setProperty('--ticker-dur', `${Math.round(loop / 45)}s`); // about 45px per second
+    };
+    setSpeed();
+    addEventListener('resize', setSpeed);
+    track.classList.add('is-ticking');
+    const vp = $('.reviews-viewport');
+    vp.addEventListener('touchstart', () => vp.classList.add('is-paused'), { passive: true });
+    vp.addEventListener('touchend', () => setTimeout(() => vp.classList.remove('is-paused'), 2500));
+  }
 
   /* ---------- Before & After ---------- */
   // Graft, hair and month figures are placeholders until the clinic supplies case data.
