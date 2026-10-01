@@ -285,6 +285,7 @@
     { id: 'nj68iQf_e6Q', img: 'steve-tesser', name: 'Hair transplant: Steve Tesser', t: 'FUE Hair Transplant', g: '2,543', h: '5,403', d: '2' },
     { id: 'adFcivrSJjg', img: 'my-experience', name: 'Hair transplant: my experience at Advanced Hair Clinics', t: 'FUE Hair Transplant', g: '2,287', h: '5,511', d: '1' },
     { id: '_lF3QzLdcqQ', img: 'dimos-beke', name: 'Dimos Beke: my experience at Advanced Hair Clinics', t: 'Unshaven FUE Hair Transplant', g: '1,820', h: '4,145', d: '1' },
+    { id: 'g4F6fGoYw1A', img: 'result-after', name: 'Result after hair transplant', t: 'FUE Hair Transplant', g: '2,318', h: '4,103', d: '1' },
   ];
   const vtPlayer = $('#vt-player');
   const vtList = $('#vt-list');
