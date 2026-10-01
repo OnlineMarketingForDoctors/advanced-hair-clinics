@@ -415,7 +415,7 @@ ul, ol { padding: 0; list-style: none; }
   overflow: hidden;
 }
 .authority-media { grid-area: media; position: relative; min-height: 420px; }
-.authority-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 62% center; }
+.authority-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 20%; }
 .authority-media figcaption {
   position: absolute; left: 20px; bottom: 20px; right: 20px;
   font-size: 13.5px; color: #fff; font-weight: 600;
