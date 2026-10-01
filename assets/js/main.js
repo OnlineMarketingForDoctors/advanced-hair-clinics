@@ -490,7 +490,7 @@
       rIO.observe(host);
     });
 
-    const par = $$('.services-bg img, .cta-bg img, .reviews-bg img');
+    const par = $$('.services-bg img, .cta-bg img');
     const doPar = () => {
       par.forEach((img) => {
         const r = img.parentElement.parentElement.getBoundingClientRect();
