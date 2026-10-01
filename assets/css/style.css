@@ -1050,7 +1050,7 @@ ul, ol { padding: 0; list-style: none; }
     scroll-snap-type: x mandatory; margin: 0 calc(-1 * var(--gutter)); padding-left: var(--gutter); padding-right: var(--gutter);
   }
   .why-tabs button { flex: none; max-width: 260px; scroll-snap-align: start; background: #fff; }
-  .why-panel { position: relative; right: auto; width: auto; margin: -50px 16px 0; }
+  .why-panel { position: relative; right: auto; width: auto; max-height: none; margin: -50px 16px 0; }
   .why-stage { padding-bottom: 0; }
 
   .meet { grid-template-columns: 1fr; }
