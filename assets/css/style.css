@@ -680,8 +680,8 @@ ul, ol { padding: 0; list-style: none; }
 .why-panel {
   /* Overlaps only the very bottom edge of the media so on-video captions stay visible */
   position: relative; z-index: 2;
-  margin: -28px 0 0 auto;
-  width: min(560px, 82%);
+  margin: -72px 7% 0;
+  width: auto;
   background: var(--grad-ink); color: #fff;
   border-radius: var(--r-md);
   padding: 28px 30px;
