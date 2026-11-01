@@ -1,0 +1,258 @@
+/* ==========================================================
+   Advanced Hair Clinics · Who we are
+   Builds on style.css (tokens, header, hero, authority card, clinics, CTA band, footer)
+   ========================================================== */
+
+.kicker.light { color: var(--teal-soft); }
+.text-link.light { color: var(--teal-soft); }
+.btn-ghost { color: #fff; background: rgba(255,255,255,.06); box-shadow: inset 0 0 0 1.5px rgba(255,255,255,.45); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+.btn-ghost:hover { background: #fff; color: var(--ink); }
+
+/* ---------- Hero ---------- */
+.hero-img {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; object-position: 100% 100%;
+  transform: scale(1.04); transition: transform 2.4s var(--ease);
+}
+.is-loaded .hero-img { transform: none; }
+.hero-about .hero-shade {
+  background:
+    linear-gradient(90deg, rgba(17,15,20,.75) 0%, rgba(17,15,20,.35) 40%, rgba(17,15,20,0) 60%),
+    linear-gradient(0deg, rgba(25,13,48,.9) 0%, rgba(25,13,48,0) 30%),
+    radial-gradient(60% 70% at 15% 40%, rgba(17,163,182,.14), transparent 70%);
+}
+.hero-about .hero-content { width: min(46%, 640px); padding-bottom: 180px; }
+.hero-about .hero-title { font-size: clamp(40px, 4.5vw, 70px); }
+.hero-about .hero-sub strong { color: #fff; }
+.hero-about .hero-points { grid-template-columns: repeat(2, minmax(0, max-content)); gap: 12px 34px; }
+
+/* ---------- Intro card ---------- */
+.about-intro .authority-text .h2 { font-size: clamp(24px, 2.4vw, 36px); }
+.about-intro .authority-media img { object-position: 50% 30%; }
+
+/* ---------- Services ---------- */
+.about-services { max-width: var(--max); margin: 0 auto; padding: clamp(90px, 10vw, 150px) var(--gutter) 0; }
+.as-head {
+  display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 24px 60px; align-items: end;
+  margin-bottom: clamp(36px, 4vw, 56px);
+}
+.as-lead { color: var(--slate); font-size: 18px; max-width: 30em; }
+.as-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.as-card {
+  display: flex; flex-direction: column;
+  background: var(--paper); border-radius: var(--r-lg); overflow: hidden;
+  box-shadow: 0 1px 0 var(--mist), var(--shadow-md);
+  transition: transform .5s var(--ease), box-shadow .5s var(--ease);
+}
+.as-card:hover { transform: translateY(-6px); box-shadow: 0 1px 0 var(--mist), var(--shadow-lg); }
+.as-img { aspect-ratio: 16 / 10; overflow: hidden; background: #ECEAF3; }
+.as-img img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 10%; transition: transform 1.2s var(--ease); }
+.as-card:hover .as-img img { transform: scale(1.05); }
+.as-body { padding: 26px 28px 30px; display: grid; gap: 10px; align-content: start; }
+.as-body h3 { font-family: var(--display); font-weight: 600; font-size: 23px; line-height: 1.15; letter-spacing: -0.02em; }
+.as-body p { color: var(--slate); font-size: 15.5px; }
+.as-wide { grid-column: span 2; flex-direction: row; }
+.as-wide .as-img { flex: 1.15; aspect-ratio: auto; min-height: 340px; }
+.as-wide .as-body { flex: 1; align-content: center; padding: 40px; }
+.as-wide .as-body h3 { font-size: clamp(26px, 2.2vw, 32px); }
+.as-wide .as-body p { font-size: 17px; }
+
+/* ---------- Commitment ---------- */
+.about-promise {
+  position: relative; overflow: hidden;
+  margin: clamp(90px, 10vw, 150px) 0 0;
+  background: var(--ink); color: #fff;
+}
+.ap-media { position: absolute; inset: 0 0 0 42%; }
+.ap-media img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; }
+.ap-media::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(90deg, var(--ink) 0%, rgba(25,13,48,.85) 25%, rgba(25,13,48,.35) 70%, rgba(25,13,48,.2) 100%),
+              linear-gradient(0deg, rgba(25,13,48,.6), transparent 40%);
+}
+.ap-inner {
+  position: relative; max-width: var(--max); margin: 0 auto;
+  padding: clamp(80px, 9vw, 140px) var(--gutter);
+  display: grid; gap: 26px; justify-items: start;
+}
+.ap-quote {
+  font-family: var(--display); font-weight: 500; font-stretch: 104%;
+  font-size: clamp(28px, 3.3vw, 50px); line-height: 1.1; letter-spacing: -0.03em;
+  max-width: 19em; text-wrap: balance;
+}
+.ap-quote::before {
+  content: "\201C"; display: block; height: .5em; margin-bottom: .1em;
+  font-size: 2.2em; line-height: 1; color: var(--teal);
+}
+.ap-text { color: #DCD5EC; font-size: clamp(16px, 1.25vw, 19px); max-width: 38em; }
+.ap-assoc { margin-top: 18px; padding-top: 26px; border-top: 1px solid rgba(255,255,255,.16); width: min(100%, 760px); }
+.ap-assoc p { font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--lilac); margin-bottom: 16px; }
+.ap-assoc ul { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; }
+.ap-assoc li {
+  height: 62px; padding: 10px 18px; border-radius: var(--r-sm);
+  background: #fff; display: grid; place-items: center;
+}
+.ap-assoc li.light { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.2); }
+.ap-assoc li.award { padding: 6px 10px; }
+.ap-assoc li.award img { max-height: 50px; }
+.ap-assoc img { max-height: 40px; width: auto; max-width: 110px; object-fit: contain; }
+
+/* ---------- Medical team ---------- */
+.team { max-width: var(--max); margin: 0 auto; padding: clamp(90px, 10vw, 150px) var(--gutter) 0; }
+.team-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 24px 40px; margin-bottom: clamp(32px, 4vw, 48px); }
+.team-head .h2 { max-width: 14em; }
+.team-filter { display: flex; flex-wrap: wrap; gap: 8px; }
+.team-filter button {
+  padding: 10px 18px; border-radius: 999px;
+  border: 1.5px solid var(--mist); background: var(--paper); color: var(--ink);
+  font-weight: 700; font-size: 14px;
+  transition: background .3s, border-color .3s, color .3s;
+}
+.team-filter button:hover { border-color: var(--ink); }
+.team-filter button[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: #fff; }
+
+.team-lead {
+  display: grid; grid-template-columns: minmax(0, 420px) minmax(0, 1fr);
+  background: var(--grad-ink); color: #fff;
+  border-radius: var(--r-lg); overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  margin-bottom: 20px;
+}
+.tl-photo { background: linear-gradient(180deg, #C9CDD3, #EDEEF1); }
+.tl-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 15%; }
+.tl-body { padding: clamp(28px, 4vw, 60px); display: grid; gap: 8px; align-content: center; }
+.tl-role { font-size: 13px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--teal-soft); }
+.tl-body h3 { font-family: var(--display); font-weight: 600; font-stretch: 106%; font-size: clamp(34px, 3.6vw, 56px); line-height: 1; letter-spacing: -0.035em; }
+.tl-spec { font-size: 18px; font-weight: 600; color: #E4DEF2; }
+.tl-bio { margin-top: 14px; color: var(--lilac); max-width: 40em; }
+.tl-foot { margin-top: 18px; display: flex; flex-wrap: wrap; align-items: center; gap: 14px 30px; }
+.team-lead .doc-cost { color: #E4DEF2; }
+.team-lead .doc-cost strong { color: #fff; }
+
+.team-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; }
+.doc {
+  background: var(--paper); border-radius: var(--r-lg); overflow: hidden;
+  box-shadow: 0 1px 0 var(--mist), var(--shadow-md);
+  padding-bottom: 22px;
+  transition: transform .5s var(--ease), box-shadow .5s var(--ease), opacity .4s;
+}
+.doc:hover { transform: translateY(-6px); box-shadow: 0 1px 0 var(--mist), var(--shadow-lg); }
+.doc img { width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; object-position: 50% 10%; background: #DADDE2; margin-bottom: 18px; transition: transform 1s var(--ease); }
+.doc h3, .doc p { padding: 0 22px; }
+.doc h3 { font-family: var(--display); font-weight: 600; font-size: 21px; line-height: 1.15; letter-spacing: -0.02em; }
+.doc-spec { font-weight: 700; font-size: 14.5px; color: var(--teal-deep); margin-top: 4px; }
+.doc-cost { font-size: 14px; color: var(--slate); margin-top: 10px; }
+.doc .doc-cost { padding-top: 12px; border-top: 1px solid var(--mist); margin: 14px 22px 0; padding-left: 0; padding-right: 0; }
+.doc-cost strong { color: var(--ink); font-weight: 800; }
+.doc[hidden], .team-lead[hidden] { display: none; }
+.doc.is-entering { animation: doc-in .5s var(--ease) both; }
+@keyframes doc-in { from { opacity: 0; transform: translateY(14px); } }
+
+/* ---------- Training ---------- */
+.training {
+  margin-top: clamp(90px, 10vw, 150px);
+  background: var(--grad-ink); color: #fff;
+  padding: clamp(80px, 9vw, 130px) 0;
+  overflow: hidden;
+}
+.training-head {
+  max-width: var(--max); margin: 0 auto clamp(36px, 4vw, 56px); padding: 0 var(--gutter);
+  display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 24px 60px; align-items: end;
+}
+.training-head .h2 { max-width: 13em; }
+.training-intro { display: grid; gap: 24px; }
+.training-intro p { color: #DCD5EC; font-size: 18px; }
+.training-nav { display: flex; gap: 10px; }
+.training-track {
+  display: flex; gap: 20px;
+  overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none;
+  padding: 0 var(--gutter) 8px;
+  padding-left: max(var(--gutter), calc((100vw - var(--max)) / 2 + var(--gutter)));
+  scroll-padding-left: max(var(--gutter), calc((100vw - var(--max)) / 2 + var(--gutter)));
+}
+.training-track::-webkit-scrollbar { display: none; }
+.training-track li { flex: none; width: clamp(280px, 30vw, 440px); scroll-snap-align: start; }
+.training-track figure { display: grid; gap: 14px; }
+.training-track img { width: 100%; aspect-ratio: 6 / 5; object-fit: cover; border-radius: var(--r-lg); }
+.training-track figcaption { font-size: 14.5px; color: var(--lilac); line-height: 1.5; padding-right: 10px; }
+
+/* ---------- Career ---------- */
+.career { max-width: var(--max); margin: 0 auto; padding: clamp(90px, 10vw, 150px) var(--gutter) 0; }
+.career-head { max-width: 820px; margin-bottom: clamp(36px, 4vw, 56px); }
+.career-lead { margin-top: 18px; color: var(--slate); font-size: 18px; }
+.career-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.cr-card {
+  position: relative; overflow: hidden;
+  background: var(--paper); border-radius: var(--r-lg);
+  box-shadow: 0 1px 0 var(--mist), var(--shadow-md);
+  padding: clamp(28px, 3vw, 42px);
+  display: grid; gap: 12px; align-content: start;
+}
+.cr-card::after {
+  content: ""; position: absolute; left: 0; right: 0; top: 0; height: 4px;
+  background: var(--grad-teal); transform: scaleX(0); transform-origin: left;
+  transition: transform .6s var(--ease);
+}
+.cr-card:hover::after { transform: scaleX(1); }
+.cr-num { font-family: var(--display); font-weight: 600; font-size: 46px; line-height: 1; letter-spacing: -0.04em; color: var(--teal); }
+.cr-card h3 { font-family: var(--display); font-weight: 600; font-size: 24px; line-height: 1.15; letter-spacing: -0.02em; max-width: 18em; }
+.cr-card p { color: var(--slate); font-size: 15.5px; }
+.cr-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+.cr-tags li { padding: 7px 14px; border-radius: 999px; background: var(--pearl); border: 1px solid var(--mist); font-size: 14px; font-weight: 700; color: var(--ink); }
+.career-cta {
+  margin-top: 28px; padding: 26px clamp(24px, 3vw, 42px);
+  border-radius: var(--r-lg); border: 1.5px dashed var(--mist);
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px;
+}
+.career-cta p { font-family: var(--display); font-weight: 600; font-size: 22px; letter-spacing: -0.02em; }
+
+/* ---------- Clinics + CTA spacing on this page ---------- */
+.about-cta .cta-bg { left: 45%; }
+.about-cta .cta-bg img { object-position: 60% 30%; }
+.about-cta .cta-inner { max-width: 760px; }
+.page-about .site-footer { margin-top: clamp(90px, 10vw, 140px); }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1120px) {
+  .hero-img { height: 66svh; bottom: auto; object-position: 88% 100%; }
+  .hero-about .hero-shade { background: linear-gradient(180deg, rgba(25,13,48,.5) 0, rgba(25,13,48,0) 16svh, rgba(25,13,48,0) 34svh, rgba(25,13,48,.94) 54svh, var(--ink) 64svh); }
+  .hero-about .hero-content { width: auto; padding-top: 54svh; padding-bottom: 150px; }
+  .as-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .as-wide { grid-column: span 2; }
+  .team-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .team-lead { grid-template-columns: minmax(0, 320px) minmax(0, 1fr); }
+  .ap-media { inset: 0; opacity: .45; }
+}
+@media (max-width: 760px) {
+  .hero-about .hero-points { grid-template-columns: 1fr; }
+  .hero-about .hero-cta .btn { flex: 1 1 100%; }
+  .as-head, .training-head { grid-template-columns: 1fr; }
+  .as-grid { grid-template-columns: 1fr; }
+  .as-wide { grid-column: auto; flex-direction: column; }
+  .as-wide .as-img { min-height: 0; aspect-ratio: 16 / 10; flex: none; }
+  .as-wide .as-body { padding: 26px 28px 30px; }
+  .team-lead { grid-template-columns: 1fr; }
+  .tl-photo { aspect-ratio: 1; }
+  .team-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .doc { padding-bottom: 16px; }
+  .doc img { margin-bottom: 12px; }
+  .doc h3, .doc p { padding: 0 14px; }
+  .doc h3 { font-size: 17px; }
+  .doc-spec { font-size: 13px; }
+  .doc .doc-cost { margin: 10px 14px 0; font-size: 12.5px; }
+  .career-grid { grid-template-columns: 1fr; }
+  .training-track li { width: 78vw; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-img { transform: none; transition: none; }
+  .doc.is-entering { animation: none; }
+}
+
+/* Join card fills the last slot of the team grid */
+.doc-join { background: var(--grad-ink); color: #fff; padding: 0; }
+.doc-join a { display: grid; align-content: end; gap: 10px; height: 100%; min-height: 260px; padding: 26px 22px; text-decoration: none; }
+.page-about .doc-join h3 { padding: 0; font-size: 24px; }
+.page-about .doc-join p { padding: 0; color: var(--lilac); font-size: 14.5px; }
+.dj-icon { width: 54px; height: 54px; border-radius: 50%; display: grid; place-items: center; background: var(--teal); background-image: var(--grad-teal); margin-bottom: auto; align-self: start; }
+.dj-icon svg { width: 24px; height: 24px; fill: none; stroke: #fff; stroke-width: 2.4; stroke-linecap: round; }
+.doc-join .text-link { justify-self: start; margin-top: 6px; }
