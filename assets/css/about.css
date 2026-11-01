@@ -208,7 +208,7 @@
 
 /* ---------- Clinics + CTA spacing on this page ---------- */
 .about-cta .cta-bg { left: 45%; }
-.about-cta .cta-bg img { object-position: 60% 30%; }
+.about-cta .cta-bg img { object-position: 60% 0; }
 .about-cta .cta-inner { max-width: 760px; }
 .page-about .site-footer { margin-top: clamp(90px, 10vw, 140px); }
 
