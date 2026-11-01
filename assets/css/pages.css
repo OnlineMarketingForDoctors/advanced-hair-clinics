@@ -1,0 +1,260 @@
+/* ==========================================================
+   Advanced Hair Clinics · Doctors, Clinics, Consultants
+   Builds on style.css and about.css
+   ========================================================== */
+
+/* ---------- Hero variants ---------- */
+.hero-clinics .hero-img { object-position: 60% 50%; }
+.hero-consult .hero-img { object-position: 70% 30%; }
+.hero-clinics .hero-shade,
+.hero-consult .hero-shade {
+  background:
+    linear-gradient(90deg, rgba(25,13,48,.95) 0%, rgba(25,13,48,.86) 34%, rgba(25,13,48,.35) 62%, rgba(25,13,48,.05) 82%),
+    linear-gradient(0deg, rgba(25,13,48,.9) 0%, rgba(25,13,48,0) 32%);
+}
+.hero-sub a { color: #fff; text-decoration-color: var(--teal); text-underline-offset: 3px; }
+h1.hero-title { margin: 0; }
+
+/* Doctors: portrait mosaic */
+.hero-mosaic {
+  position: absolute; top: 0; bottom: 0; right: 0; width: 60%;
+  display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 1fr; gap: 6px;
+  background: var(--ink);
+}
+.hero-mosaic img {
+  width: 100%; height: 100%; object-fit: cover; object-position: 50% 18%;
+  filter: saturate(.85);
+  opacity: 0; transform: scale(1.06);
+  transition: opacity 1s var(--ease), transform 1.6s var(--ease);
+}
+.is-loaded .hero-mosaic img { opacity: 1; transform: none; }
+.hero-mosaic img:nth-child(4n+2) { transition-delay: .08s; }
+.hero-mosaic img:nth-child(4n+3) { transition-delay: .16s; }
+.hero-mosaic img:nth-child(4n+4) { transition-delay: .24s; }
+.hero-mosaic .hm-lead { filter: none; }
+.hero-doctors .hero-shade {
+  background:
+    linear-gradient(90deg, var(--ink) 0%, var(--ink) 40%, rgba(25,13,48,.78) 48%, rgba(25,13,48,.25) 70%, rgba(25,13,48,.1) 100%),
+    linear-gradient(0deg, rgba(25,13,48,.9) 0%, rgba(25,13,48,0) 30%);
+}
+
+/* ---------- Doctors: Scientific Director card ---------- */
+.director .authority-media img { object-position: 30% 30%; }
+.director .authority-text .h2 { font-size: clamp(30px, 3vw, 44px); }
+.dir-spec { font-weight: 800; color: var(--teal-deep); margin-top: -8px; }
+.dir-roles { display: grid; gap: 8px; }
+.dir-roles li { position: relative; padding-left: 30px; font-weight: 600; color: var(--ink); }
+.dir-roles li::before {
+  content: ""; position: absolute; left: 0; top: .2em; width: 20px; height: 20px; border-radius: 50%;
+  background: var(--teal) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12.5l4 4 8-9' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 13px no-repeat;
+}
+.dir-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 28px; padding-top: 6px; }
+.dir-foot .doc-cost { margin: 0; font-size: 15px; }
+
+/* ---------- Doctors: cards with CV ---------- */
+.doc-link { display: block; overflow: hidden; }
+.doc-link img { margin-bottom: 0; }
+.doc:hover .doc-link img { transform: scale(1.04); }
+.doc-name { font-family: var(--display); font-weight: 600; font-size: 20px; line-height: 1.2; letter-spacing: -0.02em; padding: 18px 22px 0; }
+.doc-name a { text-decoration: none; }
+.doc-name a:hover { color: var(--teal-deep); }
+.page-doctors .doc .doc-spec { padding: 0 22px; }
+.doc-foot {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  margin: 14px 22px 0; padding-top: 12px; border-top: 1px solid var(--mist);
+}
+.doc .doc-foot .doc-cost { margin: 0; padding: 0; border: 0; font-size: 13.5px; }
+.doc-cv {
+  flex: none; font-size: 12px; font-weight: 800; letter-spacing: .08em; text-decoration: none;
+  padding: 6px 12px; border-radius: 999px; color: var(--ink); border: 1.5px solid var(--mist);
+  transition: background .3s, color .3s, border-color .3s;
+}
+.doc-cv:hover { background: var(--ink); border-color: var(--ink); color: #fff; }
+
+/* ---------- Principles (dark band with photo) ---------- */
+.principles { position: relative; overflow: hidden; margin-top: clamp(90px, 10vw, 150px); background: var(--ink); color: #fff; }
+.pr-media { position: absolute; inset: 0; }
+.pr-media img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; opacity: .32; }
+.pr-media::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(25,13,48,.6), var(--ink) 85%); }
+.pr-inner { position: relative; max-width: var(--max); margin: 0 auto; padding: clamp(80px, 9vw, 130px) var(--gutter); }
+.pr-head { max-width: 760px; margin-bottom: clamp(36px, 4vw, 56px); }
+.pr-list { counter-reset: pr; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.pr-list li {
+  counter-increment: pr; position: relative;
+  padding: 28px 24px 30px; border-radius: var(--r-lg);
+  background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.14);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  display: grid; gap: 10px; align-content: start;
+}
+.pr-list li::before {
+  content: counter(pr, decimal-leading-zero);
+  font-family: var(--display); font-weight: 600; font-size: 40px; line-height: 1; letter-spacing: -0.04em; color: var(--teal-soft);
+}
+.pr-list h3 { font-family: var(--display); font-weight: 600; font-size: 22px; line-height: 1.15; letter-spacing: -0.02em; }
+.pr-list p { color: var(--lilac); font-size: 15px; }
+.page-doctors .clinics, .page-consult .clinics { margin-top: 0; }
+
+/* ---------- Clinics: network stats card ---------- */
+.net-card { grid-template-areas: "stats"; grid-template-columns: 1fr; }
+
+/* ---------- Clinics: locations ---------- */
+.locations { max-width: var(--max); margin: 0 auto; padding: clamp(90px, 10vw, 140px) var(--gutter) 0; }
+.loc-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 24px 40px; margin-bottom: clamp(28px, 3vw, 40px); }
+.loc-filter { display: flex; flex-wrap: wrap; gap: 8px; }
+.loc-filter button {
+  padding: 10px 18px; border-radius: 999px;
+  border: 1.5px solid var(--mist); background: var(--paper); color: var(--ink);
+  font-weight: 700; font-size: 14px; transition: background .3s, border-color .3s, color .3s;
+}
+.loc-filter button:hover { border-color: var(--ink); }
+.loc-filter button[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: #fff; }
+.region { padding-top: clamp(28px, 3vw, 40px); }
+.region[hidden] { display: none; }
+.region-title { display: flex; align-items: baseline; gap: 16px; margin-bottom: 18px; padding-bottom: 14px; border-bottom: 1px solid var(--mist); }
+.region-title h2 { font-family: var(--display); font-weight: 600; font-size: clamp(26px, 2.4vw, 34px); letter-spacing: -0.03em; }
+.region-title span { font-size: 14px; font-weight: 700; color: var(--slate); }
+.loc-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; }
+.loc {
+  display: flex; flex-direction: column;
+  background: var(--paper); border-radius: var(--r-lg); overflow: hidden;
+  box-shadow: 0 1px 0 var(--mist), var(--shadow-md);
+  transition: transform .5s var(--ease), box-shadow .5s var(--ease);
+}
+.loc:hover { transform: translateY(-6px); box-shadow: 0 1px 0 var(--mist), var(--shadow-lg); }
+.loc.is-entering { animation: doc-in .5s var(--ease) both; }
+.loc-img { display: block; aspect-ratio: 16 / 10; overflow: hidden; background: var(--mist); }
+.loc-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease); }
+.loc:hover .loc-img img { transform: scale(1.05); }
+.loc-body { padding: 20px 22px 24px; display: grid; gap: 6px; align-content: start; flex: 1; }
+.loc-city { font-family: var(--display); font-weight: 600; font-size: 24px; line-height: 1.1; letter-spacing: -0.02em; }
+.loc-city a { text-decoration: none; }
+.loc-city a:hover { color: var(--teal-deep); }
+.loc-note { font-size: 14px; color: var(--teal-deep); font-weight: 700; }
+.loc-addr { font-size: 14.5px; color: var(--slate); line-height: 1.45; }
+.loc-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; margin: 8px 0 10px; }
+.loc-tel { font-weight: 800; font-size: 15px; color: var(--teal-deep); text-decoration: none; }
+.loc-tel:hover { text-decoration: underline; }
+.loc-dir {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 13px; font-weight: 700; color: var(--ink); text-decoration: none;
+  padding: 5px 12px; border-radius: 999px; border: 1.5px solid var(--mist);
+  transition: border-color .3s, background .3s, color .3s;
+}
+.loc-dir::before { content: ""; width: 12px; height: 12px; background: currentColor; -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2a7 7 0 0 0-7 7c0 5.3 7 13 7 13s7-7.7 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z'/%3E%3C/svg%3E") center / contain no-repeat; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2a7 7 0 0 0-7 7c0 5.3 7 13 7 13s7-7.7 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z'/%3E%3C/svg%3E") center / contain no-repeat; }
+.loc-dir:hover { background: var(--ink); border-color: var(--ink); color: #fff; }
+.loc .text-link { justify-self: start; margin-top: auto; }
+
+/* The flagship clinic gets a wide card */
+.loc-feature { grid-column: span 2; grid-row: span 2; }
+.loc-feature .loc-img { aspect-ratio: auto; flex: 1; min-height: 260px; }
+.loc-feature .loc-city { font-size: 34px; }
+.loc-feature .loc-body { flex: none; padding: 26px 28px 30px; }
+
+/* ---------- Consultants: steps card ---------- */
+.steps-card .authority-card { grid-template-columns: minmax(0, .9fr) minmax(0, 1.4fr); grid-template-areas: "intro steps"; }
+.sc-intro { grid-area: intro; padding: clamp(28px, 4vw, 60px); display: grid; gap: 16px; align-content: center; background: var(--grad-ink); color: #fff; }
+.sc-intro .kicker { color: var(--teal-soft); margin-bottom: 0; }
+.sc-intro .h2 { font-size: clamp(26px, 2.5vw, 38px); }
+.sc-intro p { color: #DCD5EC; }
+.sc-steps { grid-area: steps; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.sc-steps li { padding: clamp(24px, 3vw, 40px); display: grid; gap: 8px; align-content: start; border-left: 1px solid var(--mist); border-top: 1px solid var(--mist); }
+.sc-steps li:nth-child(-n+2) { border-top: 0; }
+.sc-n { font-family: var(--display); font-weight: 600; font-size: 40px; line-height: 1; letter-spacing: -0.04em; color: var(--teal); }
+.sc-steps h3 { font-family: var(--display); font-weight: 600; font-size: 22px; letter-spacing: -0.02em; }
+.sc-steps p { color: var(--slate); font-size: 15px; }
+
+/* ---------- Consultants: team ---------- */
+.consult {
+  max-width: var(--max); margin: 0 auto; padding: clamp(90px, 10vw, 150px) var(--gutter) 0;
+  display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: clamp(36px, 5vw, 80px); align-items: start;
+}
+.cs-text { display: grid; gap: 18px; }
+.cs-text .kicker { margin-bottom: 0; }
+.cs-text > p { color: var(--slate); font-size: 17px; }
+.cs-note {
+  display: flex; gap: 16px; align-items: flex-start;
+  padding: 22px 24px; border-radius: var(--r-md);
+  background: linear-gradient(120deg, rgba(17,163,182,.12), rgba(17,163,182,.04));
+  border: 1px solid rgba(17,163,182,.35);
+}
+.cs-note p { color: var(--ink); font-size: 16px; }
+.cs-note strong { color: var(--teal-deep); }
+.cs-note-icon { flex: none; width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; background: var(--teal); background-image: var(--grad-teal); }
+.cs-note-icon svg { width: 20px; height: 20px; fill: #fff; }
+.cs-people { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; position: sticky; top: calc(var(--header-h) + 24px); }
+.cs-person { background: var(--paper); border-radius: var(--r-lg); overflow: hidden; box-shadow: 0 1px 0 var(--mist), var(--shadow-md); transition: transform .5s var(--ease); }
+.cs-person:nth-child(2) { margin-top: 48px; }
+.cs-person:hover { transform: translateY(-6px); }
+.cs-person img { width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 20%; background: #F1F1F1; }
+.cs-person-body { padding: 18px 22px 22px; }
+.cs-person h3 { font-family: var(--display); font-weight: 600; font-size: 22px; letter-spacing: -0.02em; }
+.cs-person h3 a { text-decoration: none; }
+.cs-person h3 a:hover { color: var(--teal-deep); }
+.cs-person p { font-size: 14px; font-weight: 700; color: var(--teal-deep); }
+
+/* ---------- Consultants: session modes ---------- */
+.modes { max-width: var(--max); margin: 0 auto; padding: clamp(90px, 10vw, 150px) var(--gutter) 0; }
+.modes-head { max-width: 720px; margin-bottom: clamp(32px, 4vw, 48px); }
+.modes-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.mode {
+  padding: clamp(26px, 3vw, 38px); border-radius: var(--r-lg);
+  background: var(--paper); box-shadow: 0 1px 0 var(--mist), var(--shadow-md);
+  display: grid; gap: 12px; align-content: start;
+  transition: transform .5s var(--ease), box-shadow .5s var(--ease);
+}
+.mode:hover { transform: translateY(-6px); box-shadow: 0 1px 0 var(--mist), var(--shadow-lg); }
+.mode-icon { width: 54px; height: 54px; border-radius: 16px; display: grid; place-items: center; background: var(--grad-ink); margin-bottom: 6px; }
+.mode-icon svg { width: 24px; height: 24px; fill: none; stroke: var(--teal-soft); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.mode h3 { font-family: var(--display); font-weight: 600; font-size: 26px; letter-spacing: -0.02em; }
+.mode p { color: var(--slate); font-size: 15.5px; }
+.mode .text-link { justify-self: start; margin-top: 4px; }
+.page-consult .clinics { padding-top: clamp(90px, 10vw, 150px); }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1120px) {
+  .hero-mosaic { left: 0; width: auto; bottom: auto; height: 66svh; }
+  .hero-doctors .hero-shade { background: linear-gradient(180deg, rgba(25,13,48,.55) 0, rgba(25,13,48,.15) 16svh, rgba(25,13,48,.2) 34svh, rgba(25,13,48,.95) 56svh, var(--ink) 64svh); }
+  .hero-clinics .hero-img { object-position: 62% 50%; }
+  .hero-consult .hero-img { object-position: 72% 40%; }
+  .hero-clinics .hero-shade,
+  .hero-consult .hero-shade { background: linear-gradient(180deg, rgba(25,13,48,.5) 0, rgba(25,13,48,0) 16svh, rgba(25,13,48,0) 34svh, rgba(25,13,48,.94) 54svh, var(--ink) 64svh); }
+  .pr-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .loc-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .steps-card .authority-card { grid-template-columns: 1fr; grid-template-areas: "intro" "steps"; }
+  .consult { grid-template-columns: 1fr; }
+  .cs-people { position: static; }
+  .modes-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 760px) {
+  .hero-mosaic { grid-template-columns: repeat(3, 1fr); }
+  .hero-mosaic img:nth-child(n+10) { display: none; }
+  .director .authority-card { grid-template-columns: 1fr; grid-template-areas: "media" "text" "stats"; }
+  .pr-list { grid-template-columns: 1fr; }
+  .loc-grid { grid-template-columns: 1fr; }
+  .loc-feature { grid-column: auto; grid-row: auto; }
+  .loc-feature .loc-img { aspect-ratio: 16 / 10; flex: none; min-height: 0; }
+  .loc-feature .loc-city { font-size: 26px; }
+  .sc-steps { grid-template-columns: 1fr; }
+  .sc-steps li { border-left: 0; }
+  .sc-steps li:nth-child(2) { border-top: 1px solid var(--mist); }
+  .cs-person:nth-child(2) { margin-top: 0; }
+  .doc-name { font-size: 16px; padding: 14px 14px 0; }
+  .page-doctors .doc .doc-spec { padding: 0 14px; }
+  .doc-foot { flex-direction: column; align-items: flex-start; margin: 10px 14px 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-mosaic img { opacity: 1; transform: none; transition: none; }
+  .loc.is-entering { animation: none; }
+}
+
+/* ---------- Fixes ---------- */
+.page-doctors .doc { display: flex; flex-direction: column; }
+.page-doctors .doc .doc-spec { margin-bottom: 14px; }
+.page-doctors .doc-foot { margin-top: auto; }
+.cs-text > p.kicker { color: var(--teal-deep); font-size: 14px; }
+.principles + .cta-band { margin-top: clamp(70px, 8vw, 120px); }
+.loc-online { background: var(--grad-ink); color: #fff; }
+.loc-online .loc-body { align-content: end; gap: 10px; padding: 26px 22px; min-height: 100%; }
+.loc-online .dj-icon { margin-bottom: auto; }
+.loc-online .dj-icon svg { fill: none; stroke: #fff; stroke-width: 2; }
+.loc-online .loc-addr { color: var(--lilac); }
