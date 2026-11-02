@@ -3,7 +3,7 @@
    ========================================================== */
 
 /* ---------- Hero ---------- */
-.hero-profile .hero-img { object-position: 70% 30%; }
+.hero-profile .hero-img { object-position: 85% 50%; }
 .hero-profile .hero-shade {
   background:
     linear-gradient(90deg, rgba(25,13,48,.96) 0%, rgba(25,13,48,.88) 34%, rgba(25,13,48,.3) 60%, rgba(25,13,48,0) 78%),
@@ -126,7 +126,7 @@
 
 /* ---------- Responsive ---------- */
 @media (max-width: 1120px) {
-  .hero-profile .hero-img { object-position: 74% 20%; }
+  .hero-profile .hero-img { object-position: 78% 0; }
   .hero-profile .hero-shade { background: linear-gradient(180deg, rgba(25,13,48,.4) 0, rgba(25,13,48,0) 16svh, rgba(25,13,48,0) 34svh, rgba(25,13,48,.94) 54svh, var(--ink) 64svh); }
   .bio { grid-template-columns: 1fr; }
   .bio-aside { position: static; }
