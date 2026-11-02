@@ -32,21 +32,6 @@
 .page-nav-cta { padding: 11px 20px; flex: none; }
 .page-fue section[id], .page-fue .reviews { scroll-margin-top: calc(var(--header-h) + 64px); }
 
-/* ---------- Results add-on ---------- */
-.impressive { margin-top: 26px; display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; }
-.imp-title { font-family: var(--display); font-weight: 600; font-size: 22px; letter-spacing: -0.02em; }
-.imp-list { display: flex; flex-wrap: wrap; gap: 12px; flex: 1; }
-.imp-list a {
-  display: flex; align-items: center; gap: 12px; text-decoration: none;
-  padding: 12px 18px 12px 12px; border-radius: 999px; background: var(--paper);
-  box-shadow: 0 1px 0 var(--mist), var(--shadow-md); transition: transform .35s var(--ease);
-}
-.imp-list a:hover { transform: translateY(-3px); }
-.imp-icon { flex: none; width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; background: linear-gradient(135deg, #F58529, #DD2A7B 50%, #8134AF); }
-.imp-icon svg { width: 18px; height: 18px; fill: #fff; }
-.imp-list span:last-child { display: grid; font-size: 13px; color: var(--slate); line-height: 1.35; }
-.imp-list strong { font-size: 14.5px; color: var(--ink); }
-
 /* ---------- What it is ---------- */
 .fue-what { max-width: var(--max); margin: 0 auto; padding: clamp(90px, 10vw, 140px) var(--gutter) 0; }
 .fw-intro { max-width: 980px; display: grid; gap: 18px; margin-bottom: clamp(48px, 6vw, 80px); }
