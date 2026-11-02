@@ -32,6 +32,30 @@
     });
   });
 
+  /* ---------- Blog: category filter ---------- */
+  const postFilter = $('.post-filter');
+  if (postFilter) postFilter.addEventListener('click', (e) => {
+    const b = e.target.closest('button');
+    if (!b) return;
+    $$('button', postFilter).forEach((x) => x.setAttribute('aria-pressed', x === b));
+    const c = b.dataset.c;
+    $$('.post-card').forEach((p) => {
+      p.hidden = c !== 'all' && p.dataset.c !== c && p.dataset.c !== 'all';
+      p.classList.remove('is-entering');
+      if (!p.hidden) { void p.offsetWidth; p.classList.add('is-entering'); }
+    });
+  });
+
+  /* ---------- Biography: read more ---------- */
+  const bioBtn = $('.bio-toggle');
+  if (bioBtn) bioBtn.addEventListener('click', () => {
+    const more = $('#' + bioBtn.getAttribute('aria-controls'));
+    const open = more.hidden;
+    more.hidden = !open;
+    bioBtn.setAttribute('aria-expanded', open);
+    bioBtn.textContent = open ? 'Show less' : 'Read the full biography';
+  });
+
   /* ---------- Training gallery arrows ---------- */
   const track = $('#training-track');
   if (track) $$('.training-nav button').forEach((b) => b.addEventListener('click', () => {

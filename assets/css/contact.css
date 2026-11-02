@@ -1,0 +1,91 @@
+/* ==========================================================
+   Advanced Hair Clinics · Contact
+   ========================================================== */
+.hero-contact .hero-img { object-position: 70% 60%; }
+.hero-contact .hero-shade {
+  background:
+    linear-gradient(90deg, rgba(25,13,48,.96) 0%, rgba(25,13,48,.88) 36%, rgba(25,13,48,.35) 62%, rgba(25,13,48,.08) 82%),
+    linear-gradient(0deg, rgba(25,13,48,.9) 0%, rgba(25,13,48,0) 30%);
+}
+
+/* ---------- Form card ---------- */
+.cf-card { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); grid-template-areas: "form side"; }
+.cf-form-wrap { grid-area: form; padding: clamp(28px, 4vw, 60px); }
+.cf-form-wrap .h2 { font-size: clamp(30px, 3vw, 44px); }
+.cf-lead { margin: 12px 0 26px; color: var(--slate); }
+.cf { display: grid; gap: 16px; }
+.cf-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.fld { display: grid; gap: 6px; }
+.fld > span { font-size: 14px; font-weight: 700; color: var(--ink); }
+.fld i { color: var(--teal-deep); font-style: normal; }
+.fld input, .fld select, .fld textarea {
+  width: 100%; font: inherit; font-size: 16px; color: var(--ink);
+  padding: 13px 16px; border-radius: 12px; border: 1.5px solid var(--mist); background: var(--pearl);
+  transition: border-color .25s, background .25s, box-shadow .25s;
+}
+.fld textarea { resize: vertical; min-height: 120px; }
+.fld select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 9l6 6 6-6' fill='none' stroke='%23190D30' stroke-width='2'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; background-size: 18px; padding-right: 44px; }
+.fld input:focus, .fld select:focus, .fld textarea:focus { outline: none; border-color: var(--teal); background-color: #fff; box-shadow: 0 0 0 4px rgba(17,163,182,.15); }
+.was-validated .fld :invalid { border-color: #D64545; background-color: #FFF6F6; }
+.cf-check { display: flex; gap: 12px; align-items: flex-start; font-size: 14px; color: var(--slate); line-height: 1.5; }
+.cf-check input { flex: none; width: 20px; height: 20px; margin-top: 2px; accent-color: var(--teal); }
+.cf-check a { color: var(--teal-deep); font-weight: 800; }
+.was-validated .cf-check input:invalid { outline: 2px solid #D64545; outline-offset: 2px; }
+.cf-error { color: #B83232; font-weight: 700; font-size: 14px; }
+.cf-done { color: var(--teal-deep); font-weight: 700; font-size: 15px; }
+.cf-done a { color: inherit; }
+.cf-submit { justify-self: start; margin-top: 4px; }
+
+.cf-side { grid-area: side; background: var(--grad-ink); color: #fff; padding: clamp(28px, 4vw, 52px); display: grid; align-content: start; gap: 18px; }
+.cf-side .kicker { margin-bottom: 0; }
+.cf-ways { display: grid; gap: 10px; }
+.cf-ways a {
+  display: flex; align-items: center; gap: 14px; text-decoration: none;
+  padding: 14px 16px; border-radius: var(--r-md);
+  background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12);
+  transition: background .3s, border-color .3s, transform .3s var(--ease);
+}
+.cf-ways a:hover { background: rgba(255,255,255,.12); border-color: rgba(143,220,229,.5); transform: translateX(4px); }
+.cw-icon { flex: none; width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; background: var(--teal); background-image: var(--grad-teal); }
+.cw-icon svg { width: 20px; height: 20px; fill: none; stroke: #fff; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.cw-icon.wa { background: #25D366; }
+.cw-icon.wa svg { fill: #fff; stroke: none; width: 24px; height: 24px; }
+.cf-ways span:last-child { display: grid; font-weight: 700; font-size: 15px; line-height: 1.35; }
+.cf-ways small { font-size: 12.5px; font-weight: 600; color: var(--lilac); }
+.cf-fee { margin-top: 6px; padding-top: 18px; border-top: 1px solid rgba(255,255,255,.14); color: #DCD5EC; font-size: 15px; }
+.cf-fee strong { color: var(--teal-soft); font-size: 20px; }
+
+/* ---------- Clinics ---------- */
+.loc-sub { margin-top: 14px; color: var(--slate); max-width: 40em; }
+.loc-sub strong { display: inline-block; margin-left: 4px; color: var(--teal-deep); }
+.cc-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.cc {
+  display: flex; gap: 14px; align-items: stretch;
+  background: var(--paper); border-radius: var(--r-md); overflow: hidden;
+  box-shadow: 0 1px 0 var(--mist), var(--shadow-md);
+  transition: transform .4s var(--ease);
+}
+.cc:hover { transform: translateY(-4px); }
+.cc img { flex: none; width: 112px; object-fit: cover; }
+.cc-body { padding: 16px 16px 16px 0; display: grid; gap: 6px; align-content: center; }
+.cc h3 { font-family: var(--display); font-weight: 600; font-size: 20px; letter-spacing: -0.02em; line-height: 1.1; }
+.cc-addr { font-size: 14px; color: var(--slate); line-height: 1.45; text-decoration: none; }
+.cc-addr:hover { color: var(--teal-deep); text-decoration: underline; }
+.cc-tel { font-weight: 800; font-size: 15px; color: var(--teal-deep); text-decoration: none; }
+.cc-tel:hover { text-decoration: underline; }
+.page-contact .site-footer { margin-top: clamp(90px, 10vw, 140px); }
+
+@media (max-width: 1120px) {
+  .hero-contact .hero-img { object-position: 60% 60%; }
+  .hero-contact .hero-shade { background: linear-gradient(180deg, rgba(25,13,48,.4) 0, rgba(25,13,48,0) 16svh, rgba(25,13,48,0) 34svh, rgba(25,13,48,.94) 54svh, var(--ink) 64svh); }
+  .cf-card { grid-template-columns: 1fr; grid-template-areas: "form" "side"; }
+  .cc-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 760px) {
+  .cf-row { grid-template-columns: 1fr; }
+  .cc-grid { grid-template-columns: 1fr; }
+  .cc img { width: 96px; }
+  .cf-submit { justify-self: stretch; }
+}
+.cc img { height: auto; min-height: 100%; align-self: stretch; }
+.cc { min-height: 118px; }
