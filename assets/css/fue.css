@@ -203,3 +203,26 @@
 .page-fue .reviews { margin-top: 0; }
 .page-fue .results { padding-bottom: 0; }
 .page-fue .fue-what { padding-top: clamp(70px, 7vw, 100px); }
+
+/* ---------- Reviews on a light background (this page sits between two dark blocks) ---------- */
+.page-fue .reviews {
+  color: var(--ink);
+  background:
+    radial-gradient(40% 55% at 18% 70%, rgba(17,163,182,.12), transparent 70%),
+    radial-gradient(35% 50% at 82% 60%, rgba(120,72,200,.10), transparent 70%),
+    var(--pearl);
+}
+.page-fue .reviews .kicker, .page-fue .reviews .text-link { color: var(--teal-deep); }
+.page-fue .rs-count { color: var(--slate); }
+.page-fue .review {
+  color: var(--ink);
+  background: rgba(255,255,255,.75);
+  border-color: rgba(25,13,48,.06);
+  box-shadow: 0 1px 0 var(--mist), var(--shadow-md);
+}
+.page-fue .review-meta { color: var(--slate); }
+.page-fue .review-text { color: var(--slate); }
+.page-fue .review-text mark { color: var(--teal-deep); }
+.page-fue .review-more { color: var(--teal-deep); }
+.page-fue .review .g-logo, .page-fue .reviews-score .g-logo { box-shadow: 0 2px 8px rgba(25,13,48,.12); }
+.page-fue .reviews-inner { padding-bottom: clamp(40px, 5vw, 70px); }
