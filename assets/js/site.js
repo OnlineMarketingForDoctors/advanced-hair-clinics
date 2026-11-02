@@ -31,6 +31,38 @@
   $$('a', menu).forEach((a) => a.addEventListener('click', () => setMenu(false)));
   addEventListener('keydown', (e) => { if (e.key === 'Escape' && !menu.hidden) setMenu(false); });
 
+  /* ---------- Mega menu ---------- */
+  const mega = $('#mega');
+  const tops = $$('.mm-top');
+  if (mega) {
+    let closeT;
+    const openMega = (g) => {
+      clearTimeout(closeT);
+      mega.hidden = false;
+      mega.dataset.active = g;
+      tops.forEach((b) => b.setAttribute('aria-expanded', b.dataset.g === g));
+      $$('.mm-group', mega).forEach((el) => el.classList.toggle('is-active', el.dataset.g === g));
+    };
+    const closeMega = () => {
+      mega.hidden = true;
+      tops.forEach((b) => b.setAttribute('aria-expanded', 'false'));
+    };
+    const later = () => { clearTimeout(closeT); closeT = setTimeout(closeMega, 220); };
+    const canHover = matchMedia('(hover: hover)').matches;
+    tops.forEach((b) => {
+      if (canHover) b.addEventListener('mouseenter', () => openMega(b.dataset.g));
+      b.addEventListener('click', () => (b.getAttribute('aria-expanded') === 'true' && !canHover ? closeMega() : openMega(b.dataset.g)));
+    });
+    if (canHover) {
+      $$('.main-nav > ul > li:not(.has-mega)').forEach((li) => li.addEventListener('mouseenter', later));
+      header.addEventListener('mouseleave', later);
+      mega.addEventListener('mouseenter', () => clearTimeout(closeT));
+    }
+    addEventListener('keydown', (e) => { if (e.key === 'Escape' && !mega.hidden) { closeMega(); tops[0].focus(); } });
+    document.addEventListener('click', (e) => { if (!mega.hidden && !e.target.closest('.site-header')) closeMega(); });
+    mega.addEventListener('click', (e) => { if (e.target.closest('a')) closeMega(); });
+  }
+
   /* ---------- Counters ---------- */
   const counters = $$('[data-count]');
   const countIO = new IntersectionObserver((entries) => {
