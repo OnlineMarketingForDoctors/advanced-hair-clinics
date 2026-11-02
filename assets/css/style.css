@@ -1336,3 +1336,16 @@ ul, ol { padding: 0; list-style: none; }
   .mega-card { display: none; }
 }
 @media (max-width: 1120px) { .mega { display: none !important; } }
+.mm-top, .main-nav a { white-space: nowrap; }
+@media (max-width: 1520px) {
+  .mm-top, .main-nav > ul > li > a { font-size: 12px; letter-spacing: .04em; }
+  .header-inner { column-gap: 14px; }
+  .header-actions { gap: 14px; }
+  .header-phone-number { font-size: 17px; }
+  .header-book { padding: 12px 16px; font-size: 12px; }
+  .brand img { width: 160px; }
+}
+@media (max-width: 1300px) {
+  .header-phone { display: none; }
+  .mm-top { padding-right: 16px; }
+}

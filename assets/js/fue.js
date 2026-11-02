@@ -26,8 +26,19 @@
     onScroll();
   }
 
+  /* ---------- Hair loss: causes sidebar ---------- */
+  const cLinks = [...document.querySelectorAll('.causes-nav a')];
+  if (cLinks.length) {
+    const cSecs = cLinks.map((a) => document.querySelector(a.getAttribute('href')));
+    addEventListener('scroll', () => {
+      let cur = -1;
+      cSecs.forEach((s, i) => { if (s.getBoundingClientRect().top < innerHeight * 0.4) cur = i; });
+      cLinks.forEach((a, i) => a.classList.toggle('is-active', i === cur));
+    }, { passive: true });
+  }
+
   const track = document.getElementById('ev-track');
-  document.querySelectorAll('.ev-nav button').forEach((b) => b.addEventListener('click', () => {
+  if (track) document.querySelectorAll('.ev-nav button').forEach((b) => b.addEventListener('click', () => {
     track.scrollBy({ left: (track.firstElementChild.offsetWidth + 14) * 2 * +b.dataset.dir, behavior: 'smooth' });
   }));
 
