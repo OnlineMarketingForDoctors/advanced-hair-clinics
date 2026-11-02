@@ -1,0 +1,142 @@
+/* ==========================================================
+   Advanced Hair Clinics · Hair transplant
+   ========================================================== */
+.hero-ht .hero-img { object-position: 70% 30%; }
+.hero-ht .info-h1 { font-size: clamp(52px, 6.4vw, 104px); }
+.hero-ht .hero-points { grid-template-columns: repeat(2, minmax(0, max-content)); }
+.ht-intro { padding-top: clamp(70px, 8vw, 110px); }
+
+/* Stands out */
+.stand { max-width: var(--max); margin: 0 auto; padding: clamp(90px, 10vw, 140px) var(--gutter) 0; }
+.stand-head { margin-bottom: clamp(28px, 3vw, 44px); }
+.stand-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.stand-grid li { background: var(--paper); border-radius: var(--r-lg); overflow: hidden; box-shadow: 0 1px 0 var(--mist), var(--shadow-md); display: flex; flex-direction: column; }
+.stand-grid img { width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; }
+.stand-grid li > div { padding: 22px 24px 26px; display: grid; gap: 10px; }
+.stand-grid h3 { font-family: var(--display); font-weight: 600; font-size: 21px; letter-spacing: -0.02em; line-height: 1.2; }
+.stand-grid p { color: var(--slate); font-size: 15.5px; }
+.stand-grid a { color: var(--teal-deep); font-weight: 700; }
+
+/* Experience video band */
+.exp { position: relative; overflow: hidden; margin: clamp(90px, 10vw, 140px) var(--gutter) 0; border-radius: var(--r-lg); min-height: 520px; display: grid; align-items: end; color: #fff; background: var(--ink); }
+@media (min-width: 1700px) { .exp { max-width: 1600px; margin-left: auto; margin-right: auto; } }
+.exp-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.exp-shade { position: absolute; inset: 0; background: linear-gradient(0deg, rgba(25,13,48,.92) 5%, rgba(25,13,48,.35) 55%, rgba(25,13,48,.15)); }
+.exp-inner { position: relative; padding: clamp(32px, 5vw, 70px); max-width: 900px; }
+.exp-inner .display { font-size: clamp(30px, 3.8vw, 56px); }
+.page-ht .results { padding-bottom: 0; }
+
+/* Dr Vekris */
+.ht-vekris { margin-top: clamp(90px, 10vw, 140px); }
+.ht-vekris .authority-text .h2 { font-size: clamp(24px, 2.3vw, 34px); }
+
+/* Best practice tabs */
+.bps { max-width: var(--max); margin: 0 auto; padding: clamp(90px, 10vw, 140px) var(--gutter) 0; }
+.bps-head { margin-bottom: clamp(28px, 3vw, 44px); }
+.bps-body { display: grid; grid-template-columns: 290px minmax(0, 1fr); gap: clamp(24px, 3vw, 44px); align-items: start; }
+.bps-nav { position: sticky; top: calc(var(--header-h) + 80px); background: var(--paper); border-radius: var(--r-md); padding: 10px; box-shadow: 0 1px 0 var(--mist), var(--shadow-md); }
+.bps-nav ol { display: grid; gap: 1px; }
+.bps-nav a { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 10px; font-weight: 700; font-size: 14.5px; color: var(--ink); text-decoration: none; transition: background .25s, color .25s; }
+.bps-nav a span { width: 22px; font-size: 12px; font-weight: 800; color: var(--teal-deep); }
+.bps-nav a:hover { background: var(--pearl); }
+.bps-nav a.is-active { background: var(--ink); color: #fff; }
+.bps-nav a.is-active span { color: var(--teal-soft); }
+.bp { background: var(--paper); border-radius: var(--r-lg); overflow: hidden; box-shadow: 0 1px 0 var(--mist), var(--shadow-md); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); scroll-margin-top: calc(var(--header-h) + 80px); }
+.bps.js .bp { display: none; }
+.bps.js .bp.is-active { display: grid; animation: doc-in .45s var(--ease) both; }
+.bp-media { position: relative; background: var(--ink); min-height: 420px; }
+.bp-media img, .bp-media video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.bp-text { padding: clamp(24px, 3vw, 40px); display: grid; gap: 12px; align-content: start; color: var(--slate); font-size: 16px; }
+.bp-k { font-size: 12.5px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--teal-deep); }
+.bp-text h2 { font-family: var(--display); font-weight: 600; font-size: clamp(22px, 2vw, 28px); line-height: 1.15; letter-spacing: -0.02em; color: var(--ink); }
+.bp-text h4 { font-family: var(--display); font-weight: 600; font-size: 19px; color: var(--ink); margin-top: 6px; }
+.bp-text strong { color: var(--ink); }
+.bp-text .cv-list li { font-size: 15px; }
+.bps:not(.js) .bps-panels { display: grid; gap: 16px; }
+
+/* Google reviews */
+.greviews { max-width: var(--max); margin: 0 auto; padding: clamp(90px, 10vw, 140px) var(--gutter) 0; display: grid; gap: 24px; justify-items: start; }
+.gr-head { width: 100%; display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 18px; }
+.greviews .rs-count { color: var(--slate); }
+.greviews .reviews-score .g-logo { box-shadow: 0 2px 8px rgba(25,13,48,.12); }
+.gr-grid { width: 100%; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.gr { background: var(--paper); border-radius: var(--r-md); padding: 26px; box-shadow: 0 1px 0 var(--mist), var(--shadow-md); display: grid; gap: 14px; align-content: start; }
+.gr-top { display: flex; align-items: center; gap: 12px; }
+.gr-top img { width: 46px; height: 46px; border-radius: 50%; }
+.gr-n { font-weight: 800; text-transform: capitalize; }
+.gr .g-logo { width: 28px; height: 28px; margin-left: auto; }
+.gr-t { color: var(--slate); font-size: 15.5px; line-height: 1.6; }
+.greviews .text-link { color: var(--teal-deep); }
+
+/* Doctors with fees */
+.page-ht .mini-team { padding-top: clamp(90px, 10vw, 140px); }
+.md-fee { display: block; font-size: 12.5px; color: var(--slate); padding: 0 14px 14px; margin-top: -8px; }
+.md-fee strong { color: var(--ink); }
+
+/* Awards */
+.awards-row { max-width: var(--max); margin: 0 auto; padding: clamp(80px, 9vw, 120px) var(--gutter) 0; text-align: center; }
+.awards-row .kicker { justify-content: center; }
+.awards-row ul { margin-top: 28px; display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; }
+.awards-row li { width: 150px; height: 150px; border-radius: var(--r-md); background: #000; display: grid; place-items: center; overflow: hidden; box-shadow: var(--shadow-md); }
+.awards-row li.aw-light { background: #000; padding: 14px; }
+.awards-row img { width: 100%; height: 100%; object-fit: contain; }
+
+/* Overview */
+.overview { margin-top: clamp(90px, 10vw, 140px); background: var(--grad-ink); color: #fff; }
+.ov-inner { max-width: var(--max); margin: 0 auto; padding: clamp(80px, 9vw, 120px) var(--gutter); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: clamp(36px, 5vw, 70px); align-items: center; }
+.ov-text { display: grid; gap: 16px; }
+.ov-text .kicker { margin-bottom: 0; }
+.ov-text p:not(.kicker) { color: #DCD5EC; font-size: 17px; }
+.ov-facts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.ov-facts div { padding: 18px 20px; border-radius: var(--r-md); background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); }
+.ov-facts dt { font-size: 12px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--teal-soft); }
+.ov-facts dd { margin-top: 6px; font-weight: 700; font-size: 16px; line-height: 1.35; }
+
+/* Techniques */
+.tech { max-width: var(--max); margin: 0 auto; padding: clamp(90px, 10vw, 140px) var(--gutter) 0; display: grid; gap: clamp(30px, 4vw, 60px); }
+.tech-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: clamp(30px, 5vw, 70px); align-items: center; }
+.tech-grid-2 { grid-template-columns: minmax(0, .7fr) minmax(0, 1.3fr); }
+.tech-text { display: grid; gap: 14px; }
+.tech-text .kicker { margin-bottom: 0; }
+.tech-text p:not(.kicker) { color: var(--slate); font-size: 16.5px; }
+.tech-text a { color: var(--teal-deep); font-weight: 700; }
+.tech-fig { background: #fff; border-radius: var(--r-lg); padding: 14px; box-shadow: var(--shadow-md); }
+.tech-fig img { width: 100%; height: auto; border-radius: 12px; }
+.tech-photo { padding: 0; overflow: hidden; }
+.tech-photo img { aspect-ratio: 4 / 5; object-fit: cover; border-radius: 0; }
+.tech-steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: 6px; }
+.tech-steps li { padding: 16px; border-radius: var(--r-md); background: var(--paper); box-shadow: 0 1px 0 var(--mist), var(--shadow-md); font-size: 14px; color: var(--slate); line-height: 1.45; }
+.tech-steps strong { display: block; color: var(--ink); font-size: 15px; margin-bottom: 4px; }
+.page-ht .related-info .apps-grid { margin-top: 0; }
+
+/* Quote + why choose */
+.ht-quote { margin-top: clamp(90px, 10vw, 140px); background: var(--grad-ink); color: #fff; }
+.htq-inner { max-width: var(--max); margin: 0 auto; padding: clamp(80px, 9vw, 120px) var(--gutter); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(36px, 5vw, 70px); align-items: start; }
+.htq-left, .htq-right { display: grid; gap: 18px; justify-items: start; }
+.htq-left .kicker { margin-bottom: 0; }
+.htq-fig { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); }
+.htq-right p { color: #DCD5EC; }
+.htq-right a { color: var(--teal-soft); font-weight: 700; }
+.htq-right .iw-stats { width: 100%; }
+
+@media (max-width: 1120px) {
+  .hero-ht .hero-img { object-position: 85% 40%; }
+  .stand-grid { grid-template-columns: 1fr 1fr; }
+  .bps-body { grid-template-columns: 1fr; }
+  .bps-nav { position: sticky; top: var(--header-h); z-index: 30; margin: 0 calc(var(--gutter) * -1); border-radius: 0; padding: 8px var(--gutter); background: rgba(244,243,248,.95); backdrop-filter: blur(10px); }
+  .bps-nav ol { display: flex; overflow-x: auto; scrollbar-width: none; gap: 6px; }
+  .bps-nav ol::-webkit-scrollbar { display: none; }
+  .bps-nav a { white-space: nowrap; border: 1.5px solid var(--mist); background: var(--paper); border-radius: 999px; }
+  .gr-grid { grid-template-columns: 1fr; }
+  .ov-inner, .tech-grid, .tech-grid-2, .htq-inner { grid-template-columns: 1fr; }
+  .tech-photo img { aspect-ratio: 16 / 10; }
+}
+@media (max-width: 760px) {
+  .hero-ht .hero-points { grid-template-columns: 1fr; }
+  .stand-grid { grid-template-columns: 1fr; }
+  .bp { grid-template-columns: 1fr; }
+  .bp-media { min-height: 0; aspect-ratio: 4 / 3; }
+  .ov-facts, .tech-steps { grid-template-columns: 1fr; }
+  .awards-row li { width: 104px; height: 104px; }
+  .exp { min-height: 420px; }
+}
