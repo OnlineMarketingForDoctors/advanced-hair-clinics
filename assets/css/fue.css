@@ -213,3 +213,8 @@
   .intl-cards img { width: 96px; height: 80px; }
   .ev-track { grid-auto-columns: 78%; }
 }
+
+/* ---------- Spacing: reviews sit right under the section nav, results flow into the intro ---------- */
+.page-fue .reviews { margin-top: 0; }
+.page-fue .results { padding-bottom: 0; }
+.page-fue .fue-what { padding-top: clamp(70px, 7vw, 100px); }
