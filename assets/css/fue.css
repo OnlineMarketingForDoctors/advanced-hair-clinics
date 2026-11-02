@@ -225,4 +225,4 @@
 .page-fue .review-text mark { color: var(--teal-deep); }
 .page-fue .review-more { color: var(--teal-deep); }
 .page-fue .review .g-logo, .page-fue .reviews-score .g-logo { box-shadow: 0 2px 8px rgba(25,13,48,.12); }
-.page-fue .reviews-inner { padding-bottom: clamp(40px, 5vw, 70px); }
+.page-fue .reviews-inner { padding-top: clamp(60px, 6vw, 90px); padding-bottom: clamp(30px, 4vw, 50px); }
