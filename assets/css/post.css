@@ -134,3 +134,50 @@
   .units { grid-template-columns: repeat(2, 1fr); }
   .pull { padding: 24px; }
 }
+
+/* ---------- Sidebar on the right ---------- */
+@media (min-width: 1121px) {
+  .post-layout { grid-template-columns: minmax(0, 760px) 290px; }
+  .post-aside { order: 2; }
+}
+
+/* ---------- Before & after banner ---------- */
+.ba-promo {
+  border-radius: var(--r-md); padding: 20px 18px 18px;
+  background: radial-gradient(120% 80% at 100% 0%, rgba(17,163,182,.28), transparent 60%), var(--ink);
+  color: #fff; display: grid; gap: 10px;
+  box-shadow: var(--shadow-md);
+}
+.ba-promo-k { font-size: 12.5px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--teal-soft); }
+.ba-promo-t { font-family: var(--display); font-weight: 600; font-size: 21px; line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 4px; }
+.ba-promo .hba-stage { aspect-ratio: 1; }
+.bp-tag {
+  position: absolute; top: 10px; z-index: 1; pointer-events: none;
+  font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase;
+  padding: 4px 9px; border-radius: 999px; background: rgba(25,13,48,.7); color: #fff;
+}
+.bp-tag-b { left: 10px; }
+.bp-tag-a { right: 10px; background: var(--teal); }
+.ba-promo .hba-foot { padding: 4px 2px 2px; }
+.bp-btn { justify-self: stretch; padding: 12px 18px; }
+
+/* ---------- About the author ---------- */
+.post-meta a { color: inherit; text-decoration: underline; text-decoration-color: var(--teal); text-underline-offset: 3px; }
+.author {
+  margin-top: 2em !important; padding: clamp(22px, 3vw, 32px); border-radius: var(--r-lg);
+  background: var(--paper); box-shadow: 0 1px 0 var(--mist), var(--shadow-md);
+  display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: clamp(18px, 3vw, 30px); align-items: start;
+  scroll-margin-top: calc(var(--header-h) + 24px);
+}
+.author-img { width: 150px; height: 150px; border-radius: 50%; object-fit: cover; object-position: 50% 20%; box-shadow: 0 0 0 6px var(--pearl), 0 0 0 8px var(--teal); }
+.author-body { display: grid; gap: 8px; }
+.author-k { font-size: 12.5px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--teal-deep); }
+.post-body h2.author-name { margin: 0; font-size: clamp(22px, 2vw, 28px); }
+.author-role { font-size: 14px; font-weight: 700; color: var(--ink); line-height: 1.45; }
+.author-body > p:not(.author-k):not(.author-role) { font-size: 16px; line-height: 1.65; color: var(--slate); }
+.author-links { display: flex; flex-wrap: wrap; gap: 10px 26px; margin-top: 4px; }
+.post-body .author-links a { font-size: 15px; text-decoration: none; }
+@media (max-width: 760px) {
+  .author { grid-template-columns: 1fr; justify-items: start; }
+  .author-img { width: 110px; height: 110px; }
+}
