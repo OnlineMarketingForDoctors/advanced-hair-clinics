@@ -1,0 +1,876 @@
+/* Advanced Hair Clinics · Vekris Signature VIP page (ported from the VIP landing page) */
+/* ==========================================================
+   Hair transplant in Greece · page layer on top of base.css
+   ========================================================== */
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+.header-book-mobile, .header-book { text-decoration: none; }
+
+/* ==========================================================
+   HERO
+   ========================================================== */
+/* The hero video, its mirroring and its shade come from base.css, as on the homepage. */
+.gr-hero .hero-title { font-size: clamp(38px, 4.2vw, 66px); }
+
+/* Travel page: purple gradient, copy on the left, a timelapse with satellites on the right */
+.gr-hero.hero-split {
+  background:
+    radial-gradient(55% 65% at 82% 35%, rgba(120,72,200,.5), transparent 70%),
+    radial-gradient(45% 55% at 8% 95%, rgba(17,163,182,.2), transparent 70%),
+    linear-gradient(135deg, #190D30 0%, #261447 55%, #34195F 100%);
+}
+.hero-stage {
+  position: absolute; z-index: 2;
+  top: calc(var(--header-h) + 44px); bottom: 150px;
+  right: max(var(--gutter), calc((100vw - var(--max)) / 2));
+  width: min(44vw, 640px);
+  opacity: 0; transform: translateY(20px);
+  transition: opacity 1s .6s var(--ease), transform 1s .6s var(--ease);
+}
+.is-loaded .hero-stage { opacity: 1; transform: none; }
+.hs-media { position: absolute; inset: 0; }
+.hs-video {
+  position: absolute; top: 3%; right: 0; left: 16%; aspect-ratio: 16 / 10.5;
+  border-radius: var(--r-lg); overflow: hidden; background: var(--ink);
+  box-shadow: 0 50px 100px -40px rgba(0,0,0,.8);
+}
+.hs-video video { width: 100%; height: 100%; object-fit: cover; }
+.hs-sat {
+  position: absolute; margin: 0; width: 30%; aspect-ratio: 4 / 5;
+  border-radius: var(--r-md); overflow: hidden;
+  border: 6px solid #261447; box-shadow: 0 30px 60px -24px rgba(0,0,0,.8);
+}
+.hs-sat img { width: 100%; height: 100%; object-fit: cover; }
+.hs-sat-a { left: 0; top: 27%; width: 28%; transform: rotate(-3deg); }
+.hs-sat-b { right: 1%; bottom: 30%; width: 31%; aspect-ratio: 4 / 3; transform: rotate(3deg); }
+.hero-stage .flight { position: absolute; left: 6%; right: auto; bottom: 0; width: min(372px, 62%); opacity: 1; transform: none; transition: none; }
+
+/* German: longer compound words, so the hero headline runs a little smaller */
+html[lang="de"] .gr-hero .hero-title { font-size: clamp(30px, 3.7vw, 58px); }
+html[lang="de"] .hero-content { min-width: 0; }
+@media (max-width: 760px) {
+  html[lang="de"] .gr-hero .hero-title { font-size: clamp(28px, 8.2vw, 40px); }
+  html[lang="de"] .btn { white-space: normal; text-align: center; }
+}
+
+/* Satellite card: flight time from the visitor's city */
+.flight {
+  position: absolute; z-index: 3;
+  right: max(var(--gutter), calc((100vw - var(--max)) / 2));
+  bottom: 176px;
+  width: 372px;
+  padding: 20px 22px 18px;
+  border-radius: var(--r-md);
+  color: #fff;
+  background: rgba(25,13,48,.6);
+  border: 1px solid rgba(255,255,255,.18);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 30px 60px -24px rgba(0,0,0,.7);
+  opacity: 0; transform: translateY(20px);
+  transition: opacity 1s 1.5s var(--ease), transform 1s 1.5s var(--ease);
+}
+.is-loaded .flight { opacity: 1; transform: none; }
+.flight-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.flight-title { font-weight: 800; font-size: 15px; line-height: 1.3; }
+.flight-select select {
+  appearance: none; -webkit-appearance: none;
+  font: inherit; font-weight: 700; font-size: 14px; color: #fff;
+  background: rgba(255,255,255,.12) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238FDCE5' stroke-width='2.6' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") right 10px center / 14px no-repeat;
+  border: 1px solid rgba(255,255,255,.28); border-radius: 999px;
+  padding: 7px 32px 7px 14px; cursor: pointer;
+}
+.flight-select select option { color: var(--ink); }
+.flight-route { position: relative; display: grid; grid-template-columns: auto 1fr auto; align-items: end; gap: 8px; margin: 18px 0 14px; }
+.fr-code { font-family: var(--display); font-weight: 600; font-size: 22px; letter-spacing: .02em; line-height: 1; }
+.fr-track { position: relative; display: block; height: 44px; }
+.fr-arc { display: block; width: 100%; height: 44px; overflow: visible; }
+.fr-arc path {
+  fill: none; stroke: var(--teal-soft); stroke-width: 2; stroke-dasharray: 4 6;
+  vector-effect: non-scaling-stroke;
+}
+.fr-plane {
+  position: absolute; left: 0; top: 0; width: 22px; height: 22px; fill: #fff;
+  /* The script sets offset-path from the arc's rendered size, so the plane follows the dotted line */
+  offset-anchor: center;
+  offset-distance: 90%;
+  offset-rotate: auto 90deg;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,.4));
+}
+.flight-route.is-flying .fr-plane { animation: fly 2.4s var(--ease) both; }
+@keyframes fly { from { offset-distance: 0%; } to { offset-distance: 90%; } }
+@supports not (offset-path: path("M0 0")) { .fr-plane { display: none; } }
+.flight-facts { display: grid; grid-template-columns: 1.25fr 1fr 1fr; gap: 10px; border-top: 1px solid rgba(255,255,255,.16); padding-top: 12px; }
+.flight-facts dt { font-size: 12px; color: var(--lilac); font-weight: 600; line-height: 1.3; }
+.flight-facts dd { font-weight: 800; font-size: 15px; color: var(--teal-soft); line-height: 1.3; margin-top: 2px; }
+
+/* ==========================================================
+   AUTHORITY tweaks
+   ========================================================== */
+.authority-text .kicker { margin-bottom: -4px; }
+.authority-text .h2 { font-size: clamp(26px, 2.6vw, 38px); }
+
+/* ==========================================================
+   WHY: panel copy is a touch longer here
+   ========================================================== */
+.why { padding-bottom: clamp(60px, 7vw, 100px); }
+
+/* ==========================================================
+   ATHENS (full bleed, quote, overlapping image strip)
+   ========================================================== */
+.athens { position: relative; color: #fff; padding-bottom: clamp(70px, 8vw, 120px); }
+.athens-bg { position: absolute; inset: 0 0 180px 0; overflow: hidden; background: var(--ink); }
+.athens-bg img { width: 100%; height: 115%; object-fit: cover; object-position: 50% 70%; will-change: transform; }
+.athens-bg::after {
+  content: ""; position: absolute; inset: 0;
+  background:
+    linear-gradient(180deg, rgba(25,13,48,.55) 0%, rgba(25,13,48,.2) 40%, rgba(25,13,48,.75) 100%),
+    linear-gradient(90deg, rgba(25,13,48,.7) 0%, rgba(25,13,48,0) 60%);
+}
+.athens-inner {
+  position: relative;
+  max-width: var(--max); margin: 0 auto;
+  padding: clamp(100px, 11vw, 170px) var(--gutter) clamp(60px, 6vw, 90px);
+  display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: clamp(30px, 5vw, 80px); align-items: end;
+}
+.athens .kicker { color: var(--teal-soft); }
+.athens .display { font-size: clamp(36px, 4.6vw, 70px); max-width: 12em; }
+.athens-lead { margin-top: 22px; font-size: clamp(17px, 1.3vw, 19px); color: #E4DEF2; max-width: 34em; }
+.athens-quote {
+  margin: 0;
+  background: rgba(255,255,255,.1);
+  border: 1px solid rgba(255,255,255,.2);
+  backdrop-filter: blur(18px) saturate(140%); -webkit-backdrop-filter: blur(18px) saturate(140%);
+  border-radius: var(--r-lg);
+  padding: 30px 30px 26px;
+  box-shadow: 0 40px 80px -40px rgba(0,0,0,.7);
+}
+.athens-quote p { font-family: var(--display); font-weight: 500; font-size: clamp(18px, 1.4vw, 21px); line-height: 1.45; letter-spacing: -0.01em; }
+.athens-quote footer { display: flex; align-items: center; gap: 14px; margin-top: 20px; font-size: 13.5px; color: var(--lilac); line-height: 1.35; }
+.athens-quote footer img { width: 52px; height: 52px; border-radius: 50%; object-fit: cover; object-position: 50% 20%; border: 2px solid var(--teal-soft); }
+.athens-quote strong { display: block; color: #fff; font-size: 15px; }
+
+.athens-strip {
+  position: relative;
+  max-width: var(--max); margin: 0 auto;
+  padding: 0 var(--gutter);
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(16px, 2vw, 28px); align-items: stretch;
+}
+.as-card {
+  position: relative; background: #fff; color: var(--ink);
+  border-radius: var(--r-lg); overflow: hidden;
+  box-shadow: var(--shadow-lg);
+}
+.as-card img { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; transition: transform 1.2s var(--ease); }
+.as-card:hover img { transform: scale(1.04); }
+.as-card > div { padding: 22px 24px 26px; display: grid; gap: 6px; }
+.as-card h3 { font-family: var(--display); font-weight: 600; font-size: 22px; letter-spacing: -0.02em; line-height: 1.15; }
+.as-card p { font-size: 15px; color: var(--slate); line-height: 1.55; }
+.as-card:nth-child(3) img { object-position: 50% 30%; }
+
+/* ==========================================================
+   PACKAGES (staggered, overlapping cards)
+   ========================================================== */
+.packages {
+  max-width: var(--max); margin: 0 auto;
+  padding: clamp(70px, 8vw, 120px) var(--gutter) clamp(80px, 9vw, 140px);
+}
+.packages-head { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 6px 60px; align-items: end; margin-bottom: clamp(40px, 5vw, 70px); }
+.packages-head .kicker { grid-column: 1 / -1; }
+.packages-head p:not(.kicker) { color: var(--slate); font-size: 18px; }
+/* The Advanced Team leads; the Vekris Signature sits beside it as the optional upgrade */
+.pk-grid { display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr); align-items: start; }
+.pk {
+  position: relative; border-radius: var(--r-lg); overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  display: grid;
+}
+.pk-vip { background: #fff; margin-top: 90px; margin-left: -40px; z-index: 1; }
+.pk-team { background: var(--grad-ink); color: #fff; z-index: 2; }
+.pk-media { aspect-ratio: 16 / 10; overflow: hidden; position: relative; }
+.pk-team .pk-media { aspect-ratio: 16 / 11; }
+.pk-media img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; transition: transform 1.2s var(--ease); }
+.pk-team .pk-media img { object-position: 50% 22%; }
+.pk:hover .pk-media img { transform: scale(1.03); }
+.pk-vip .pk-body { padding-left: calc(clamp(22px, 3vw, 44px) + 40px); }
+.pk-body {
+  position: relative;
+  margin: -70px 18px 18px;
+  border-radius: var(--r-md);
+  padding: clamp(24px, 3vw, 40px) clamp(22px, 3vw, 44px);
+  display: grid; gap: 14px; justify-items: start;
+}
+.pk-vip .pk-body { background: #fff; box-shadow: var(--shadow-md); }
+.pk-team .pk-body { background: rgba(25,13,48,.92); border: 1px solid var(--ink-3); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+.pk-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 14px; border-radius: 999px;
+  font-weight: 700; font-size: 13.5px;
+  color: var(--teal-deep); background: rgba(17,163,182,.1);
+}
+.pk-team .pk-tag { color: #fff; background: rgba(17,163,182,.22); border: 1px solid rgba(143,220,229,.45); }
+.pk-team .pk-tag::before {
+  content: ""; width: 16px; height: 16px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%238FDCE5'%3E%3Cpath d='M12 2l2.9 6.2 6.8.8-5 4.6 1.3 6.7L12 17l-6 3.3 1.3-6.7-5-4.6 6.8-.8z'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+.pk h3 { font-family: var(--display); font-weight: 600; font-size: clamp(30px, 2.8vw, 42px); line-height: 1; letter-spacing: -0.03em; }
+.pk-price { font-family: var(--display); font-weight: 600; font-size: clamp(28px, 2.4vw, 36px); letter-spacing: -0.02em; line-height: 1; color: var(--teal-deep); }
+.pk-team .pk-price { color: var(--teal-soft); }
+.pk-price span { font-family: var(--sans); font-size: 15px; font-weight: 700; letter-spacing: 0; color: var(--slate); margin-right: 4px; }
+.pk-team .pk-price span { color: var(--lilac); }
+.pk-desc { color: var(--slate); font-size: 16px; }
+.pk-team .pk-desc { color: #D9D2EA; }
+.pk-list { display: grid; gap: 10px; margin: 4px 0 8px; width: 100%; }
+.pk-list li { position: relative; padding-left: 32px; font-size: 15px; line-height: 1.5; }
+.pk-list li::before {
+  content: ""; position: absolute; left: 0; top: 1px; width: 21px; height: 21px; border-radius: 50%;
+  background: var(--teal) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12.5l4 4 8-9' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 13px no-repeat;
+}
+.pk-team .pk-list li { color: #E8E3F3; }
+.pk-plus li:first-child { font-weight: 800; padding-left: 0; }
+.pk-plus li:first-child::before { display: none; }
+
+.pk h3 .pk-sub { display: block; margin-top: 8px; font-family: var(--sans); font-size: 16px; font-weight: 700; letter-spacing: 0; color: var(--teal-soft); }
+.pk-grafts { font-weight: 700; font-size: 15px; color: #fff; }
+
+/* What every package includes, above the cards */
+.pk-included { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-bottom: clamp(36px, 4vw, 56px); }
+.pk-included li {
+  display: grid; grid-template-columns: 44px 1fr; column-gap: 14px; row-gap: 2px; align-items: start;
+  padding: 18px; border-radius: var(--r-md); background: #fff; box-shadow: var(--shadow-md);
+}
+.pk-included svg { grid-row: span 2; width: 44px; height: 44px; padding: 10px; border-radius: 50%; color: var(--teal-deep); fill: var(--teal-deep); background: rgba(17,163,182,.1); }
+.pk-included svg path[fill="none"], .pk-included svg rect, .pk-included svg circle[fill="none"] { fill: none; }
+.pk-included strong { font-weight: 800; font-size: 15.5px; line-height: 1.3; }
+.pk-included span { font-size: 14px; color: var(--slate); line-height: 1.45; }
+
+.pk-compare { margin-top: clamp(36px, 4vw, 56px); background: #fff; border-radius: var(--r-lg); box-shadow: var(--shadow-md); overflow: hidden; }
+.pk-compare summary {
+  list-style: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding: 22px clamp(20px, 3vw, 36px);
+  font-family: var(--display); font-weight: 600; font-size: clamp(19px, 1.6vw, 23px); letter-spacing: -0.02em;
+}
+.pk-compare summary::-webkit-details-marker { display: none; }
+.pk-compare summary::after, .faq-list summary::after {
+  content: ""; flex: none; width: 34px; height: 34px; border-radius: 50%;
+  background: var(--pearl) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230B7F8E' stroke-width='2.6' stroke-linecap='round'%3E%3Cpath d='M12 5v14M5 12h14'/%3E%3C/svg%3E") center / 16px no-repeat;
+  transition: transform .4s var(--ease), background-color .3s;
+}
+.pk-compare[open] summary::after, .faq-list details[open] summary::after { transform: rotate(45deg); background-color: var(--mist); }
+.pk-table-wrap { overflow-x: auto; padding: 0 clamp(12px, 2vw, 24px) clamp(16px, 2vw, 24px); }
+.pk-table { width: 100%; border-collapse: collapse; font-size: 15px; min-width: 620px; }
+.pk-table th, .pk-table td { text-align: left; padding: 14px 16px; border-top: 1px solid var(--mist); vertical-align: top; }
+.pk-table thead th { border-top: 0; font-weight: 800; font-size: 14px; color: var(--slate); }
+.pk-table thead th:last-child { color: var(--teal-deep); }
+.pk-table tbody th { font-weight: 700; width: 32%; }
+.pk-table td:last-child { background: rgba(17,163,182,.05); font-weight: 600; }
+.tick { display: inline-block; width: 22px; height: 22px; border-radius: 50%; background: var(--teal) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12.5l4 4 8-9' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 13px no-repeat; vertical-align: middle; }
+.pk-note { margin-top: 18px; font-size: 14px; color: var(--slate); max-width: 60em; }
+
+/* ==========================================================
+   RESULTS: hair transplant cases only, arrows and a scrolling thumbnail panel
+   ========================================================== */
+.results-intro { color: var(--slate); max-width: 26em; }
+/* White, full-width band for contrast with the grey "Why" section below.
+   The shadow paints the band past the content width; clip-path keeps it from spilling vertically. */
+.results { background: var(--paper); box-shadow: 0 0 0 100vmax var(--paper); clip-path: inset(0 -100vmax); }
+.results-grid { align-items: stretch; }
+.ba-frame { position: relative; }
+.ba-step {
+  position: absolute; top: 50%; z-index: 2;
+  width: 46px; height: 46px; margin-top: -23px; border-radius: 50%; border: 0;
+  display: grid; place-items: center;
+  color: var(--ink); background: rgba(255,255,255,.92);
+  box-shadow: 0 10px 24px -10px rgba(25,13,48,.6);
+  transition: transform .3s var(--ease), background .3s, color .3s;
+}
+.ba-step:hover { background: var(--teal); color: #fff; transform: scale(1.06); }
+.ba-step[data-step="-1"] { left: 14px; }
+.ba-step[data-step="1"] { right: 14px; }
+.ba-step svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.ba-count {
+  position: absolute; z-index: 2; left: 50%; top: 14px; transform: translateX(-50%);
+  padding: 5px 12px; border-radius: 999px;
+  font-weight: 800; font-size: 13px; color: #fff; background: rgba(25,13,48,.72);
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+}
+/* The panel takes the height of the main photo and scrolls inside it */
+.ba-thumbs-wrap {
+  position: relative; min-height: 0;
+  overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin;
+  padding: 4px 6px 24px 4px; margin: -4px -6px 0 -4px;
+  -webkit-mask-image: linear-gradient(180deg, #000 88%, transparent);
+  mask-image: linear-gradient(180deg, #000 88%, transparent);
+}
+@media (min-width: 1121px) {
+  .ba-thumbs-wrap { height: 0; min-height: 100%; }
+}
+
+/* ==========================================================
+   MEET: tag copy is shorter here
+   ========================================================== */
+.meet-text .btn { white-space: normal; text-align: center; }
+
+/* ==========================================================
+   JOURNEY: a little more room before it
+   ========================================================== */
+.vt { padding-bottom: clamp(90px, 10vw, 140px); }
+/* Journey on white, so it stands apart from the grey sections around it.
+   Cards turn grey to read against it; markers and arrows match the white so they still mask the rail. */
+.journey { background: var(--paper); }
+.j-card:not(.j-now) { background: var(--pearl); box-shadow: none; }
+.j-node, .j-card:not(:last-child) .j-arrow { background: var(--paper); }
+
+/* ==========================================================
+   FAQ (sticky layered images + accordion)
+   ========================================================== */
+.faq {
+  max-width: var(--max); margin: 0 auto;
+  padding: clamp(90px, 10vw, 150px) var(--gutter) clamp(40px, 5vw, 70px);
+  display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: clamp(36px, 6vw, 100px); align-items: start;
+}
+.faq-media { position: sticky; top: calc(var(--header-h) + 30px); aspect-ratio: 1 / 1.12; }
+.faq-media img { position: absolute; object-fit: cover; border-radius: var(--r-lg); box-shadow: var(--shadow-lg); }
+.fm-main { left: 0; top: 0; width: 80%; height: 88%; object-position: 50% 20%; }
+.fm-sat { right: 0; bottom: 0; width: 56%; aspect-ratio: 3 / 2; height: auto; border: 8px solid var(--pearl); }
+.faq-text .h2 { margin-bottom: 26px; }
+.faq-list { display: grid; gap: 10px; }
+.faq-list details { background: #fff; border-radius: var(--r-md); box-shadow: 0 10px 30px -22px rgba(25,13,48,.5); transition: box-shadow .3s; }
+.faq-list details[open] { box-shadow: var(--shadow-md); }
+.faq-list summary {
+  list-style: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding: 18px 20px 18px 24px;
+  font-weight: 800; font-size: 16.5px; line-height: 1.35;
+}
+.faq-list summary::-webkit-details-marker { display: none; }
+.faq-list details p { padding: 0 24px 22px; color: var(--slate); font-size: 15.5px; max-width: 40em; }
+.faq-list details[open] p { animation: rise .45s var(--ease) both; }
+
+/* ==========================================================
+   CLINIC
+   ========================================================== */
+.clinics { padding-top: clamp(60px, 7vw, 100px); }
+/* Text on the left, images on the right; on narrow screens the images stay first */
+@media (min-width: 1121px) {
+  .clinics .clinics-media { order: 2; }
+}
+.clinic-lead { color: var(--slate); margin: -8px 0 24px; max-width: 34em; }
+.clinic-card {
+  background: var(--grad-ink); color: #fff; border-radius: var(--r-lg);
+  padding: clamp(22px, 3vw, 34px); box-shadow: var(--shadow-lg);
+  display: grid; gap: 12px;
+}
+.clinic-card h3 { font-family: var(--display); font-weight: 600; font-size: 24px; letter-spacing: -0.02em; }
+.clinic-card address { font-style: normal; color: #D9D2EA; }
+.clinic-links { display: grid; gap: 6px; justify-items: start; }
+.clinic-links a { color: #fff; font-weight: 800; text-decoration: none; }
+.clinic-links a:hover { color: var(--teal-soft); }
+.clinic-links .text-link { color: var(--teal-soft); margin-top: 6px; }
+.clinic-note { margin-top: 16px; font-size: 14.5px; color: var(--slate); }
+
+/* ==========================================================
+   ENQUIRY (full bleed image, overlapping form)
+   ========================================================== */
+.enquiry { position: relative; color: #fff; overflow: hidden; background: var(--ink); }
+.enquiry-bg { position: absolute; inset: 0; }
+.enquiry-bg img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 80%; transform: scaleX(-1); }
+.enquiry-bg::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(25,13,48,.94) 0%, rgba(25,13,48,.82) 45%, rgba(25,13,48,.55) 100%); }
+.enquiry-inner {
+  position: relative; max-width: var(--max); margin: 0 auto;
+  padding: clamp(80px, 9vw, 130px) var(--gutter);
+  display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: clamp(36px, 5vw, 80px); align-items: center;
+}
+.enquiry .kicker { color: var(--teal-soft); }
+.enquiry .display { font-size: clamp(34px, 4vw, 60px); }
+.enquiry-copy > p:not(.kicker) { margin-top: 20px; color: #E4DEF2; font-size: 18px; max-width: 30em; }
+.enquiry-points { margin-top: 24px; display: grid; gap: 10px; }
+.enquiry-points li { display: flex; align-items: center; gap: 12px; font-weight: 700; }
+.enquiry-points li::before {
+  content: ""; flex: none; width: 22px; height: 22px; border-radius: 50%;
+  background: var(--teal) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12.5l4 4 8-9' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 14px no-repeat;
+}
+.enquiry-wa {
+  display: inline-flex; align-items: center; gap: 12px; margin-top: 30px;
+  padding: 12px 20px 12px 14px; border-radius: 999px;
+  color: #fff; text-decoration: none; font-weight: 700; font-size: 15px;
+  background: rgba(37,211,102,.16); border: 1px solid rgba(37,211,102,.5);
+  transition: background .3s;
+}
+.enquiry-wa:hover { background: rgba(37,211,102,.3); }
+.enquiry-wa svg { width: 24px; height: 24px; fill: #25D366; flex: none; }
+
+/* The LeadConnector form sits in a white card with 40px of padding around it.
+   form_embed.js sets the iframe height from the form, so the card has no fixed height. */
+.enquiry-form {
+  background: #fff; border-radius: var(--r-lg); overflow: hidden;
+  padding: 40px;
+  box-shadow: 0 50px 100px -40px rgba(0,0,0,.8);
+}
+.enquiry-form iframe { display: block; width: 100%; min-height: 0; }
+
+/* ==========================================================
+   FOOTER
+   ========================================================== */
+.powered { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; }
+.powered a { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; }
+.powered img { width: 18px; height: 18px; }
+.powered a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+
+/* ==========================================================
+   WHY TRAVEL (the overlapping card, with a list)
+   ========================================================== */
+.why-travel .authority-media img { object-position: 50% 60%; }
+.wt-list { display: grid; gap: 14px; }
+.wt-list li { position: relative; padding-left: 32px; color: var(--slate); line-height: 1.55; }
+.wt-list li::before {
+  content: ""; position: absolute; left: 0; top: 2px; width: 21px; height: 21px; border-radius: 50%;
+  background: var(--teal) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12.5l4 4 8-9' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 13px no-repeat;
+}
+.wt-list strong { color: var(--ink); }
+
+/* ==========================================================
+   GREECE VS TURKEY (inside the Why section)
+   ========================================================== */
+.versus-section { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter) clamp(70px, 8vw, 120px); }
+.versus-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 10px 60px; align-items: end; margin-bottom: 22px; }
+.versus-head h2 { font-family: var(--display); font-weight: 600; font-size: clamp(24px, 2.4vw, 34px); line-height: 1.12; letter-spacing: -0.02em; }
+.versus-head p { color: var(--slate); }
+.versus .pk-table-wrap { background: #fff; border-radius: var(--r-lg); box-shadow: var(--shadow-md); padding: 8px clamp(12px, 2vw, 24px) 12px; }
+.vs-table td:last-child { color: var(--ink); }
+.vs-table td:last-child { position: relative; padding-left: 44px; }
+.vs-table td:last-child::before {
+  content: ""; position: absolute; left: 16px; top: 16px; width: 18px; height: 18px; border-radius: 50%;
+  background: var(--teal) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12.5l4 4 8-9' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 11px no-repeat;
+}
+.vs-table td:nth-child(2) { color: var(--slate); }
+.vs-head { display: inline-flex; align-items: center; gap: 10px; }
+.vs-flag { flex: none; width: 27px; height: 18px; border-radius: 3px; box-shadow: 0 0 0 1px rgba(25,13,48,.08), 0 3px 8px rgba(25,13,48,.15); }
+
+/* ==========================================================
+   ATHENS: what every package includes, in place of the quote
+   ========================================================== */
+.athens-included {
+  background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2);
+  backdrop-filter: blur(18px) saturate(140%); -webkit-backdrop-filter: blur(18px) saturate(140%);
+  border-radius: var(--r-lg); padding: 28px 30px 26px;
+  box-shadow: 0 40px 80px -40px rgba(0,0,0,.7);
+  display: grid; gap: 14px; justify-items: start;
+}
+.athens-included h3 { font-family: var(--display); font-weight: 600; font-size: clamp(20px, 1.6vw, 24px); letter-spacing: -0.02em; }
+.athens-included ul { display: grid; gap: 10px; }
+.athens-included li { position: relative; padding-left: 30px; font-size: 15.5px; line-height: 1.45; color: #E8E3F3; }
+.athens-included li::before {
+  content: ""; position: absolute; left: 0; top: 1px; width: 20px; height: 20px; border-radius: 50%;
+  background: var(--teal) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12.5l4 4 8-9' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 12px no-repeat;
+}
+.athens-included .text-link { color: var(--teal-soft); }
+
+/* Reviews follow the white results band directly */
+.results + .reviews { margin-top: 0; }
+
+@media (max-width: 1120px) {
+  .versus-head { grid-template-columns: 1fr; }
+  .hero-stage { position: relative; top: auto; bottom: auto; right: auto; width: auto; max-width: 640px; margin: 36px var(--gutter) 140px; }
+  .hs-media { position: relative; inset: auto; aspect-ratio: 1 / .7; }
+  .hs-sat-a { top: 30%; }
+  .hs-sat-b { bottom: 0; }
+  .hero-stage .flight { position: relative; left: auto; bottom: auto; width: auto; max-width: none; margin: 18px 0 0; }
+}
+@media (max-width: 760px) {
+  .gr-hero.hero-split .hero-content { padding-top: calc(var(--header-h) + 36px); }
+  /* Copy centred on phones; the ticks stay aligned as one centred block */
+  .hero-split .hero-content { text-align: center; }
+  .hero-split .hero-eyebrow, .hero-split .hero-cta, .hero-split .hero-awards { justify-content: center; }
+  .hero-split .hero-eyebrow::before, .hero-split .hero-hairline { display: none; }
+  .hero-split .hero-sub { margin-left: auto; margin-right: auto; }
+  .hero-split .hero-points { width: max-content; max-width: 100%; margin-left: auto; margin-right: auto; text-align: left; }
+  .hero-content .hs-media { margin: 30px 0 34px; }
+    .hero-stage { margin: 30px var(--gutter) 120px; }
+  .hs-media { aspect-ratio: 1 / .9; }
+  .hs-video { top: 0; left: 10%; }
+  .hs-sat { border-width: 4px; }
+  .hs-sat-a { width: 32%; top: 42%; }
+  .hs-sat-b { width: 42%; right: 2%; bottom: 0; }
+}
+@media (max-width: 760px) {
+  /* The comparison becomes one card per row, so both sides stay on screen */
+  .versus .pk-table-wrap { overflow: visible; background: none; box-shadow: none; padding: 0; }
+  .vs-table { min-width: 0; display: block; }
+  .vs-table thead { display: none; }
+  .vs-table tbody { display: grid; gap: 10px; }
+  .vs-table tr { display: grid; background: #fff; border-radius: var(--r-md); box-shadow: var(--shadow-md); overflow: hidden; }
+  .vs-table th, .vs-table td { border-top: 0; width: auto !important; }
+  .vs-table tbody th { padding: 14px 16px 6px; font-size: 15px; }
+  .vs-table td:nth-child(2) { padding: 0 16px 12px; font-size: 14px; }
+  .vs-table td:nth-child(2)::before {
+    content: "Many clinics in Turkey: "; font-weight: 700;
+    padding-left: 30px; background: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 30 20%22%3E%3Crect width=%2230%22 height=%2220%22 fill=%22%23E30A17%22/%3E%3Ccircle cx=%2211.25%22 cy=%2210%22 r=%225%22 fill=%22%23fff%22/%3E%3Ccircle cx=%2212.5%22 cy=%2210%22 r=%224%22 fill=%22%23E30A17%22/%3E%3Cpolygon points=%2214.10,10.00 15.79,9.41 15.83,7.62 16.91,9.05 18.62,8.53 17.60,10.00 18.62,11.47 16.91,10.95 15.83,12.38 15.79,10.59%22 fill=%22%23fff%22/%3E%3C/svg%3E") left center / 22px 15px no-repeat;
+  }
+  .vs-table td:last-child { padding: 12px 16px 14px 44px; font-size: 14.5px; }
+  .vs-table td:last-child::before { top: 13px; }
+  .athens-included { padding: 22px 20px; }
+  .athens-included li { font-size: 14.5px; }
+}
+
+/* ==========================================================
+   RESPONSIVE
+   ========================================================== */
+@media (max-width: 1120px) {
+  .flight { position: relative; right: auto; bottom: auto; margin: 32px var(--gutter) 140px; align-self: flex-start; width: auto; max-width: 420px; }
+
+  .athens-inner { grid-template-columns: 1fr; align-items: start; }
+  .athens-bg { inset: 0 0 240px 0; }
+  .athens-strip { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+  .packages-head { grid-template-columns: 1fr; }
+  .pk-grid { grid-template-columns: 1fr; gap: 24px; }
+  .pk-vip { margin: 0; }
+  .pk-vip .pk-body { padding-left: clamp(22px, 3vw, 44px); }
+  .pk-included { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+  .faq { grid-template-columns: 1fr; }
+  .faq-media { position: relative; top: auto; max-width: 560px; width: 100%; aspect-ratio: 1 / .9; }
+
+  .enquiry-inner { grid-template-columns: 1fr; }
+}
+@media (max-width: 1120px) {
+  .ba-thumbs-wrap { overflow-x: auto; overflow-y: hidden; -webkit-mask-image: none; mask-image: none; padding-bottom: 10px; scroll-snap-type: x mandatory; }
+  .ba-thumbs-wrap .ba-thumbs { display: flex; gap: 10px; width: max-content; }
+  .ba-thumbs-wrap .ba-thumbs li { width: 168px; scroll-snap-align: start; }
+}
+@media (max-width: 760px) {
+  .ba-step { width: 38px; height: 38px; margin-top: -19px; }
+  .ba-step[data-step="-1"] { left: 8px; }
+  .ba-step[data-step="1"] { right: 8px; }
+  .ba-thumbs-wrap .ba-thumbs li { width: 132px; }
+  .flight { margin: 28px var(--gutter) 120px; align-self: stretch; max-width: none; }
+  .flight-facts dd { font-size: 14px; }
+  /* The video becomes a band at the top so Dr Vekris stays visible above the headline.
+     object-position is read before the mirror flip, so 40% centres him after it. */
+  .gr-hero { background: var(--ink); }
+  .gr-hero .hero-video { bottom: auto; height: 58svh; object-position: 40% 20%; }
+  .gr-hero .hero-shade { inset: 0 0 auto 0; height: calc(58svh + 2px); background: linear-gradient(180deg, rgba(25,13,48,.55) 0%, rgba(25,13,48,0) 22%, rgba(25,13,48,.25) 62%, var(--ink) 100%); }
+  .gr-hero .hero-content { padding-top: calc(58svh - 36px); }
+
+  .athens-bg { inset: 0; }
+  .athens { padding-bottom: 0; }
+  .versus-section { padding-top: 64px; }
+  .athens-strip { grid-template-columns: 1fr; padding-bottom: 20px; }
+  .as-card { display: grid; grid-template-columns: 120px 1fr; }
+  .as-card img { aspect-ratio: auto; height: 100%; }
+  .as-card > div { padding: 16px 18px; }
+  .as-card h3 { font-size: 18px; }
+  .as-card p { font-size: 14px; }
+  .athens-quote { padding: 24px 22px; }
+
+  .pk-body { margin: -50px 10px 10px; }
+  .pk-media { aspect-ratio: 4 / 3; }
+  .pk-team .pk-media { aspect-ratio: 4 / 3.4; }
+  .pk-included { grid-template-columns: 1fr; gap: 10px; }
+  .pk-included li { padding: 14px 16px; }
+
+
+  .faq-list summary { font-size: 15.5px; padding: 16px 16px 16px 18px; }
+  .faq-list details p { padding: 0 18px 18px; }
+
+}
+
+/* ==========================================================
+   LIGHTBOX for the before and after photos
+   ========================================================== */
+#ba-main { cursor: zoom-in; }
+.lb {
+  position: fixed; inset: 0; z-index: 300;
+  display: grid; grid-template-rows: auto 1fr auto; align-items: center;
+  padding: max(14px, env(safe-area-inset-top)) 14px max(18px, env(safe-area-inset-bottom));
+  background: rgba(14,8,28,.94);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  color: #fff;
+  animation: lbIn .3s var(--ease) both;
+}
+.lb[hidden] { display: none; }
+@keyframes lbIn { from { opacity: 0; } }
+.lb-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; max-width: 1400px; width: 100%; margin: 0 auto; }
+.lb-count { font-weight: 800; font-size: 14px; color: var(--lilac); }
+.lb-btn {
+  width: 48px; height: 48px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,.3);
+  background: rgba(255,255,255,.08); color: #fff; display: grid; place-items: center; flex: none;
+  transition: background .3s, border-color .3s;
+}
+.lb-btn:hover { background: var(--teal); border-color: var(--teal); }
+.lb-btn svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.lb-stage { position: relative; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 14px; max-width: 1400px; width: 100%; height: 100%; margin: 0 auto; min-height: 0; }
+.lb-stage img { width: 100%; max-height: calc(100svh - 190px); object-fit: contain; border-radius: var(--r-md); justify-self: center; touch-action: pan-y; transition: opacity .25s; }
+.lb-stage img.is-swapping { opacity: 0; }
+.lb-cap { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 26px; text-align: center; max-width: 900px; margin: 0 auto; }
+.lb-cap strong { width: 100%; font-family: var(--display); font-weight: 600; font-size: 20px; letter-spacing: -0.02em; }
+.lb-cap span { font-size: 14px; color: var(--lilac); }
+.lb-cap b { color: var(--teal-soft); font-size: 16px; margin-left: 4px; }
+body.lb-open { overflow: hidden; }
+
+/* ==========================================================
+   WHY on phones: an accordion instead of tabs
+   ========================================================== */
+.why-acc { display: none; }
+.why-acc details { background: #fff; border-radius: var(--r-md); box-shadow: 0 10px 30px -22px rgba(25,13,48,.5); overflow: hidden; }
+.why-acc details[open] { box-shadow: var(--shadow-md); }
+.why-acc summary {
+  list-style: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: space-between; gap: 14px;
+  padding: 16px 16px 16px 18px; font-weight: 800; font-size: 15.5px; line-height: 1.35;
+}
+.why-acc summary::-webkit-details-marker { display: none; }
+.why-acc summary::after {
+  content: ""; flex: none; width: 32px; height: 32px; border-radius: 50%;
+  background: var(--pearl) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230B7F8E' stroke-width='2.6' stroke-linecap='round'%3E%3Cpath d='M12 5v14M5 12h14'/%3E%3C/svg%3E") center / 15px no-repeat;
+  transition: transform .4s var(--ease), background-color .3s;
+}
+.why-acc details[open] summary::after { transform: rotate(45deg); background-color: var(--mist); }
+.why-acc details[open] summary { color: var(--teal-deep); }
+.wa-body { padding: 0 16px 18px; display: grid; gap: 12px; animation: rise .45s var(--ease) both; }
+.wa-body video { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: var(--r-sm); background: var(--ink); }
+.wa-body p { color: var(--slate); font-size: 15px; }
+.wa-body ul { display: grid; gap: 8px; }
+.wa-body li { position: relative; padding-left: 20px; font-size: 14.5px; color: var(--slate); }
+.wa-body li::before { content: ""; position: absolute; left: 0; top: .65em; width: 10px; height: 2px; background: var(--teal); }
+
+@media (max-width: 760px) {
+  .why-body { display: none; }
+  .why-acc { display: grid; gap: 10px; }
+
+  /* Journey: snapping keeps the gutter, so the first step's marker is never clipped */
+  .journey.is-native .journey-track { scroll-padding-inline: var(--gutter); }
+  /* Clinic to enquiry: the clinic note is the last thing before the dark form band */
+  .clinics { padding-bottom: 48px; }
+  /* Footer: no tall empty strip at the end; text stays clear of the floating buttons instead */
+  .enquiry-inner { padding-top: 64px; }
+  /* Marker and its connector sit inside the card: iOS Safari clips anything drawn in the
+     scroller's padding, which cut off the first marker's ring */
+  .journey.is-native .j-node { left: 12px; }
+  .journey.is-native .j-card::before { left: 30px; }
+
+  /* Meet: photo fades into the section; the two badges sit side by side below his face */
+  .meet-bg::after { background: linear-gradient(0deg, var(--ink) 0%, rgba(25,13,48,.6) 18%, rgba(25,13,48,0) 42%); }
+  .meet-cover { grid-template-columns: 1fr 1fr; margin-top: -120px; gap: 8px; }
+  .meet-tag { max-width: none; padding: 12px 13px; }
+  .meet-tag strong { font-size: 15.5px; }
+  .meet-tag span { font-size: 12px; line-height: 1.4; }
+  .lb-stage { grid-template-columns: minmax(0, 1fr); }
+  /* Arrows sit over the photo's edges so it keeps the full width */
+  .lb-stage .lb-btn {
+    position: absolute; top: 50%; z-index: 2; transform: translateY(-50%);
+    width: 42px; height: 42px;
+    background: rgba(25,13,48,.72); border-color: rgba(255,255,255,.45);
+    box-shadow: 0 8px 20px -8px rgba(0,0,0,.6);
+  }
+  .lb-stage .lb-btn[data-step="-1"] { left: 8px; }
+  .lb-stage .lb-btn[data-step="1"] { right: 8px; }
+}
+
+
+/* ---------- VIP ---------- */
+/* ==========================================================
+   VIP hair transplant · layer on top of base.css and greece.css
+   ========================================================== */
+
+/* ---------- Who comes to Dr Vekris: four patient needs, then specialised procedures ---------- */
+.cases { max-width: var(--max); margin: 0 auto; padding: clamp(80px, 9vw, 130px) var(--gutter) 0; }
+.cases-head { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 6px 60px; align-items: end; margin-bottom: clamp(36px, 4vw, 56px); }
+.cases-head .kicker { grid-column: 1 / -1; }
+.cases-head p:not(.kicker) { color: var(--slate); font-size: 18px; }
+.cases-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(14px, 1.6vw, 22px); }
+.case {
+  display: grid; align-content: start; gap: 10px;
+  padding: 28px 26px 30px; border-radius: var(--r-lg);
+  background: #fff; box-shadow: var(--shadow-md);
+}
+.case svg {
+  width: 48px; height: 48px; padding: 12px; margin-bottom: 6px; border-radius: 50%;
+  fill: none; stroke: #fff; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+  background: var(--grad-teal); box-shadow: 0 12px 24px -12px rgba(17,163,182,.7);
+}
+.case h3 { font-family: var(--display); font-weight: 600; font-size: 21px; letter-spacing: -0.02em; line-height: 1.15; }
+.case p { font-size: 15px; line-height: 1.55; color: var(--slate); }
+
+.special {
+  margin-top: clamp(18px, 2vw, 26px);
+  display: grid; gap: 24px;
+  padding: clamp(28px, 3.5vw, 48px); border-radius: var(--r-lg);
+  color: #fff;
+  background:
+    radial-gradient(60% 90% at 100% 0%, rgba(120,72,200,.35), transparent 70%),
+    radial-gradient(50% 80% at 0% 100%, rgba(17,163,182,.25), transparent 70%),
+    var(--ink);
+  box-shadow: var(--shadow-lg);
+}
+.special-head h3 { font-family: var(--display); font-weight: 600; font-size: clamp(24px, 2.2vw, 32px); letter-spacing: -0.02em; line-height: 1.12; }
+.special-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 30px; }
+.special-head p { color: var(--lilac); }
+.special-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.special-grid li {
+  display: grid; gap: 6px; align-content: start;
+  padding: 18px; border-radius: var(--r-md);
+  background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.14);
+}
+.special-grid strong { font-weight: 800; font-size: 15.5px; color: var(--teal-soft); }
+.special-grid span { font-size: 14px; line-height: 1.5; color: #E4DEF2; }
+
+@media (max-width: 1120px) {
+  .cases-head { grid-template-columns: 1fr; }
+  .cases-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .special-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 760px) {
+  .cases-grid, .special-grid { grid-template-columns: 1fr; }
+  .case { padding: 22px 20px 24px; }
+  .special { padding: 24px 18px; }
+}
+
+/* ---------- The Vekris Signature: the single offer ---------- */
+.sig {
+  position: relative; color: #fff; overflow: hidden;
+  background:
+    radial-gradient(45% 60% at 12% 30%, rgba(17,163,182,.22), transparent 70%),
+    radial-gradient(40% 55% at 90% 80%, rgba(120,72,200,.28), transparent 70%),
+    var(--ink);
+}
+.sig-inner {
+  max-width: var(--max); margin: 0 auto;
+  padding: clamp(90px, 10vw, 150px) var(--gutter);
+  display: grid; grid-template-columns: minmax(0, .78fr) minmax(0, 1.22fr);
+  gap: clamp(40px, 6vw, 100px); align-items: center;
+}
+.sig-media { position: relative; padding: 0 12% 18% 0; }
+.sm-main { width: 100%; height: auto; aspect-ratio: 4 / 4.4; object-fit: cover; object-position: 50% 15%; border-radius: var(--r-lg); box-shadow: 0 50px 100px -40px rgba(0,0,0,.8); }
+.sm-sat {
+  position: absolute; right: 0; bottom: 0; width: 58%; height: auto; aspect-ratio: 16 / 10; object-fit: cover;
+  border-radius: var(--r-md); border: 8px solid var(--ink);
+  box-shadow: 0 30px 60px -24px rgba(0,0,0,.8);
+}
+.sm-badge {
+  position: absolute; left: -18px; bottom: 30%; max-width: 230px;
+  display: grid; gap: 4px; padding: 16px 18px; border-radius: var(--r-md);
+  background: var(--grad-teal); color: #fff;
+  box-shadow: 0 24px 50px -20px rgba(17,163,182,.7);
+}
+.sm-badge strong { font-family: var(--display); font-weight: 600; font-size: 21px; letter-spacing: -0.02em; line-height: 1.1; }
+.sm-badge span { font-size: 13.5px; line-height: 1.4; }
+
+.sig-text { display: grid; gap: 22px; justify-items: start; }
+.sig-text .h2 { max-width: 15em; }
+.sig-lead { font-size: clamp(17px, 1.3vw, 19px); color: #E4DEF2; max-width: 34em; }
+
+/* The three steps really are a sequence, so they are numbered */
+.sig-steps { counter-reset: sig; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; width: 100%; }
+.sig-steps li {
+  counter-increment: sig; position: relative;
+  padding: 54px 18px 18px; border-radius: var(--r-md);
+  background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.14);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+}
+.sig-steps li::before {
+  content: counter(sig); position: absolute; left: 18px; top: 16px;
+  width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center;
+  font-weight: 800; font-size: 14px; background: var(--grad-teal);
+}
+.sig-steps h3 { font-size: 16.5px; font-weight: 800; line-height: 1.3; }
+.sig-steps p { margin-top: 4px; font-size: 14px; line-height: 1.5; color: var(--lilac); }
+
+.sig-also { width: 100%; border-top: 1px solid var(--ink-3); padding-top: 20px; }
+.sig-also h3 { font-size: 15px; font-weight: 800; margin-bottom: 12px; color: #fff; }
+.sig-also ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 24px; }
+.sig-also li { position: relative; padding-left: 30px; font-size: 15px; line-height: 1.5; color: #E8E3F3; }
+.sig-also li::before {
+  content: ""; position: absolute; left: 0; top: 1px; width: 20px; height: 20px; border-radius: 50%;
+  background: var(--teal) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12.5l4 4 8-9' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 12px no-repeat;
+}
+
+.sig-price { display: flex; flex-wrap: wrap; align-items: center; gap: 18px 30px; margin-top: 6px; }
+.sp-amount { font-family: var(--display); font-weight: 600; font-size: clamp(34px, 3.4vw, 50px); letter-spacing: -0.03em; line-height: 1; color: var(--teal-soft); }
+.sp-amount span { font-family: var(--sans); font-size: 16px; font-weight: 700; letter-spacing: 0; color: var(--lilac); margin-right: 6px; }
+.sig-note { font-size: 13.5px; color: var(--lilac); max-width: 46em; }
+
+/* The offer comes straight after the overlapping authority card, so it needs room above */
+.sig { margin-top: clamp(80px, 9vw, 140px); }
+.results + .sig { margin-top: 0; }
+/* Review cards run along the bottom of the Signature section */
+.sig-reviews { position: relative; max-width: var(--max); margin: calc(-1 * clamp(40px, 5vw, 80px)) auto 0; padding: 0 var(--gutter) clamp(80px, 9vw, 130px); }
+
+@media (max-width: 1120px) {
+  .sig-inner { grid-template-columns: 1fr; }
+  .sig-media { max-width: 560px; width: 100%; }
+}
+@media (max-width: 760px) {
+  .sig-media { padding: 0 10% 16% 0; }
+  .sm-badge { left: -6px; max-width: 190px; padding: 12px 14px; }
+  .sm-badge strong { font-size: 18px; }
+  .sig-steps { grid-template-columns: 1fr; }
+  .sig-steps li { padding: 16px 16px 16px 58px; }
+  .sig-also ul { grid-template-columns: 1fr; }
+  .sig-price .btn { width: 100%; white-space: normal; text-align: center; }
+  /* The header button text is longer on this page */
+  .site-header.is-scrolled .header-book-mobile { font-size: 11.5px; padding: 11px 14px; }
+}
+
+
+/* Longer button labels on this page: let them wrap on phones rather than widen the layout */
+@media (max-width: 760px) {
+  .vip .btn { white-space: normal; text-align: center; }
+}
+
+/* The VIP headline is longer: a slightly smaller size keeps each phrase on one line on desktop,
+   and balanced wrapping avoids a lone word when a phrase has to wrap on phones */
+.vip .gr-hero .hero-title { font-size: clamp(34px, 3.75vw, 54px); }
+.vip .hero-title .line > span { text-wrap: balance; }
+
+/* ---------- Travelling from abroad: full-bleed band, photo left, details right ---------- */
+.abroad { margin-top: clamp(60px, 7vw, 100px); background: var(--grad-ink); color: #fff; }
+.abroad-inner { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: stretch; }
+.abroad-inner > img { width: 100%; height: 100%; min-height: 560px; object-fit: cover; }
+.abroad-text {
+  display: grid; gap: 16px; align-content: center;
+  padding: clamp(60px, 7vw, 110px) max(var(--gutter), calc((100vw - var(--max)) / 2)) clamp(60px, 7vw, 110px) clamp(36px, 5vw, 80px);
+}
+.abroad-text .kicker { margin-bottom: -4px; color: var(--teal-soft); }
+.abroad-text h2 { font-family: var(--display); font-weight: 600; font-size: clamp(28px, 2.8vw, 42px); letter-spacing: -0.02em; line-height: 1.1; max-width: 16em; }
+.abroad-text > p { color: #D9D2EA; font-size: clamp(16px, 1.2vw, 18px); max-width: 40em; }
+.abroad-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 28px; margin-top: 10px; }
+.abroad-list li { position: relative; padding-left: 32px; font-size: 15px; line-height: 1.5; color: #CFC7E2; }
+.abroad-list li::before {
+  content: ""; position: absolute; left: 0; top: 1px; width: 21px; height: 21px; border-radius: 50%;
+  background: var(--teal) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12.5l4 4 8-9' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 13px no-repeat;
+}
+.abroad-list strong { color: #fff; }
+@media (max-width: 1120px) {
+  .abroad-inner { grid-template-columns: 1fr; }
+  .abroad-inner > img { height: 360px; min-height: 0; }
+  .abroad-text { padding: 48px var(--gutter) 56px; }
+}
+@media (max-width: 760px) {
+  .abroad-list { grid-template-columns: 1fr; }
+  .abroad-inner > img { height: 240px; }
+  .abroad-text { padding: 36px var(--gutter) 44px; }
+}
+
+/* Hero copy centred on phones, as on the travel page; the ticks stay aligned as one centred block */
+@media (max-width: 760px) {
+  .vip .gr-hero .hero-content { text-align: center; }
+  .vip .gr-hero .hero-eyebrow::before { display: none; }
+  .vip .gr-hero .hero-eyebrow, .vip .gr-hero .hero-cta, .vip .gr-hero .hero-awards { justify-content: center; }
+  .vip .gr-hero .hero-hairline, .vip .gr-hero .hero-sub { margin-left: auto; margin-right: auto; }
+  .vip .gr-hero .hero-points { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 14px; text-align: left; }
+  .vip .gr-hero .hero-points li { font-size: 14px; line-height: 1.35; }
+}
+
+/* No flight card under the copy here, so the hero keeps room for the overlapping authority card */
+@media (max-width: 1120px) {
+  .vip .gr-hero .hero-content { padding-bottom: 150px; }
+}
+
+/* ---------- Site integration ---------- */
+.page-vip .site-footer { margin-top: 0; }
+.meet-ctas { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 28px; }

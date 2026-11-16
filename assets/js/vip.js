@@ -1,0 +1,597 @@
+/* Advanced Hair Clinics · Vekris Signature VIP page: reviews, techniques, before & after, videos, journey, FAQ */
+(() => {
+  const $ = (s, c = document) => c.querySelector(s);
+  const $$ = (s, c = document) => [...c.querySelectorAll(s)];
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const A = '/assets';
+  // German pages (<html lang="de">) swap the script's own copy; English stays the default.
+  const DE = document.documentElement.lang === 'de';
+  const T = (en, de) => (DE ? de : en);
+  const num = (v) => (DE ? String(v).replace(/,/g, '.') : v);
+
+  /* ---------- Reviews ---------- */
+  // Ordered: reviews naming Dr Vekris and describing the experience first.
+  const reviews = [
+    { n: 'Kon Kal', c: '#4A4E9C', t: 'The Best Hair Clinic that you can find out there. Professional and highly experienced staff made me feel as comfortable as possible, by answering all of my questions from our first appointment. I had a 2 day hair implantation, the procedure was smooth and the doctors were excellent. I now know why people from all over the world prefer Mr. Vekris. If you want to look as you imagine, this is the place.', de: 'Die beste Haarklinik, die man finden kann. Das professionelle und sehr erfahrene Personal hat dafür gesorgt, dass ich mich so wohl wie möglich fühle, und alle meine Fragen ab dem ersten Termin beantwortet. Ich hatte eine zweitägige Haartransplantation, der Eingriff verlief reibungslos und die Ärzte waren hervorragend. Jetzt weiß ich, warum Menschen aus der ganzen Welt Herrn Vekris vorziehen. Wenn Sie so aussehen möchten, wie Sie es sich vorstellen, sind Sie hier richtig.' },
+    { n: 'Stelios Galanis', c: '#3B2A5C', t: 'I had my session 6 months ago and my result so far is absolutely amazing. I highly recommend the Clinic, Dr Vekris, Ms Agiant and the whole medical team. Thank you, you have changed my life!!', de: 'Meine Sitzung war vor 6 Monaten, und mein Ergebnis ist bisher einfach großartig. Ich kann die Klinik, Dr. Vekris, Frau Agiant und das gesamte Ärzteteam nur wärmstens empfehlen. Danke, Sie haben mein Leben verändert!!' },
+    { n: 'Zlatko Kljajic', c: '#5B6B7A', t: 'If you are looking for best clinic to do hair transplant, you do not need to waist your time exploring to whom you will give your trust. All protocols and methods for doing hair transplant in this clinic are on highest standard. Staff is very professional and they will explain you everything in details. The most important that results of hair transplants are really natural with no complication at all.', de: 'Wenn Sie die beste Klinik für eine Haartransplantation suchen, müssen Sie keine Zeit damit verschwenden, herauszufinden, wem Sie Ihr Vertrauen schenken. Alle Abläufe und Methoden der Haartransplantation entsprechen in dieser Klinik dem höchsten Standard. Das Personal ist sehr professionell und erklärt Ihnen alles im Detail. Das Wichtigste: Die Ergebnisse sind wirklich natürlich und ganz ohne Komplikationen.' },
+    { n: 'Jad', c: '#6A5ACD', t: 'I had my hair surgery a couple of days ago, and I must say, everything was perfect from start to finish. It was truly a 7-star experience. A huge thanks to Klodiana for her professionalism and to Dr. Alexandrios for his attention and care throughout the surgery.', de: 'Meine Haar-OP war vor ein paar Tagen, und ich muss sagen, alles war von Anfang bis Ende perfekt. Es war wirklich ein 7-Sterne-Erlebnis. Ein großes Dankeschön an Klodiana für ihre Professionalität und an Dr. Alexandrios für seine Aufmerksamkeit und Fürsorge während der gesamten OP.' },
+    { n: 'Paulos Papamichail', c: '#2E7D6B', t: 'Great job in Advanced Hair Clinics. Dr Vekris and the rest of the medical team are highly specialised and experienced. I had a two days session with great results in 12 months.', de: 'Großartige Arbeit bei Advanced Hair Clinics. Dr. Vekris und das restliche Ärzteteam sind hoch spezialisiert und erfahren. Ich hatte eine zweitägige Sitzung mit tollen Ergebnissen nach 12 Monaten.' },
+    { n: 'O V', c: '#C2185B', t: 'One can only recommend the clinics of Dr Anastasios Vekris, a highly professional team with high quality equipment in very secure environment. The right advise and perfect results. This is what I personally experienced and would recommend the team with no hesitation.', de: 'Die Kliniken von Dr. Anastasios Vekris kann man nur empfehlen: ein hochprofessionelles Team mit hochwertiger Ausstattung in einem sehr sicheren Umfeld. Die richtige Beratung und perfekte Ergebnisse. Das habe ich persönlich erlebt, und ich würde das Team ohne Zögern weiterempfehlen.' },
+    { n: 'Stefan Prikulovic', c: '#C0502B', t: 'Excellent experience with Advanced Hair Clinics. I chose the clinic because of my trust in Dr. Dimitris Alexandris and my expectations were fully met. Special thanks to Klodiana and Dr. Chorianopoulou for their professionalism, kindness, and support throughout the process. Highly recommended!', de: 'Hervorragende Erfahrung mit Advanced Hair Clinics. Ich habe mich wegen meines Vertrauens in Dr. Dimitris Alexandris für die Klinik entschieden, und meine Erwartungen wurden voll erfüllt. Besonderer Dank an Klodiana und Dr. Chorianopoulou für ihre Professionalität, Freundlichkeit und Unterstützung während des gesamten Ablaufs. Sehr zu empfehlen!' },
+    { n: 'Theodoros Thodas', c: '#1E88A8', t: 'I recently visited Advanced Hair Clinics, and I am truly impressed with the level of professionalism and expertise they demonstrated. From the initial consultation to the procedure itself, the team was incredibly attentive, knowledgeable, and thorough in addressing all my questions and concerns. What sets Advanced Hair Clinics apart is their personalized approach. They tailored a treatment plan specifically to my needs, ensuring optimal results. The procedure was virtually painless, and the aftercare instructions were detailed and easy to follow.', de: 'Ich war vor Kurzem bei Advanced Hair Clinics und bin von der Professionalität und dem Fachwissen wirklich beeindruckt. Von der ersten Beratung bis zum Eingriff selbst war das Team unglaublich aufmerksam, kompetent und gründlich bei der Beantwortung all meiner Fragen und Bedenken. Was Advanced Hair Clinics auszeichnet, ist der persönliche Ansatz. Der Behandlungsplan wurde genau auf meine Bedürfnisse abgestimmt, für ein optimales Ergebnis. Der Eingriff war praktisch schmerzfrei, und die Hinweise zur Nachsorge waren ausführlich und leicht umzusetzen.' },
+    { n: 'Apostolos Modas', c: '#7B5E3B', t: 'It is the second time I do a hair transplant with Advanced Hair Clinics. Both times everything was exceptional! High professionalism, personalized support/care, and excellent and natural result. Many thanks to everyone involved in my operation; namely Lilly, Alberta and Iro. Highly recommended.', de: 'Es ist bereits meine zweite Haartransplantation bei Advanced Hair Clinics. Beide Male war alles außergewöhnlich! Hohe Professionalität, persönliche Betreuung und ein ausgezeichnetes, natürliches Ergebnis. Vielen Dank an alle, die an meiner Operation beteiligt waren, insbesondere Lilly, Alberta und Iro. Sehr zu empfehlen.' },
+    { n: 'George Tsichlis', c: '#512DA8', t: 'I had my hair transplant three days ago, and the entire experience went smoothly with no pain or discomfort. Dr. Dimitris and his team were highly professional, and they made the time pass quickly in a relaxed and comfortable atmosphere. I had a great experience during the procedure. I would highly recommend them!', de: 'Meine Haartransplantation war vor drei Tagen, und alles verlief reibungslos, ohne Schmerzen oder Beschwerden. Dr. Dimitris und sein Team waren äußerst professionell und haben die Zeit in einer entspannten, angenehmen Atmosphäre schnell vergehen lassen. Ich hatte während des Eingriffs ein tolles Erlebnis. Ich kann sie nur wärmstens empfehlen!' },
+    { n: 'Marios Bompoulos', c: '#E67E22', t: 'Amazing experience. I performed hair transplant with excellent results. Extremely helpful and friendly staff. The whole processes was seamless. I highly recommend them to anyone who is looking for a hair transplant.', de: 'Eine tolle Erfahrung. Ich hatte eine Haartransplantation mit ausgezeichneten Ergebnissen. Äußerst hilfsbereites und freundliches Personal. Der gesamte Ablauf war reibungslos. Ich kann sie jedem empfehlen, der eine Haartransplantation sucht.' },
+    { n: 'Eleni Theodorakopoulou', c: '#1565C0', t: 'Congratulations to the whole team of Advanced Hair Clinics. I solved my hairloss problem combining the unshaved FUE technique and conservative treatment of minoxidil and prp. My hair is now falling less and is thicker and more strong. Many thanks to Dr Anastasios Vekris and Dr Antonia Andriopoulou!', de: 'Glückwunsch an das gesamte Team von Advanced Hair Clinics. Ich habe mein Haarausfallproblem mit einer Kombination aus Unshaven-FUE-Technik und konservativer Behandlung mit Minoxidil und PRP gelöst. Meine Haare fallen jetzt weniger aus und sind dichter und kräftiger. Vielen Dank an Dr. Anastasios Vekris und Dr. Antonia Andriopoulou!' },
+  ];
+  const gSmall = `<svg class="g-logo" viewBox="0 0 48 48" aria-label="${T('Google review', 'Google-Bewertung')}"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 13 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="m6.3 14.7 6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3a12 12 0 0 1-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/></svg>`;
+  const track = $('#reviews-track');
+  track.innerHTML = reviews.map((r) => `
+    <li class="review">
+      <div class="review-top">
+        <span class="avatar" style="background:${r.c}" aria-hidden="true">${esc(r.n[0])}</span>
+        <div><p class="review-name">${esc(r.n)}</p><p class="review-meta"><span class="stars" aria-label="${T('5 out of 5 stars', '5 von 5 Sternen')}">★★★★★</span></p></div>
+        ${gSmall}
+      </div>
+      <p class="review-text is-clamped">${esc(DE && r.de ? r.de : r.t).replace(/Vekris/g, '<mark>Vekris</mark>')}</p>
+    </li>`).join('');
+  $$('.review-text', track).forEach((p) => {
+    if (p.scrollHeight <= p.clientHeight + 2) return;
+    const more = document.createElement('button');
+    more.type = 'button';
+    more.className = 'review-more';
+    more.textContent = T('Read more', 'Weiterlesen');
+    more.setAttribute('aria-expanded', 'false');
+    more.addEventListener('click', () => {
+      const open = p.classList.toggle('is-clamped') === false;
+      more.textContent = open ? T('Show less', 'Weniger anzeigen') : T('Read more', 'Weiterlesen');
+      more.setAttribute('aria-expanded', open);
+    });
+    p.after(more);
+  });
+  if (!reduceMotion) {
+    $$('.review', track).forEach((li) => {
+      const c = li.cloneNode(true);
+      c.setAttribute('aria-hidden', 'true');
+      c.inert = true;
+      track.appendChild(c);
+    });
+    const setSpeed = () => track.style.setProperty('--ticker-dur', `${Math.round(track.scrollWidth / 2 / 45)}s`);
+    setSpeed();
+    addEventListener('resize', setSpeed);
+    track.classList.add('is-ticking');
+    const vp = $('.reviews-viewport');
+    vp.addEventListener('touchstart', () => vp.classList.add('is-paused'), { passive: true });
+    vp.addEventListener('touchend', () => setTimeout(() => vp.classList.remove('is-paused'), 2500));
+  }
+
+  /* ---------- Why (tabs with video or photo) ---------- */
+  // Media is a clip name from /assets/video, or an image path starting with "/".
+  const isVip = document.body.classList.contains('vip');
+  const whyTravel = [
+    { t: 'A team trained by Dr Vekris', media: 'ai-planning',
+      p: ['Every doctor on the Advanced Team was trained by Dr Vekris and works to the planning and hairline design standards he created. Doctors and nurses from around the world come to our Athens clinic to learn the same techniques.',
+        'Your hair transplant is performed exclusively by doctors, from the local anaesthesia to the last graft, never delegated to technicians.'] },
+    { t: 'A well-established clinic', media: '/assets/img/clinic/athens-lounge.webp',
+      p: ['Dr Vekris founded Advanced Hair Clinics in Athens, and it has grown into 15 clinics across Greece and Cyprus, with more than 30,000 hair transplants performed by its medical teams.',
+        'Patients travel to us from over 80 countries, and the clinic’s awards include the IMTJ Medical Travel Awards and Gold at the Medical Beauty Awards 2024.'] },
+    { t: 'A world-renowned surgeon behind it', media: '/assets/img/doc/fue-europe-speech.webp',
+      p: ['Plastic surgeon Dr Anastasios Vekris is President of the FUE Europe Society and an invited trainer at the world’s leading hair restoration congresses, including ISHRS and IMCAS.',
+        'He sets the clinic’s medical standards. If you would like him to perform your procedure himself, you can choose the Vekris Signature upgrade.'] },
+    { t: 'Combine it with a holiday', media: '/assets/img/greece/coast-cafe.webp',
+      p: ['You only need 3 to 4 days in Athens, and the city makes those days easy: a European capital with year-round sunshine, the Acropolis on your doorstep and the coast a short drive away.',
+        'You are welcome to bring a partner or friend, or to add a few days to your trip. Your doctor will advise you on sun, swimming and activity while your scalp heals.'] },
+    { t: 'Better value than you might expect', media: '/assets/img/clinic/athens-reception.webp',
+      p: ['Turkey is known for low headline prices. In Athens, a complete hair transplant package starts from €3,000, with every step performed by doctors under EU medical standards.',
+        'Your package includes your consultation, procedure, airport transfers and post-operative review, so you know what you are paying for before you travel.'] },
+    { t: 'Techniques surgeons travel to learn', media: 'sharp-implanter',
+      p: ['Grafts are placed in one step with the Sharp Implanter, without first opening holes in the recipient area, for precise placement with less trauma to the scalp.',
+        'If you would rather nobody knew, ask about Unshaven FUE. Grafts are placed between your existing hairs, so most patients are back to work and social life within 24 to 48 hours.'] },
+    { t: 'Support before, during and after your visit', media: 'aftercare',
+      p: ['From your first message to your post-operative review and beyond, our team supports you in English, French and German, by phone, email and WhatsApp.',
+        'Patients who trust us become “our people”, and know they can reach us at any time with any question.'] },
+  ];
+  const whyVip = [
+    { t: 'A surgeon other surgeons learn from', media: 'timelapse',
+      p: ['Dr Anastasios Vekris is President of the FUE Europe Society and an invited trainer at the world’s leading hair restoration congresses. Every year, doctors and nurses from around the world come to Advanced Hair Clinics in Athens to learn his techniques.',
+        'He is the only doctor to have performed hair transplant surgery in 17 countries, and he openly presents the results of his clinic to the most demanding scientific audiences, including the ISHRS World Congress.'] },
+    { t: 'Exclusively by doctors, from start to finish', media: 'timelapse',
+      p: ['At Advanced Hair Clinics a hair transplant is treated as what it is: a medical procedure. Local anaesthesia, extraction and implantation are performed only by doctors, never delegated to technicians.',
+        isVip
+          ? 'With the Vekris Signature, Dr Vekris performs your procedure himself, supported by the doctors and nurses he has trained to his own standards.'
+          : 'Every doctor on the team was trained by Dr Vekris and works to the planning and hairline standards he created, so the same care goes into every graft whichever package you choose.'] },
+    { t: 'Direct implantation with the Sharp Implanter', media: 'sharp-implanter',
+      p: ['Grafts are placed in one step with the Sharp Implanter, without first opening holes in the recipient area. Its tip is less than 1 mm wide, for precise placement at the angle and direction of your natural hair growth.'],
+      l: ['Less trauma to the scalp and a lower chance of swelling after the procedure', 'Grafts are handled gently, which supports their survival and growth', 'Natural density, with single-hair grafts along the hairline'] },
+    { t: 'Unshaven and Long Hair FUE for discretion', media: 'unshaven-fue',
+      p: ['If you would rather nobody knew, ask about Unshaven FUE. Only the donor area is trimmed and grafts are placed between your existing hairs, so most patients go back to work and social life within 24 to 48 hours.',
+        'Our teams are also among the very few in Greece who perform Long Hair FUE, where the hair is not cut at all, whatever its length.'] },
+    { t: 'Hairline design that suits your face', media: 'hairline-distance',
+      p: ['The hairline is what makes a transplant look natural or obvious. Our doctors design it around the shape of your face, your age, gender and ethnicity, the quality of your hair and how your hair loss is likely to progress.'],
+      l: ['An irregular, “asymmetrically symmetrical” front line, as in nature', 'Single-hair grafts at the front, denser grafts behind for volume', 'Planned for how you will look in 10 and 20 years, not just next year'] },
+    { t: 'Planning supported by artificial intelligence', media: 'ai-planning',
+      p: ['Your plan combines the doctor’s experience with AI planning software, so you can see how your transplanted hair is expected to grow and how your donor area is used.'],
+      l: ['Better use of every available graft', 'A donor area preserved for any future needs', 'A clear picture of the result before you travel'] },
+    { t: 'Experience with every hair type', media: 'afro-fue',
+      p: ['Dr Vekris teaches Afro Hair FUE at international workshops and has in-depth knowledge of how hairline shape and hair quality differ between ethnic backgrounds. Patients with curly, Afro-textured or very fine hair travel to Athens for this expertise.'] },
+    { t: 'Support before, during and after your visit', media: 'aftercare',
+      p: ['From your first message to your post-operative review and beyond, our team supports you in English, French and German, by phone, email and WhatsApp.',
+        'Patients who trust us become “our people”, and know they can reach us at any time with any question.'] },
+  ];
+  const whyTravelDe = [
+    { t: 'Ein von Dr. Vekris ausgebildetes Team', media: 'ai-planning',
+      p: ['Jeder Arzt im Advanced Team wurde von Dr. Vekris ausgebildet und arbeitet nach den Standards für Planung und Haarliniengestaltung, die er entwickelt hat. Ärzte und Pflegekräfte aus aller Welt kommen in unsere Klinik in Athen, um dieselben Techniken zu lernen.',
+        'Ihre Haartransplantation wird ausschließlich von Ärzten durchgeführt, von der örtlichen Betäubung bis zum letzten Graft, und nie an Techniker delegiert.'] },
+    { t: 'Eine etablierte Klinik', media: '/assets/img/clinic/athens-lounge.webp',
+      p: ['Dr. Vekris hat Advanced Hair Clinics in Athen gegründet. Daraus sind 15 Kliniken in Griechenland und Zypern geworden, in denen die Ärzteteams mehr als 30.000 Haartransplantationen durchgeführt haben.',
+        'Patienten reisen aus über 80 Ländern zu uns, und zu den Auszeichnungen der Klinik gehören die IMTJ Medical Travel Awards und Gold bei den Medical Beauty Awards 2024.'] },
+    { t: 'Ein international renommierter Chirurg dahinter', media: '/assets/img/doc/fue-europe-speech.webp',
+      p: ['Der plastische Chirurg Dr. Anastasios Vekris ist Präsident der FUE Europe Society und gefragter Ausbilder auf den führenden Kongressen für Haarchirurgie weltweit, darunter ISHRS und IMCAS.',
+        'Er setzt die medizinischen Standards der Klinik. Wenn er Ihren Eingriff persönlich durchführen soll, wählen Sie das Upgrade Vekris Signature.'] },
+    { t: 'Verbinden Sie es mit einem Urlaub', media: '/assets/img/greece/coast-cafe.webp',
+      p: ['Sie brauchen nur 3 bis 4 Tage in Athen, und die Stadt macht diese Tage angenehm: eine europäische Hauptstadt mit ganzjährigem Sonnenschein, die Akropolis direkt vor der Tür und die Küste nur eine kurze Fahrt entfernt.',
+        'Sie können gern eine Begleitperson mitbringen oder Ihre Reise um ein paar Tage verlängern. Ihr Arzt sagt Ihnen, was in Sachen Sonne, Schwimmen und Aktivität erlaubt ist, während Ihre Kopfhaut heilt.'] },
+    { t: 'Ein besseres Preis-Leistungs-Verhältnis als gedacht', media: '/assets/img/clinic/athens-reception.webp',
+      p: ['Die Türkei ist für niedrige Lockpreise bekannt. In Athen beginnt ein Komplettpaket für die Haartransplantation bei 3.000 €, und jeder Schritt wird von Ärzten nach medizinischen EU-Standards durchgeführt.',
+        'Ihr Paket umfasst Beratung, Eingriff, Flughafentransfers und Nachkontrolle, sodass Sie schon vor der Reise wissen, wofür Sie bezahlen.'] },
+    { t: 'Techniken, für die Chirurgen anreisen', media: 'sharp-implanter',
+      p: ['Mit dem Sharp Implanter werden die Grafts in einem Schritt eingesetzt, ohne vorher Kanäle im Empfängerbereich zu öffnen. Das ermöglicht eine präzise Platzierung bei geringerer Belastung der Kopfhaut.',
+        'Wenn niemand etwas merken soll, fragen Sie nach Unshaven FUE. Die Grafts werden zwischen Ihre vorhandenen Haare gesetzt, sodass die meisten Patienten nach 24 bis 48 Stunden wieder arbeiten und unter Leute gehen.'] },
+    { t: 'Betreuung vor, während und nach Ihrem Aufenthalt', media: 'aftercare',
+      p: ['Von Ihrer ersten Nachricht bis zur Nachkontrolle und darüber hinaus betreut Sie unser Team auf Deutsch, Englisch und Französisch, per Telefon, E-Mail und WhatsApp.',
+        'Patienten, die uns vertrauen, gehören für uns dazu und wissen, dass sie uns jederzeit mit jeder Frage erreichen.'] },
+  ];
+  const why = isVip ? whyVip : (DE ? whyTravelDe : whyTravel);
+  const isImg = (m) => m.startsWith('/');
+  const mediaHtml = (m, attrs = '') => isImg(m)
+    ? `<img src="${m}" alt="" loading="lazy" ${attrs}>`
+    : `<video muted loop playsinline preload="none" poster="${A}/video/${m}-poster.webp" aria-hidden="true" ${attrs}><source src="${A}/video/${m}.mp4" type="video/mp4"></video>`;
+  const WHY_DUR = 9000;
+  const tabs = $('#why-tabs');
+  const media = $('#why-media');
+  const panel = $('#why-panel');
+  document.documentElement.style.setProperty('--why-dur', `${WHY_DUR / 1000}s`);
+  tabs.innerHTML = why.map((w, i) => `<button type="button" role="tab" id="why-t${i}" aria-controls="why-panel" aria-selected="${i === 0}" data-i="${i}"><span class="bar" aria-hidden="true"></span>${w.t}</button>`).join('');
+  // One video element per clip, shared by tabs that use the same clip.
+  const clips = [...new Set(why.map((w) => w.media))];
+  media.innerHTML = clips.map((v) => mediaHtml(v, `data-clip="${v}"`)).join('');
+  const mediaEls = [...media.children];
+  let wIdx = 0, wTimer, wStart = 0, wRemain = WHY_DUR, whyVisible = false, wExpanded = false, wHover = false;
+  const schedule = (ms) => {
+    clearTimeout(wTimer);
+    if (reduceMotion || !whyVisible) return;
+    wStart = performance.now();
+    wRemain = ms;
+    wTimer = setTimeout(() => showWhy((wIdx + 1) % why.length), ms);
+  };
+  const hold = () => {
+    if (tabs.classList.contains('is-held')) return;
+    clearTimeout(wTimer);
+    wRemain = Math.max(800, wRemain - (performance.now() - wStart));
+    tabs.classList.add('is-held');
+  };
+  const release = () => {
+    if (wExpanded || wHover || !tabs.classList.contains('is-held')) return;
+    tabs.classList.remove('is-held');
+    schedule(wRemain);
+  };
+  const showWhy = (i, user) => {
+    wIdx = i;
+    wExpanded = false;
+    const w = why[i];
+    $$('button', tabs).forEach((b) => b.setAttribute('aria-selected', b.dataset.i == i));
+    mediaEls.forEach((el) => {
+      const on = el.dataset.clip === w.media;
+      el.classList.toggle('is-active', on);
+      if (el.tagName !== 'VIDEO') return;
+      if (on && whyVisible && !reduceMotion) { el.preload = 'auto'; el.play().catch(() => {}); } else if (!on) el.pause();
+    });
+    panel.setAttribute('aria-labelledby', `why-t${i}`);
+    panel.classList.add('is-swapping');
+    setTimeout(() => {
+      const [first, ...rest] = w.p;
+      const extra = rest.map((x) => `<p>${x}</p>`).join('') + (w.l ? `<ul>${w.l.map((x) => `<li>${x}</li>`).join('')}</ul>` : '');
+      panel.innerHTML = `<h3>${w.t}</h3><p>${first}</p>`
+        + (extra ? `<div class="why-more" id="why-more" hidden>${extra}</div><button type="button" class="why-toggle" aria-expanded="false" aria-controls="why-more">${T('Read more', 'Weiterlesen')}</button>` : '');
+      panel.classList.remove('is-swapping');
+    }, reduceMotion ? 0 : 200);
+    if (user && innerWidth <= 1120) $$('button', tabs)[i].scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
+    tabs.classList.remove('is-held');
+    schedule(WHY_DUR);
+    if (wHover) hold();
+  };
+  panel.addEventListener('click', (e) => {
+    const btn = e.target.closest('.why-toggle');
+    if (!btn) return;
+    const more = $('#why-more', panel);
+    wExpanded = more.hidden;
+    more.hidden = !wExpanded;
+    btn.textContent = wExpanded ? T('Show less', 'Weniger anzeigen') : T('Read more', 'Weiterlesen');
+    btn.setAttribute('aria-expanded', wExpanded);
+    if (wExpanded) hold(); else release();
+  });
+  const whyStage = $('.why-stage');
+  whyStage.addEventListener('mouseenter', () => { wHover = true; hold(); });
+  whyStage.addEventListener('mouseleave', () => { wHover = false; release(); });
+  tabs.addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) showWhy(+b.dataset.i, true); });
+  tabs.addEventListener('keydown', (e) => {
+    const vertical = innerWidth > 1120;
+    const next = vertical ? 'ArrowDown' : 'ArrowRight';
+    const prev = vertical ? 'ArrowUp' : 'ArrowLeft';
+    if (e.key !== next && e.key !== prev) return;
+    e.preventDefault();
+    const i = (wIdx + (e.key === next ? 1 : -1) + why.length) % why.length;
+    showWhy(i, true);
+    $$('button', tabs)[i].focus();
+  });
+  new IntersectionObserver(([en]) => {
+    whyVisible = en.isIntersecting;
+    if (whyVisible) { showWhy(wIdx); return; }
+    clearTimeout(wTimer);
+    mediaEls.forEach((el) => { if (el.tagName === 'VIDEO') el.pause(); });
+  }, { threshold: 0.35 }).observe(whyStage);
+  showWhy(0);
+
+  /* ---------- Why on phones: the same content as an accordion ---------- */
+  const whyAcc = document.createElement('div');
+  whyAcc.className = 'why-acc';
+  whyAcc.innerHTML = why.map((w, i) => `<details${i === 0 ? ' open' : ''}><summary>${w.t}</summary><div class="wa-body">
+    ${mediaHtml(w.media, 'aria-hidden="true"')}
+    ${w.p.map((x) => `<p>${x}</p>`).join('')}${w.l ? `<ul>${w.l.map((x) => `<li>${x}</li>`).join('')}</ul>` : ''}</div></details>`).join('');
+  $('.why-body').after(whyAcc);
+  const accItems = $$('details', whyAcc);
+  let accVisible = false;
+  const accPlay = () => accItems.forEach((d) => {
+    const v = $('video', d);
+    if (!v) return;
+    if (d.open && accVisible && !reduceMotion) { v.preload = 'auto'; v.play().catch(() => {}); } else v.pause();
+  });
+  accItems.forEach((d) => d.addEventListener('toggle', () => {
+    if (d.open) {
+      accItems.forEach((o) => { if (o !== d) o.open = false; });
+      // Bring the opened item's heading into view if closing the one above moved it off screen
+      const top = d.getBoundingClientRect().top;
+      if (top < 80) scrollTo({ top: scrollY + top - 90, behavior: reduceMotion ? 'auto' : 'smooth' });
+    }
+    accPlay();
+  }));
+  new IntersectionObserver(([en]) => { accVisible = en.isIntersecting; accPlay(); }, { threshold: 0.2 }).observe(whyAcc);
+
+  /* ---------- Packages: preselect the package in the form ---------- */
+  $$('[data-package]').forEach((a) => a.addEventListener('click', () => {
+    const r = $(`input[name="package"][value="${a.dataset.package}"]`);
+    if (r) r.checked = true;
+  }));
+
+  /* ---------- Before & after gallery (hair transplant only) ---------- */
+  // Cases, grafts, hairs and months are from the clinic's results page:
+  // advancedhairclinics.gr/en/hair-transplant-results-before-after
+  const cases = [
+    { f: 'hair-transplant-128-a', g: '4,267', h: '8,446', m: 15 },
+    { f: 'unshaven-fue-006', g: '1,656', h: '3,477', m: 12, label: T('Unshaven FUE hair transplant', 'Unshaven-FUE-Haartransplantation') },
+    { f: 'hair-transplant-126-e', g: '2,318', h: '4,103', m: 12 },
+    { f: 'hair-transplant-125-a', g: '2,304', h: '4,879', m: 12 },
+    { f: 'hair-transplant-124-a', g: '2,288', h: '4,983', m: 12 },
+    { f: 'hair-transplant-123', g: '2,543', h: '7,061', m: 6 },
+    { f: 'hair-transplant-122-a', g: '4,484', h: '8,396', m: 6 },
+    { f: 'hair-transplant-121-a', g: '2,278', h: '4,785', m: 12 },
+    { f: 'hair-transplant-120', g: '1,831', h: '4,487', m: 12 },
+    { f: 'hair-transplant-119', g: '1,029', h: '2,543', m: 3 },
+    { f: 'hair-transplant-118', g: '4,407', h: '9,300', m: 12 },
+  ];
+  const thumbs = $('#ba-thumbs');
+  const baMain = $('#ba-main');
+  const label = (c) => c.label || T('FUE hair transplant', 'FUE-Haartransplantation');
+  const months = (m) => T(`${m} months`, `${m} Monate`);
+  const baAlt = (c) => T(`Before and after an ${label(c)} with ${c.g} grafts`, `Vorher und nachher: ${label(c)} mit ${num(c.g)} Grafts`);
+  thumbs.innerHTML = cases.map((c, i) => `
+    <li><button type="button" aria-pressed="${i === 0}" data-i="${i}" aria-label="${T('Show', 'Anzeigen:')} ${label(c)}, ${num(c.g)} Grafts">
+      <img src="${A}/img/ba/${c.f}.webp" alt="" loading="lazy" width="800" height="500"><span class="t-label">${num(c.g)} ${T('grafts', 'Grafts')}</span>
+    </button></li>`).join('');
+  let baCur = 0;
+  const showCase = (i, fromThumb) => {
+    baCur = (i + cases.length) % cases.length;
+    const c = cases[baCur];
+    const btns = $$('button', thumbs);
+    btns.forEach((b) => b.setAttribute('aria-pressed', b.dataset.i == baCur));
+    // Keep the active thumbnail in view inside the scrolling panel without moving the page
+    if (!fromThumb) {
+      // The panel scrolls down on desktop and sideways on smaller screens
+      const t = btns[baCur].parentElement;
+      const wrap = thumbs.parentElement;
+      const sideways = wrap.scrollWidth > wrap.clientWidth;
+      const [pos, size, view, scroll] = sideways
+        ? [t.offsetLeft, t.offsetWidth, wrap.clientWidth, wrap.scrollLeft]
+        : [t.offsetTop, t.offsetHeight, wrap.clientHeight, wrap.scrollTop];
+      if (pos < scroll || pos + size > scroll + view) {
+        wrap.scrollTo({ [sideways ? 'left' : 'top']: pos - 8, behavior: reduceMotion ? 'auto' : 'smooth' });
+      }
+    }
+    baMain.classList.add('is-swapping');
+    setTimeout(() => {
+      baMain.src = `${A}/img/ba/${c.f}.webp`;
+      baMain.alt = `${baAlt(c)}. ${T('Open full screen', 'Im Vollbild öffnen')}`;
+      $('#ba-type').textContent = label(c);
+      $('#ba-grafts').textContent = num(c.g);
+      $('#ba-hairs').textContent = num(c.h);
+      $('#ba-months').textContent = months(c.m);
+      $('#ba-count').textContent = `${baCur + 1} / ${cases.length}`;
+      const done = () => baMain.classList.remove('is-swapping');
+      (baMain.decode ? baMain.decode() : Promise.resolve()).then(done, done);
+    }, reduceMotion ? 0 : 260);
+  };
+  thumbs.addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) showCase(+b.dataset.i, true); });
+  $$('.ba-step').forEach((b) => b.addEventListener('click', () => showCase(baCur + +b.dataset.step)));
+  // Swipe on the main photo on touch screens
+  let tx = null;
+  baMain.parentElement.addEventListener('touchstart', (e) => { tx = e.touches[0].clientX; }, { passive: true });
+  baMain.parentElement.addEventListener('touchend', (e) => {
+    if (tx === null) return;
+    const dx = e.changedTouches[0].clientX - tx;
+    if (Math.abs(dx) > 40) showCase(baCur + (dx < 0 ? 1 : -1));
+    tx = null;
+  });
+  showCase(0, true);
+
+  /* ---------- Lightbox: the main before and after photo opens full screen ---------- */
+  const icon = (d) => `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="${d}"/></svg>`;
+  const lb = document.createElement('div');
+  lb.className = 'lb';
+  lb.hidden = true;
+  lb.setAttribute('role', 'dialog');
+  lb.setAttribute('aria-modal', 'true');
+  lb.setAttribute('aria-label', T('Before and after photo', 'Vorher-Nachher-Foto'));
+  lb.innerHTML = `
+    <div class="lb-top"><span class="lb-count" id="lb-count"></span>
+      <button type="button" class="lb-btn lb-close" aria-label="${T('Close', 'Schließen')}">${icon('M6 6l12 12M18 6L6 18')}</button></div>
+    <div class="lb-stage">
+      <button type="button" class="lb-btn" data-step="-1" aria-label="${T('Previous case', 'Vorheriger Fall')}">${icon('M15 6l-6 6 6 6')}</button>
+      <img id="lb-img" alt="">
+      <button type="button" class="lb-btn" data-step="1" aria-label="${T('Next case', 'Nächster Fall')}">${icon('M9 6l6 6-6 6')}</button>
+    </div>
+    <p class="lb-cap" id="lb-cap"></p>`;
+  document.body.appendChild(lb);
+  const lbImg = $('#lb-img', lb);
+  let lbReturn = null;
+  const lbRender = () => {
+    const c = cases[baCur];
+    lbImg.classList.add('is-swapping');
+    lbImg.onload = () => lbImg.classList.remove('is-swapping');
+    lbImg.src = `${A}/img/ba/${c.f}.webp`;
+    lbImg.alt = baAlt(c);
+    $('#lb-count', lb).textContent = `${baCur + 1} / ${cases.length}`;
+    $('#lb-cap', lb).innerHTML = `<strong>${label(c)}</strong><span>Grafts<b>${num(c.g)}</b></span><span>${T('Hairs', 'Haare')}<b>${num(c.h)}</b></span><span>${T('Post-procedure', 'Nach dem Eingriff')}<b>${months(c.m)}</b></span>`;
+  };
+  // Stepping in the lightbox moves the gallery behind it too
+  const lbStep = (d) => { showCase(baCur + d); lbRender(); };
+  const lbOpen = () => {
+    lbReturn = document.activeElement;
+    lbRender();
+    lb.hidden = false;
+    document.body.classList.add('lb-open');
+    $('.lb-close', lb).focus();
+  };
+  const lbClose = () => {
+    lb.hidden = true;
+    document.body.classList.remove('lb-open');
+    if (lbReturn) lbReturn.focus();
+  };
+  baMain.addEventListener('click', lbOpen);
+  baMain.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); lbOpen(); } });
+  lb.addEventListener('click', (e) => {
+    const b = e.target.closest('button');
+    if (b && b.dataset.step) return lbStep(+b.dataset.step);
+    if (b && b.classList.contains('lb-close')) return lbClose();
+    if (e.target === lb || e.target.classList.contains('lb-stage')) lbClose(); // tap outside the photo
+  });
+  addEventListener('keydown', (e) => {
+    if (lb.hidden) return;
+    if (e.key === 'Escape') lbClose();
+    else if (e.key === 'ArrowRight') lbStep(1);
+    else if (e.key === 'ArrowLeft') lbStep(-1);
+    else if (e.key === 'Tab') { // keep focus inside the dialog
+      const f = $$('button', lb);
+      const i = f.indexOf(document.activeElement);
+      if (e.shiftKey && i <= 0) { e.preventDefault(); f[f.length - 1].focus(); }
+      else if (!e.shiftKey && i === f.length - 1) { e.preventDefault(); f[0].focus(); }
+    }
+  });
+  let lbX = null;
+  lbImg.addEventListener('touchstart', (e) => { lbX = e.touches[0].clientX; }, { passive: true });
+  lbImg.addEventListener('touchend', (e) => {
+    if (lbX === null) return;
+    const dx = e.changedTouches[0].clientX - lbX;
+    if (Math.abs(dx) > 40) lbStep(dx < 0 ? 1 : -1);
+    lbX = null;
+  });
+
+  /* ---------- Meet Dr Vekris: Read more ---------- */
+  const meetBtn = $('.meet-toggle');
+  if (meetBtn) meetBtn.addEventListener('click', () => {
+    const more = $('#meet-more');
+    more.hidden = !more.hidden;
+    meetBtn.textContent = more.hidden ? T('Read more', 'Weiterlesen') : T('Show less', 'Weniger anzeigen');
+    meetBtn.setAttribute('aria-expanded', !more.hidden);
+    setupJourney();
+  });
+
+  /* ---------- Video testimonials ---------- */
+  const vids = [
+    { id: 'GztrgiQqlYM', img: 'real-results', name: 'Real results: hair transplant at Advanced Hair Clinics', t: 'FUE Hair Transplant', g: '3,850', h: '8,565', d: '2' },
+    { id: 'nj68iQf_e6Q', img: 'steve-tesser', name: 'Hair transplant: Steve Tesser', t: 'FUE Hair Transplant', g: '2,543', h: '5,403', d: '2' },
+    { id: 'adFcivrSJjg', img: 'my-experience', name: 'Hair transplant: my experience at Advanced Hair Clinics', t: 'FUE Hair Transplant', g: '2,287', h: '5,511', d: '1' },
+    { id: '_lF3QzLdcqQ', img: 'dimos-beke', name: 'Dimos Beke: my experience at Advanced Hair Clinics', t: 'Unshaven FUE Hair Transplant', g: '1,820', h: '4,145', d: '1' },
+    { id: 'g4F6fGoYw1A', img: 'result-after', name: 'Result after hair transplant', t: 'FUE Hair Transplant', g: '2,318', h: '4,103', d: '1' },
+  ];
+  if (DE) {
+    const deNames = ['Echte Ergebnisse: Haartransplantation bei Advanced Hair Clinics', 'Haartransplantation: Steve Tesser',
+      'Haartransplantation: meine Erfahrung bei Advanced Hair Clinics', 'Dimos Beke: meine Erfahrung bei Advanced Hair Clinics', 'Ergebnis nach der Haartransplantation'];
+    vids.forEach((v, i) => Object.assign(v, { name: deNames[i], t: v.t.startsWith('Unshaven') ? 'Unshaven-FUE-Haartransplantation' : 'FUE-Haartransplantation', g: num(v.g), h: num(v.h) }));
+  }
+  const CAP = T('en', 'de');
+  const vtPlayer = $('#vt-player');
+  const vtList = $('#vt-list');
+  let vCur = 0;
+  const vSrc = (v) => `${A}/img/testimonials/${v.img}.webp`;
+  vtList.innerHTML = vids.map((v, i) => `<li><button type="button" data-i="${i}" aria-current="${i === 0}">
+    <span class="vt-thumb"><img src="${vSrc(v)}" alt="" loading="lazy" width="640" height="360"></span>
+    <span><strong>${v.name}</strong><span>${v.g} ${T('grafts', 'Grafts')}</span></span></button></li>`).join('');
+  // English captions: use an English track when the video has one, otherwise ask the player to
+  // auto-translate the video's own captions into English (YouTube's Auto-translate option).
+  // The translation call is not in YouTube's documented API, so every step falls back safely:
+  // if the player script never loads, the plain embed plays with captions on.
+  const ytParams = `autoplay=1&rel=0&modestbranding=1&cc_load_policy=1&cc_lang_pref=${CAP}&hl=${CAP}`;
+  const plainEmbed = (v) => `<iframe src="https://www.youtube-nocookie.com/embed/${v.id}?${ytParams}" title="${v.name}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`;
+  let ytApi;
+  const loadYT = () => ytApi || (ytApi = new Promise((res, rej) => {
+    if (window.YT && window.YT.Player) return res();
+    const prev = window.onYouTubeIframeAPIReady;
+    window.onYouTubeIframeAPIReady = () => { if (prev) prev(); res(); };
+    const sc = document.createElement('script');
+    sc.src = 'https://www.youtube.com/iframe_api';
+    sc.onerror = rej;
+    document.head.appendChild(sc);
+    setTimeout(rej, 5000);
+  }));
+  const captionsToEnglish = (player) => {
+    try {
+      const list = player.getOption('captions', 'tracklist') || [];
+      if (!list.length) return false;
+      const en = list.find((t) => new RegExp(`^${CAP}`, 'i').test(t.languageCode));
+      player.setOption('captions', 'track', en
+        ? { languageCode: en.languageCode }
+        : { languageCode: list[0].languageCode, translationLanguage: { languageCode: CAP, languageName: T('English', 'Deutsch') } });
+      return true;
+    } catch (e) { return false; }
+  };
+  let vtToken = 0;
+  const playWithEnglishCaptions = (v) => {
+    const token = ++vtToken;
+    vtPlayer.innerHTML = '<div id="vt-yt"></div>';
+    loadYT().then(() => {
+      if (token !== vtToken) return; // another video was chosen meanwhile
+      let done = false;
+      const tryEnglish = (p) => { if (!done) done = captionsToEnglish(p); };
+      new window.YT.Player('vt-yt', {
+        host: 'https://www.youtube-nocookie.com',
+        videoId: v.id,
+        width: '100%', height: '100%',
+        playerVars: { autoplay: 1, rel: 0, modestbranding: 1, cc_load_policy: 1, cc_lang_pref: CAP, hl: CAP, playsinline: 1 },
+        events: {
+          onReady: (e) => { e.target.getIframe().title = v.name; e.target.playVideo(); },
+          // The captions module reports its tracks once it loads
+          onApiChange: (e) => tryEnglish(e.target),
+          onStateChange: (e) => { if (e.data === 1) { tryEnglish(e.target); setTimeout(() => tryEnglish(e.target), 1500); } },
+        },
+      });
+    }).catch(() => { if (token === vtToken) vtPlayer.innerHTML = plainEmbed(v); });
+  };
+  const showVid = (i, play) => {
+    vCur = i;
+    const v = vids[i];
+    $$('button', vtList).forEach((b) => b.setAttribute('aria-current', b.dataset.i == i));
+    $('#vt-name').textContent = v.name;
+    $('#vt-stats').innerHTML = [[T('Treatment', 'Behandlung'), v.t], ['Grafts', v.g], [T('Hairs', 'Haare'), v.h], [T('Treatment days', 'Behandlungstage'), v.d]]
+      .map(([k, val]) => `<div><dt>${k}</dt><dd>${val}</dd></div>`).join('');
+    if (play) {
+      playWithEnglishCaptions(v);
+      return;
+    }
+    vtPlayer.innerHTML = `<button type="button" class="vt-poster" aria-label="${T('Play video', 'Video abspielen')}: ${v.name}"><img src="${vSrc(v)}" alt="${v.name}" width="1600" height="900" loading="lazy"><span class="vt-play" aria-hidden="true"></span></button>`;
+  };
+  vtPlayer.addEventListener('click', (e) => { if (e.target.closest('.vt-poster')) showVid(vCur, true); });
+  vtList.addEventListener('click', (e) => {
+    const b = e.target.closest('button');
+    if (!b) return;
+    vtToken++;
+    showVid(+b.dataset.i, false);
+    if (innerWidth <= 1120) vtPlayer.scrollIntoView({ block: 'center', behavior: reduceMotion ? 'auto' : 'smooth' });
+  });
+  showVid(0, false);
+
+  /* ---------- Journey: pinned horizontal scroll ---------- */
+  const journey = $('.journey');
+  const jTrack = $('#journey-track');
+  const jBar = $('.journey-bar span');
+  const desktopPin = matchMedia('(min-width: 1121px)');
+  const jCards = $$('.j-card', jTrack);
+  jCards.forEach((c, i) => {
+    const node = document.createElement('span');
+    node.className = 'j-node';
+    node.setAttribute('aria-hidden', 'true');
+    node.textContent = i === jCards.length - 1 ? '✓' : i + 1;
+    const arrow = document.createElement('span');
+    arrow.className = 'j-arrow';
+    arrow.setAttribute('aria-hidden', 'true');
+    c.prepend(node, arrow);
+  });
+  const fillTimeline = (shift, viewW) => {
+    const start = jCards[0].offsetLeft;
+    const reach = shift + viewW * 0.6;
+    jTrack.style.setProperty('--fill', `${Math.max(0, reach - start)}px`);
+    jCards.forEach((c) => c.classList.toggle('is-reached', c.offsetLeft <= reach));
+  };
+  const moveJourney = () => {
+    if (journey.classList.contains('is-native')) return;
+    const dist = +journey.dataset.dist || 0;
+    const top = journey.getBoundingClientRect().top;
+    const p = Math.min(1, Math.max(0, -top / (journey.offsetHeight - innerHeight || 1)));
+    jTrack.style.transform = `translate3d(${-p * dist}px,0,0)`;
+    jBar.style.width = `${p * 100}%`;
+    fillTimeline(p * dist + (p > 0.98 ? innerWidth : 0), innerWidth);
+  };
+  function setupJourney() {
+    const native = reduceMotion || !desktopPin.matches;
+    journey.classList.toggle('is-native', native);
+    if (native) { journey.style.height = ''; fillTimeline(jTrack.scrollLeft, jTrack.clientWidth); return; }
+    const dist = jTrack.scrollWidth - innerWidth;
+    journey.style.height = `${innerHeight + Math.max(0, dist)}px`;
+    journey.dataset.dist = Math.max(0, dist);
+    moveJourney();
+  }
+  addEventListener('scroll', moveJourney, { passive: true });
+  addEventListener('resize', setupJourney);
+  addEventListener('load', setupJourney);
+  setupJourney();
+  jTrack.addEventListener('scroll', () => {
+    if (!journey.classList.contains('is-native')) return;
+    const max = jTrack.scrollWidth - jTrack.clientWidth;
+    jBar.style.width = `${max ? (jTrack.scrollLeft / max) * 100 : 0}%`;
+    fillTimeline(jTrack.scrollLeft + (jTrack.scrollLeft >= max - 2 ? jTrack.clientWidth : 0), jTrack.clientWidth);
+  }, { passive: true });
+
+  /* ---------- FAQ: one answer open at a time ---------- */
+  const faqs = $$('.faq-list details');
+  faqs.forEach((d) => d.addEventListener('toggle', () => {
+    if (d.open) faqs.forEach((o) => { if (o !== d) o.open = false; });
+  }));
+
+  /* ---------- Editorial image reveal + gentle parallax ---------- */
+  if (!reduceMotion) {
+    const revealTargets = $$('.faq-media img');
+    revealTargets.forEach((el) => el.classList.add('reveal'));
+    const owner = new Map();
+    const rIO = new IntersectionObserver((entries) => entries.forEach((e) => {
+      if (!e.isIntersecting) return;
+      (owner.get(e.target) || []).forEach((el) => el.classList.add('is-in'));
+      rIO.unobserve(e.target);
+    }), { threshold: 0.1 });
+    revealTargets.forEach((el) => {
+      const host = el.parentElement;
+      owner.set(host, [...(owner.get(host) || []), el]);
+      rIO.observe(host);
+    });
+
+    const par = $$('.athens-bg img');
+    const doPar = () => par.forEach((img) => {
+      const r = img.closest('section').getBoundingClientRect();
+      if (r.bottom < 0 || r.top > innerHeight) return;
+      const p = (r.top + r.height / 2 - innerHeight / 2) / innerHeight;
+      img.style.transform = `translate3d(0, ${p * -60 - 40}px, 0)`;
+    });
+    addEventListener('scroll', doPar, { passive: true });
+    doPar();
+  }
+})();
