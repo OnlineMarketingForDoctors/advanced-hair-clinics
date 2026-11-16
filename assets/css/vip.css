@@ -874,3 +874,10 @@ body.lb-open { overflow: hidden; }
 /* ---------- Site integration ---------- */
 .page-vip .site-footer { margin-top: 0; }
 .meet-ctas { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 28px; }
+/* Placeholder enquiry form (contact page form styles) */
+.enquiry-form .ef-title { font-family: var(--display); font-weight: 600; font-size: 24px; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 20px; }
+.enquiry-form .cf-submit { justify-self: stretch; }
+@media (max-width: 760px) {
+  .enquiry-form { padding: 24px 20px; }
+  .enquiry-form .cf-row { grid-template-columns: 1fr; }
+}

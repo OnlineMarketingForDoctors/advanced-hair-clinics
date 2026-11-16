@@ -595,3 +595,19 @@
     doPar();
   }
 })();
+
+/* ---------- Placeholder enquiry form: validates, sends nothing ---------- */
+(() => {
+  const form = document.getElementById('vf');
+  if (!form) return;
+  const err = document.getElementById('vf-error');
+  const done = document.getElementById('vf-done');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    form.classList.add('was-validated');
+    const ok = form.checkValidity();
+    err.hidden = ok;
+    done.hidden = !ok;
+    if (!ok) form.querySelector(':invalid').focus();
+  });
+})();

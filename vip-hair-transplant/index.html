@@ -15,6 +15,7 @@
 <link rel="stylesheet" href="/assets/css/style.css">
 <link rel="stylesheet" href="/assets/css/about.css">
 <link rel="stylesheet" href="/assets/css/pages.css">
+<link rel="stylesheet" href="/assets/css/contact.css">
 <link rel="stylesheet" href="/assets/css/vip.css">
 </head>
 <body class="page-about vip page-vip">
@@ -572,27 +573,33 @@
       </a>
     </div>
 
-    <!-- LeadConnector form. form_embed.js resizes the iframe to the form's height. -->
+    <!-- Placeholder form: validates but sends nothing until the clinic's own form is connected. -->
     <div class="enquiry-form">
-      <iframe
-        src="https://api.leadconnectorhq.com/widget/form/NWlmI161OVrViQD78PH1"
-        style="width:100%;height:100%;border:none;border-radius:0px"
-        id="inline-NWlmI161OVrViQD78PH1"
-        data-layout="{'id':'INLINE'}"
-        data-trigger-type="alwaysShow"
-        data-trigger-value=""
-        data-activation-type="alwaysActivated"
-        data-activation-value=""
-        data-deactivation-type="neverDeactivate"
-        data-deactivation-value=""
-        data-form-name="LP Form"
-        data-height="853"
-        data-layout-iframe-id="inline-NWlmI161OVrViQD78PH1"
-        data-form-id="NWlmI161OVrViQD78PH1"
-        data-cookie-consent="true"
-        data-cookie-consent-provider="auto"
-        title="LP Form"></iframe>
-      <script src="https://link.msgsndr.com/js/form_embed.js"></script>
+      <h3 class="ef-title">Your private enquiry</h3>
+      <form class="cf" id="vf" novalidate>
+        <div class="cf-row">
+          <label class="fld"><span>Name <i aria-hidden="true">*</i></span><input type="text" name="name" autocomplete="given-name" required></label>
+          <label class="fld"><span>Last Name <i aria-hidden="true">*</i></span><input type="text" name="lastname" autocomplete="family-name" required></label>
+        </div>
+        <div class="cf-row">
+          <label class="fld"><span>Email <i aria-hidden="true">*</i></span><input type="email" name="email" autocomplete="email" required></label>
+          <label class="fld"><span>Phone/Mobile <i aria-hidden="true">*</i></span><input type="tel" name="phone" autocomplete="tel" inputmode="tel" required></label>
+        </div>
+        <div class="cf-row">
+          <label class="fld"><span>Country of residence <i aria-hidden="true">*</i></span><input type="text" name="country" autocomplete="country-name" required></label>
+          <label class="fld"><span>Previous hair transplant?</span>
+            <select name="previous"><option value="">Select...</option><option>No</option><option>Yes, once</option><option>Yes, more than once</option></select>
+          </label>
+        </div>
+        <label class="fld"><span>Tell us about your hair loss</span><textarea name="message" rows="4"></textarea></label>
+        <label class="cf-check">
+          <input type="checkbox" name="gdpr" required>
+          <span>I have been informed about the processing of my personal data, and I GIVE my consent to it, as it is specifically defined in detail <a href="/privacy-policy-gdpr/" target="_blank" rel="noopener">HERE</a>.</span>
+        </label>
+        <p class="cf-error" id="vf-error" role="alert" hidden>Please fill in all required fields and give your consent.</p>
+        <button class="btn btn-teal btn-lg cf-submit" type="submit">Request a private consultation</button>
+        <p class="cf-done" id="vf-done" role="status" hidden>Thank you. This form is not connected yet, so your details have not been sent. Please call us on <a href="tel:+302106980451">+30 210 698 0451</a> or message us on <a href="https://wa.me/306940457494" target="_blank" rel="noopener">WhatsApp</a>.</p>
+      </form>
     </div>
   </div>
 </section>
