@@ -1349,3 +1349,11 @@ ul, ol { padding: 0; list-style: none; }
   .header-phone { display: none; }
   .mm-top { padding-right: 16px; }
 }
+
+/* Mega menu: Dr Vekris and VIP hair transplant feature cards */
+.mega-cards { display: grid; gap: 16px; align-content: start; }
+.mega-cards .mega-card { min-height: 300px; }
+.mega-cards .mega-card-vip { min-height: 250px; }
+.mega-card-vip img { object-position: 50% 30%; }
+.mega-card-vip .mc-k::before { content: "★"; margin-right: 6px; }
+@media (max-width: 1400px) { .mega-cards { display: none; } }
