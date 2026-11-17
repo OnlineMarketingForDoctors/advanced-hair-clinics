@@ -1354,6 +1354,6 @@ ul, ol { padding: 0; list-style: none; }
 /* The card column stretches to the menu's full height and the two cards share it equally. */
 .mega-cards { display: grid; gap: 16px; grid-auto-rows: 1fr; align-self: stretch; }
 .mega-cards .mega-card { min-height: 240px; align-self: stretch; }
-.mega-card-vip img { object-position: 50% 30%; }
+.mega-card-vip img { object-position: 50% 0; }
 .mega-card-vip .mc-k::before { content: "★"; margin-right: 6px; }
 @media (max-width: 1400px) { .mega-cards { display: none; } }
