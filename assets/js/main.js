@@ -275,13 +275,14 @@
     setupJourney();
   });
 
-  /* ---------- Journey: pinned horizontal scroll ---------- */
+  /* ---------- Journey: horizontal steps, moved with arrows ---------- */
   const journey = $('.journey');
   const jTrack = $('#journey-track');
   const jBar = $('.journey-bar span');
   const desktopPin = matchMedia('(min-width: 1121px)');
   const setupJourney = () => {
-    const native = reduceMotion || !desktopPin.matches;
+    // The steps no longer pin and move sideways with the page scroll: arrows (or a swipe) move them.
+    const native = true;
     journey.classList.toggle('is-native', native);
     if (native) { journey.style.height = ''; return; }
     const dist = jTrack.scrollWidth - innerWidth;
@@ -327,6 +328,30 @@
     jBar.style.width = `${max ? (jTrack.scrollLeft / max) * 100 : 0}%`;
     fillTimeline(jTrack.scrollLeft + (jTrack.scrollLeft >= max - 2 ? jTrack.clientWidth : 0), jTrack.clientWidth);
   }, { passive: true });
+
+  /* ---------- Journey arrows: the steps move one card at a time, only when asked ---------- */
+  {
+    const head = $('.journey-head');
+    const nav = document.createElement('div');
+    nav.className = 'journey-nav';
+    const btn = (dir, label, d) => `<button class="round-btn" type="button" data-dir="${dir}" aria-label="${label}" aria-controls="journey-track"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="${d}"/></svg></button>`;
+    nav.innerHTML = btn(-1, 'Previous step', 'M15 5l-7 7 7 7') + btn(1, 'Next step', 'M9 5l7 7-7 7');
+    head.append(nav);
+    const [prev, next] = $$('button', nav);
+    const step = () => $('.j-card', jTrack).getBoundingClientRect().width + (parseFloat(getComputedStyle(jTrack).columnGap) || 40);
+    const sync = () => {
+      const max = jTrack.scrollWidth - jTrack.clientWidth;
+      prev.disabled = jTrack.scrollLeft <= 2;
+      next.disabled = jTrack.scrollLeft >= max - 2;
+    };
+    nav.addEventListener('click', (e) => {
+      const b = e.target.closest('button');
+      if (b) jTrack.scrollBy({ left: +b.dataset.dir * step(), behavior: reduceMotion ? 'auto' : 'smooth' });
+    });
+    jTrack.addEventListener('scroll', sync, { passive: true });
+    addEventListener('resize', sync);
+    sync();
+  }
 
   /* ---------- Instagram ticker (recent posts linking to the profile) ---------- */
   const insta = Array.from({ length: 10 }, (_, i) => `assets/img/insta/post-${String(i + 1).padStart(2, '0')}.webp`);

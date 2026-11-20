@@ -881,3 +881,13 @@ body.lb-open { overflow: hidden; }
   .enquiry-form { padding: 24px 20px; }
   .enquiry-form .cf-row { grid-template-columns: 1fr; }
 }
+
+/* Journey: arrows instead of scroll-linked sideways movement */
+.journey-nav { grid-column: 2; grid-row: 2; justify-self: end; display: flex; gap: 10px; }
+.journey-nav .round-btn { border-color: var(--mist); color: var(--ink); background: #fff; }
+.journey-nav .round-btn:hover:not(:disabled) { background: var(--teal); border-color: var(--teal); color: #fff; }
+.journey-nav .round-btn:disabled { opacity: .35; cursor: default; }
+.journey.is-native .journey-track { scrollbar-width: none; }
+.journey.is-native .journey-track::-webkit-scrollbar { display: none; }
+@media (max-width: 1120px) { .journey-nav { grid-column: 1; grid-row: auto; justify-self: start; margin-top: 18px; } }
+.journey.is-native .journey-track { scroll-padding-inline: max(var(--gutter), calc((100vw - var(--max)) / 2)); }
