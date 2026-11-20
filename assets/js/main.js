@@ -302,11 +302,18 @@
     arrow.setAttribute('aria-hidden', 'true');
     c.prepend(node, arrow);
   });
+  // The rail spans every step (not just the visible width), and the teal fill
+  // ends exactly at the last highlighted step, or runs to the end once all are reached.
   const fillTimeline = (shift, viewW) => {
     const start = jCards[0].offsetLeft;
+    const last = jCards[jCards.length - 1];
+    const railW = last.offsetLeft + last.offsetWidth - start;
     const reach = shift + viewW * 0.6;
-    jTrack.style.setProperty('--fill', `${Math.max(0, reach - start)}px`);
-    jCards.forEach((c) => c.classList.toggle('is-reached', c.offsetLeft <= reach));
+    let lastOn = -1;
+    jCards.forEach((c, i) => { const on = c.offsetLeft <= reach; c.classList.toggle('is-reached', on); if (on) lastOn = i; });
+    const fill = lastOn < 0 ? 0 : lastOn === jCards.length - 1 ? railW : jCards[lastOn].offsetLeft - start + 18;
+    jTrack.style.setProperty('--rail-w', `${railW}px`);
+    jTrack.style.setProperty('--fill', `${fill}px`);
   };
   const moveJourney = () => {
     if (journey.classList.contains('is-native')) return;

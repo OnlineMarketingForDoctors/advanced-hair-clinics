@@ -1367,3 +1367,7 @@ ul, ol { padding: 0; list-style: none; }
 .journey.is-native .journey-track::-webkit-scrollbar { display: none; }
 @media (max-width: 1120px) { .journey-nav { grid-column: 1; grid-row: auto; justify-self: start; margin-top: 18px; } }
 .journey.is-native .journey-track { scroll-padding-inline: max(var(--gutter), calc((100vw - var(--max)) / 2)); }
+
+/* Journey rail sized to all the steps, so it does not stop at the edge of the visible strip */
+.journey.is-native .journey-track::before { right: auto; width: var(--rail-w, calc(100% - 2 * max(var(--gutter), calc((100vw - var(--max)) / 2)))); }
+.journey.is-native .journey-track::after { max-width: var(--rail-w, none); }
