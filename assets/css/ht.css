@@ -140,3 +140,7 @@
   .awards-row li { width: 104px; height: 104px; }
   .exp { min-height: 420px; }
 }
+
+/* "As featured in" press ticker under the hero buttons */
+.hero-ht .hero-content > .hero-press { margin-top: 38px; opacity: 0; transform: translateY(14px); transition: opacity .9s var(--ease), transform .9s var(--ease); transition-delay: 1.35s; }
+.is-loaded .hero-ht .hero-content > .hero-press { opacity: 1; transform: none; }

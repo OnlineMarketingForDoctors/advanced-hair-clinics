@@ -360,34 +360,6 @@
     sync();
   }
 
-  /* ---------- Hero press ticker ---------- */
-  {
-    const press = $('.hero-press');
-    const list = $('.hero-press-list');
-    if (press && list) {
-      // A second, hidden copy of the logos makes the loop seamless.
-      [...list.children].forEach((li) => {
-        const c = li.cloneNode(true);
-        c.setAttribute('aria-hidden', 'true');
-        c.querySelectorAll('a').forEach((a) => a.setAttribute('tabindex', '-1'));
-        list.append(c);
-      });
-      // On desktop the before and after card floats beside the hero text:
-      // the ticker runs from the button up to the card, with a small gap.
-      const card = $('.hero-ba');
-      const fit = () => {
-        press.style.width = '';
-        press.style.flex = '';
-        if (!card || getComputedStyle(card).position !== 'absolute') return;
-        const w = card.getBoundingClientRect().left - 40 - press.getBoundingClientRect().left;
-        if (w > 160) { press.style.flex = 'none'; press.style.width = `${w}px`; }
-      };
-      addEventListener('resize', fit);
-      addEventListener('load', fit);
-      fit();
-    }
-  }
-
   /* ---------- Instagram ticker (recent posts linking to the profile) ---------- */
   const insta = Array.from({ length: 10 }, (_, i) => `assets/img/insta/post-${String(i + 1).padStart(2, '0')}.webp`);
   const tTrack = $('.ticker-track');
