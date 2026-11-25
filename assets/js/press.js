@@ -18,8 +18,13 @@
       const fit = () => {
         press.style.width = '';
         press.style.flex = '';
-        if (!card || getComputedStyle(card).position !== 'absolute') return;
-        const w = card.getBoundingClientRect().left - 40 - press.getBoundingClientRect().left;
+        if (innerWidth <= 1120) return;
+        let end;
+        if (card && getComputedStyle(card).position === 'absolute') end = card.getBoundingClientRect().left - 40;
+        // data-reach="edge": run to the right-hand content edge, mirroring the hero's left margin
+        else if (press.dataset.reach === 'edge') end = innerWidth - document.querySelector('.hero-content').getBoundingClientRect().left;
+        else return;
+        const w = end - press.getBoundingClientRect().left;
         if (w > 160) { press.style.flex = 'none'; press.style.width = `${w}px`; }
       };
       addEventListener('resize', fit);
