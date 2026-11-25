@@ -1399,3 +1399,7 @@ ul, ol { padding: 0; list-style: none; }
   .hero-press-list .hp-ap-news img, .hero-press-list .hp-times-of-san-diego img { height: 28px; }
 }
 @media (prefers-reduced-motion: reduce) { .hero-press-list { animation: none; } }
+
+/* Press ticker as its own row under the hero buttons (hair transplant and FUE pages) */
+.hero-content > .hero-press { margin-top: 38px; opacity: 0; transform: translateY(14px); transition: opacity .9s var(--ease), transform .9s var(--ease); transition-delay: 1.35s; }
+.is-loaded .hero-content > .hero-press { opacity: 1; transform: none; }
