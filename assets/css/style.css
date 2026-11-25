@@ -1,3 +1,7 @@
+/* Brand typeface, as on advancedhairclinics.gr: Gotham Greek Book (400) and Bold (600) */
+@font-face { font-family: 'AHC'; src: url('/assets/fonts/ahc-regular.woff2') format('woff2'); font-weight: 100 500; font-style: normal; font-display: swap; }
+@font-face { font-family: 'AHC'; src: url('/assets/fonts/ahc-bold.woff2') format('woff2'); font-weight: 600 900; font-style: normal; font-display: swap; }
+
 /* ==========================================================
    Advanced Hair Clinics · homepage
    Tokens
@@ -18,8 +22,8 @@
   --grad-ink: linear-gradient(135deg, #190D30 0%, #2A1850 55%, #0E4E63 130%);
   --grad-teal: linear-gradient(120deg, #11A3B6 0%, #5CC9D6 100%);
 
-  --display: "Archivo", "Helvetica Neue", Arial, sans-serif;
-  --sans: "Manrope", "Helvetica Neue", Arial, sans-serif;
+  --display: "AHC", system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --sans: "AHC", system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 
   --r-lg: 28px;
   --r-md: 18px;
