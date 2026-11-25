@@ -62,4 +62,24 @@
     const step = track.firstElementChild.getBoundingClientRect().width + 20;
     track.scrollBy({ left: step * +b.dataset.dir, behavior: 'smooth' });
   }));
+
+  /* ---------- In the media: arrows move the article cards one at a time ---------- */
+  const pTrack = document.getElementById('press-track');
+  const pNav = document.querySelector('.press-nav');
+  if (pTrack && pNav) {
+    const [pPrev, pNext] = pNav.querySelectorAll('button');
+    const pSync = () => {
+      pPrev.disabled = pTrack.scrollLeft <= 2;
+      pNext.disabled = pTrack.scrollLeft >= pTrack.scrollWidth - pTrack.clientWidth - 2;
+    };
+    pNav.addEventListener('click', (e) => {
+      const b = e.target.closest('button');
+      if (!b) return;
+      const step = pTrack.querySelector('.mc').getBoundingClientRect().width + 20;
+      pTrack.scrollBy({ left: +b.dataset.dir * step, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+    });
+    pTrack.addEventListener('scroll', pSync, { passive: true });
+    addEventListener('resize', pSync);
+    pSync();
+  }
 })();
